@@ -1,7 +1,7 @@
 export default function Chip() {
     return (
         <div className="chip">
-        <span>Jira Connection Test</span>
+        <span>Jira Connection Tests</span>
         </div>
     );
 }
