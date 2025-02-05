@@ -30,10 +30,8 @@ export default [
           'newlines-between': 'always'
         }
       ],
-
       'tailwindcss/classnames-order': 'warn',
       'tailwindcss/no-custom-classname': 'off',
-
       'prettier/prettier': ['error', { endOfLine: 'auto' }]
     }
   }
