@@ -28,3 +28,7 @@
 
   --font-family-pretandard: "Pretendard", sans-serif;
 }
+
+button{
+  width: -webkit-fill-available;
+}
