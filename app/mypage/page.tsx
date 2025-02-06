@@ -2,6 +2,7 @@ import CheckIcon from '@/components/shared/Icons/CheckIcon';
 import Chip from '@/components/ui/chip/Chip';
 import ChipInfo from '@/components/ui/chip/ChipInfo';
 import StatusChip from '@/components/ui/chip/ChipState';
+import Tag from '@/components/ui/Tag';
 
 export default function MyPage() {
   return (
@@ -41,6 +42,12 @@ export default function MyPage() {
         <StatusChip text="개설 확정" status="confirmed" />
         개설 대기 (waiting) - 아이콘 없음
         <StatusChip text="개설 대기" status="waiting" />
+      </div>
+      <div className="flex flex-col gap-1">
+        왼쪽 둥근 모서리 태그
+        <Tag text="오늘 21시 마감" variant="left-rounded" />
+        오른쪽 둥근 모서리 태그
+        <Tag text="오늘 21시 마감" variant="right-rounded" />
       </div>
     </div>
   );

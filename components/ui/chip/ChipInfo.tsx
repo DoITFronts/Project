@@ -9,7 +9,7 @@ export default function ChipInfo({ text, colorMode = 'white' }: ChipInfoProps) {
   return (
     <div
       className={clsx(
-        'inline-flex h-6 w-fit items-center justify-center gap-2.5 overflow-hidden rounded bg-gray-900 px-2 py-0.5',
+        'inline-flex h-6 w-fit min-w-max items-center justify-center gap-2.5 overflow-hidden rounded bg-gray-900 px-2 py-0.5',
       )}
     >
       <div
