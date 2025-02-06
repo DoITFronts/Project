@@ -38,6 +38,7 @@ export default [
       "@typescript-eslint": tsPlugin,
     },
     rules: {
+      "react/require-default-props": "off",
       'import/order': [
         'error',
         {

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "clsx": "^2.1.1",
     "husky": "^9.1.7",
     "next": "15.1.6",
     "prettier": "^3.4.2",
