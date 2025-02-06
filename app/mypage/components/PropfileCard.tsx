@@ -32,10 +32,7 @@ export default function ProfileCard({ name, nickname }: ProfileCardProps) {
       <div className="absolute left-[2px] top-px inline-flex items-start justify-start gap-2.5">
         <div className="relative h-[66px] w-[692px]">
           <div className="absolute left-0 top-px h-[65px] w-[692px] rounded-t-[22px] bg-orange-400" />
-          <div
-            className="absolute left-px top-[59px] h-0 border-2 border-orange-600"
-            style={{ width: '-webkit-fill-available' }}
-          />
+          <div className="absolute left-px top-[59px] h-0 w-[-webkit-fill-available] border-2 border-orange-600" />
           <div className="absolute left-[379px] top-[13px] h-[38.16px] w-[156.22px]">
             <Icon path="profile/profileCardBg" />
           </div>
