@@ -32,25 +32,19 @@ export default function ProfileCard({ name, nickname }: ProfileCardProps) {
       <div className="absolute left-[2px] top-px inline-flex items-start justify-start gap-2.5">
         <div className="relative h-[66px] w-[692px]">
           <div className="absolute left-0 top-px h-[65px] w-[692px] rounded-t-[22px] bg-orange-400" />
-          <div className="absolute left-[379px] top-[22px] h-[38.16px] w-[156.22px]">
-            <div className="absolute left-0 top-0 h-[36.64px] w-[95px]">
-              <div className="absolute left-0 top-[3.28px] h-[33.36px] w-[95px]">
-                <div className="absolute left-[40.21px] top-[7.07px] h-1 w-[35.79px] bg-orange-500" />
-                <div className="absolute left-[40.21px] top-[11.05px] h-[22.09px] w-[3.53px] bg-orange-500" />
-                <div className="absolute left-[53.91px] top-[11.05px] h-[22.09px] w-[3.53px] bg-orange-500" />
-                <div className="absolute left-[76px] top-[11.05px] h-[22.09px] w-[3.53px] bg-orange-300" />
-                <div className="absolute left-[91.46px] top-[11.05px] h-[22.09px] w-[3.53px] bg-orange-300" />
-                <div className="absolute left-[76px] top-[7.07px] h-1 w-[19px] bg-orange-300" />
-                <div className="absolute left-0 top-0 h-[16.13px] w-[16.35px] bg-orange-500" />
-                <div className="absolute left-0 top-[16.13px] h-1 w-[16.35px] bg-orange-300" />
-                <div className="absolute left-[16.35px] top-[16.13px] h-1 w-[10.60px] bg-orange-500" />
-                <div className="absolute left-[12.81px] top-[20.10px] h-[13.26px] w-[3.53px] bg-orange-500" />
-                <div className="absolute left-0 top-[20.10px] h-[13.26px] w-[3.53px] bg-orange-500" />
-                <div className="absolute left-[23.42px] top-[20.10px] h-[13.26px] w-[3.53px] bg-orange-500" />
-              </div>
-              <div className="absolute left-[58.30px] top-0 h-[10.37px] w-[18.36px]" />
-            </div>
+          <div className="absolute left-[379px] top-[13px] h-[38.16px] w-[156.22px]">
+            <Icon path="profile/profileCardBg" />
           </div>
+          <div
+            style={{
+              width: 990,
+              height: 0,
+              left: 1,
+              top: 59,
+              position: 'absolute',
+              border: '2px #EA580C solid',
+            }}
+          />
           <div className="absolute left-[23px] top-[17px] inline-flex w-[646px] items-center justify-between">
             <div className="font-['Pretendard'] text-lg font-semibold leading-7 text-gray-900">
               내 프로필
