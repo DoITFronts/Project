@@ -1,7 +1,8 @@
 import CheckIcon from '@/components/shared/Icons/CheckIcon';
+import BoxSelect from '@/components/ui/BoxSelect';
 import Chip from '@/components/ui/chip/Chip';
 import ChipInfo from '@/components/ui/chip/ChipInfo';
-import StatusChip from '@/components/ui/chip/ChipState';
+import ChipStatus from '@/components/ui/chip/ChipState';
 import Tag from '@/components/ui/Tag';
 
 export default function MyPage() {
@@ -35,19 +36,29 @@ export default function MyPage() {
       </div>
       <div className="flex flex-col gap-1">
         상태 칩 이용 예정 (planned)
-        <StatusChip text="이용 예정" status="planned" />
+        <ChipStatus text="이용 예정" status="planned" />
         이용 완료 (completed)
-        <StatusChip text="이용 완료" status="completed" />
+        <ChipStatus text="이용 완료" status="completed" />
         개설 확정 (confirmed) - 아이콘 자리 있음
-        <StatusChip text="개설 확정" status="confirmed" />
+        <ChipStatus text="개설 확정" status="confirmed" />
         개설 대기 (waiting) - 아이콘 없음
-        <StatusChip text="개설 대기" status="waiting" />
+        <ChipStatus text="개설 대기" status="waiting" />
       </div>
       <div className="flex flex-col gap-1">
         왼쪽 둥근 모서리 태그
         <Tag text="오늘 21시 마감" variant="left-rounded" />
         오른쪽 둥근 모서리 태그
         <Tag text="오늘 21시 마감" variant="right-rounded" />
+      </div>
+      <div className="flex flex-col gap-1">
+        Dark, Small
+        <BoxSelect title="달램핏" subtitle="오피스 스트레칭" variant="dark-sm" />
+        Light, Small
+        <BoxSelect title="달램핏" subtitle="오피스 스트레칭" variant="light-sm" />
+        Dark, Large
+        <BoxSelect title="달램핏" subtitle="오피스 스트레칭" variant="dark-lg" />
+        Light, Large
+        <BoxSelect title="달램핏" subtitle="오피스 스트레칭" variant="light-lg" />
       </div>
     </div>
   );
