@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import Title from './Title';
 import DateDisplay from './DateDisplay';
+import TimeDisplay from './TimeDisplay';
 
 const Card = ({ children }: { children: ReactNode }) => {
   return { children };
@@ -8,5 +9,6 @@ const Card = ({ children }: { children: ReactNode }) => {
 
 Card.Title = Title;
 Card.DateDisplay = DateDisplay;
+Card.TimeDisplay = TimeDisplay;
 
 export default Card;
