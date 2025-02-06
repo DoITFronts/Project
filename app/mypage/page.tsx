@@ -54,8 +54,8 @@ export default function MyPage() {
       </div>
       <div>
         <ProfileCard
-          name="럽윈즈올"
-          nickname="codeit@codeit.com"
+          name="최승은"
+          nickname="승승"
           // profileImage="https://via.placeholder.com/44x35"
         />
       </div>
