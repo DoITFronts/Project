@@ -1,14 +1,33 @@
+'use client';
+
 import clsx from 'clsx';
+import { useState } from 'react';
+
+import CheckIcon from '@/components/shared/Icons/CheckIcon';
 
 interface BoxSelectProps {
   title: string;
   subtitle: string;
   variant?: 'dark-sm' | 'light-sm' | 'dark-lg' | 'light-lg';
+  onClick?: () => void;
 }
 
-export default function BoxSelect({ title, subtitle, variant = 'dark-sm' }: BoxSelectProps) {
+export default function BoxSelect({
+  title,
+  subtitle,
+  variant = 'dark-sm',
+  onClick,
+}: BoxSelectProps) {
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleClick = () => {
+    setIsChecked(!isChecked);
+    if (onClick) onClick();
+  };
   return (
-    <div
+    <button
+      type="button"
+      onClick={handleClick}
       className={clsx(
         'flex w-40 flex-col items-start justify-start gap-2.5 overflow-hidden rounded-lg border',
         {
@@ -27,7 +46,9 @@ export default function BoxSelect({ title, subtitle, variant = 'dark-sm' }: BoxS
                 'bg-white': variant.startsWith('dark'),
                 'bg-white border border-gray-200': variant.startsWith('light'),
               })}
-            />
+            >
+              {isChecked && <CheckIcon />}
+            </div>
           </div>
           <div className="flex flex-col items-start justify-start gap-0.5">
             <div
@@ -49,6 +70,6 @@ export default function BoxSelect({ title, subtitle, variant = 'dark-sm' }: BoxS
           </div>
         </div>
       </div>
-    </div>
+    </button>
   );
 }
