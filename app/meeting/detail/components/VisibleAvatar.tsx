@@ -10,7 +10,7 @@ interface UserProps {
   image: string | null;
 }
 
-export default function AvatarStack({ User: { image }, userId }: ParticipantProps) {
+export default function VisibleAvatar({ User: { image }, userId }: ParticipantProps) {
   return (
     <div key={userId} className="flex items-center -space-x-3">
       {image ? (
