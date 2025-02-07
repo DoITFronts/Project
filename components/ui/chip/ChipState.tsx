@@ -2,16 +2,16 @@ import clsx from 'clsx';
 
 import CheckIcon from '@/components/shared/Icons/CheckIcon';
 
-interface StatusChipProps {
+interface ChipStatusProps {
   text: string;
   status: 'planned' | 'completed' | 'confirmed' | 'waiting';
 }
 
-export default function StatusChip({ text, status }: StatusChipProps) {
+export default function ChipStatus({ text, status }: ChipStatusProps) {
   return (
     <div
       className={clsx(
-        'inline-flex h-8 w-fit items-center justify-center gap-2.5 rounded-3xl px-3 py-1.5',
+        'inline-flex h-8 w-fit min-w-max items-center justify-center gap-2.5 rounded-3xl px-3 py-1.5',
         {
           planned: 'bg-orange-100 text-orange-600',
           completed: 'bg-gray-200 text-gray-500',
