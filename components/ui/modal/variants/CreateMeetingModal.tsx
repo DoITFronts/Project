@@ -26,14 +26,11 @@ export default function CreateMeetingModal() {
     capacity: participantCount,
   };
 
-  useEffect(() => {
-    console.log(meetingPlace);
-  }, [meetingPlace]);
-
   const handleMeetingName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMeetingName(e.target.value);
   };
 
+  // TODO?: 따로 행정구역(~도 ~시)파일을 만들어서 지역을 검색했을 때 자동 완성 되는 기능을 넣어볼까 합니다.
   const handleMeetingPlace = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMeetingPlace(e.target.value);
   };

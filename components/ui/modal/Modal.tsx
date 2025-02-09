@@ -2,10 +2,12 @@
 import React from 'react';
 import useModalStore from '@/store/useModalStore';
 import CreateMeetingModal from './variants/CreateMeetingModal';
+import ProfileModal from './variants/ProfileModal';
 
 export default function Modal() {
   const { isOpen, modalType, closeModal } = useModalStore();
   if (!isOpen) return null;
+
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       closeModal();
@@ -15,6 +17,9 @@ export default function Modal() {
     switch (modalType) {
       case 'create':
         return <CreateMeetingModal />;
+
+      case 'editProfile':
+        return <ProfileModal />;
       default:
         return null;
     }
