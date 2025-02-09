@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import '@/styles/global.css';
 import React from 'react';
 
-import Header from '@/components/layout/Header';
+import Gnb from '@/components/layout/Gnb';
 
 export const metadata: Metadata = {
   title: '홈페이지 - 같이 달랩',
@@ -13,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <Header />
+        <Gnb />
         <div className="main-layout">
           <div className="content">{children}</div>
         </div>
