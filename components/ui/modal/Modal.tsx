@@ -30,7 +30,7 @@ import SignUpModal from './variants/SignUpModal';
  * @property {Object} modalTypes - 지원하는 모달 타입들
  * @property {'create'} modalTypes.create - 미팅 생성 모달
  * @property {'calender'} modalTypes.calender - 캘린더 모달
- * @property {'confirm'} modalTypes.confirm - 확인 모달
+ * @property {'signUp'} modalTypes.signUp - 회원가입 성공 모달
  * @property {'editProfile'} modalTypes.editProfile - 프로필 수정 모달
  */
 
