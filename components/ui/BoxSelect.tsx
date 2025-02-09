@@ -10,6 +10,7 @@ interface BoxSelectProps {
   subtitle: string;
   defaultVariant?: 'dark-sm' | 'light-sm' | 'dark-lg' | 'light-lg';
   onClick?: () => void;
+  isChecked?: boolean;
 }
 
 export default function BoxSelect({
@@ -17,26 +18,18 @@ export default function BoxSelect({
   subtitle,
   defaultVariant = 'light-sm',
   onClick,
+  isChecked = false,
 }: BoxSelectProps) {
-  const [isChecked, setIsChecked] = useState(false);
-  const [variant, setVariant] = useState(defaultVariant);
+  // const [variant, setVariant] = useState(defaultVariant);
 
-  const handleClick = () => {
-    setIsChecked(!isChecked);
-
-    setVariant((prevVariant) =>
-      prevVariant.includes('light')
-        ? (prevVariant.replace('light', 'dark') as 'dark-sm' | 'dark-lg')
-        : (prevVariant.replace('dark', 'light') as 'light-sm' | 'light-lg'),
-    );
-
-    if (onClick) onClick();
-  };
+  const variant = isChecked
+    ? (defaultVariant.replace('light', 'dark') as 'dark-sm' | 'dark-lg')
+    : defaultVariant;
 
   return (
     <button
       type="button"
-      onClick={handleClick}
+      onClick={onClick}
       className={clsx(
         'flex w-40 flex-col items-start justify-start gap-2.5 overflow-hidden rounded-lg border',
         {
