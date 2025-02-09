@@ -5,7 +5,7 @@ import React from 'react';
 import Gnb from '@/components/layout/Gnb';
 
 export const metadata: Metadata = {
-  title: '홈페이지 - 같이 달랩',
+  title: '번개팅',
   description: '같이 달랩은 모임을 위한 서비스입니다.',
 };
 
