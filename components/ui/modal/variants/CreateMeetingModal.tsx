@@ -4,6 +4,7 @@ import BoxSelect from '../../BoxSelect';
 import { useEffect, useState } from 'react';
 import CustomDatePicker from '../datePicker';
 import Button from '@/components/ui/Button';
+import Icon from '@/components/shared/Icon';
 
 type MeetingType = '달램핏' | '달램핏2' | '달램핏3'; //TODO: 실제 타입값으로 변경
 
@@ -63,8 +64,8 @@ export default function CreateMeetingModal() {
       <div className="flex flex-col gap-6 w-full h-auto">
         <div className="w-full flex justify-between ">
           <span className="font-bold text-black">모임 만들기</span>
-          <button className="w-25 h-25 bg-blue-600" onClick={closeModal}>
-            닫기
+          <button onClick={closeModal}>
+            <Icon path="X" width="24" height="24" />
           </button>
         </div>
         <form className="w-full h-auto flex flex-col gap-6">
@@ -153,7 +154,7 @@ export default function CreateMeetingModal() {
         </form>
         <div className="w-full flex justify-center mt-4">
           {/* TODO: form value 모두 작성 시, 버튼 활성화 로직 추가 */}
-          <Button color="filled" size="lg" disabled={true}>
+          <Button color="filled" size="lg" disabled={true} className="w-full">
             확인
           </Button>
         </div>
