@@ -77,7 +77,7 @@ export default function CreateMeetingModal() {
               type="text"
               placeholder="모임 이름을 작성해 주세요."
               onChange={handleMeetingName}
-              className="text-black w-full bg-gray-50 px-4 py-2.5"
+              className="text-black w-full bg-gray-50 px-4 py-2.5 rounded-[12px]"
             />
           </div>
           <div className="w-full flex flex-col gap-3">
@@ -88,7 +88,7 @@ export default function CreateMeetingModal() {
               type="text"
               onChange={handleMeetingPlace}
               placeholder="장소를 선택해 주세요"
-              className="text-black w-full bg-gray-50 px-4 py-2.5"
+              className="text-black w-full bg-gray-50 px-4 py-2.5 rounded-[12px]"
             />
           </div>
 
@@ -102,7 +102,6 @@ export default function CreateMeetingModal() {
           <div className="w-full flex flex-col gap-3">
             <span className="font-semibold text-black">선택 서비스</span>
             <div className="w-full flex justify-between gap-3">
-              {/* TODO: box-select 컴포넌트 완료 후 대체 */}
               <BoxSelect
                 onClick={() => handleMeetingType('달램핏')}
                 title="달램핏"
@@ -145,7 +144,7 @@ export default function CreateMeetingModal() {
             </label>
             <input
               type="text"
-              className="text-black w-full bg-gray-50 px-4 py-2.5"
+              className="text-black w-full bg-gray-50 px-4 py-2.5 rounded-[12px]"
               placeholder="최소 5인 이상 입력해 주세요."
               onChange={handleParticipantChange}
               value={participantCount}
