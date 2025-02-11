@@ -1,16 +1,17 @@
 import { ReactNode } from 'react';
-import Title from './Title';
+
+import ConfirmedStatus from './ConfirmedStatus';
 import DateDisplay from './DateDisplay';
-import TimeDisplay from './TimeDisplay';
+import Join from './Join';
 import Like from './Like';
 import Participant from './Participant';
-import ConfirmedStatus from './ConfirmedStatus';
 import ProgressBar from './ProgressBar';
-import Join from './Join';
+import TimeDisplay from './TimeDisplay';
+import Title from './Title';
 
-const Card = ({ children }: { children: ReactNode }) => {
-  return { children };
-};
+function Card({ children }: { children: ReactNode }) {
+  return <div>{children}</div>;
+}
 
 Card.Title = Title;
 Card.DateDisplay = DateDisplay;
