@@ -1,20 +1,20 @@
-import Image from 'next/image';
+import Icon from '@/components/shared/Icon';
 
-const Participant = ({
+function Participant({
   participantCount,
   capacity,
 }: {
   participantCount: number;
   capacity: number;
-}) => {
+}) {
   return (
     <div className="flex flex-row items-center">
-      <Image src="" className="w-4 h-4" alt="User_duotone" />
-      <div className="text-gray-700 text-sm font-medium font-['Pretendard'] leading-tight">
+      <Icon path="card/user" />
+      <div className="font-['Pretendard'] text-sm font-medium leading-tight text-gray-700">
         {participantCount}/{capacity}
       </div>
     </div>
   );
-};
+}
 
 export default Participant;
