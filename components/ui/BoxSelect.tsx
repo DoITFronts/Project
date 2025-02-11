@@ -8,26 +8,28 @@ import CheckIcon from '@/components/shared/Icons/CheckIcon';
 interface BoxSelectProps {
   title: string;
   subtitle: string;
-  variant?: 'dark-sm' | 'light-sm' | 'dark-lg' | 'light-lg';
+  defaultVariant?: 'dark-sm' | 'light-sm' | 'dark-lg' | 'light-lg';
   onClick?: () => void;
+  isChecked?: boolean;
 }
 
 export default function BoxSelect({
   title,
   subtitle,
-  variant = 'dark-sm',
+  defaultVariant = 'light-sm',
   onClick,
+  isChecked = false,
 }: BoxSelectProps) {
-  const [isChecked, setIsChecked] = useState(false);
+  // const [variant, setVariant] = useState(defaultVariant);
 
-  const handleClick = () => {
-    setIsChecked(!isChecked);
-    if (onClick) onClick();
-  };
+  const variant = isChecked
+    ? (defaultVariant.replace('light', 'dark') as 'dark-sm' | 'dark-lg')
+    : defaultVariant;
+
   return (
     <button
       type="button"
-      onClick={handleClick}
+      onClick={onClick}
       className={clsx(
         'flex w-40 flex-col items-start justify-start gap-2.5 overflow-hidden rounded-lg border',
         {
