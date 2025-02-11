@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+        
 import ProfileCard from '@/app/mypage/components/PropfileCard';
 import BottomFloatingBar from '@/components/layout/BottomFloatingBar';
 import CheckIcon from '@/components/shared/Icons/CheckIcon';
@@ -7,9 +9,11 @@ import BoxSelect from '@/components/ui/BoxSelect';
 import Chip from '@/components/ui/chip/Chip';
 import ChipInfo from '@/components/ui/chip/ChipInfo';
 import ChipStatus from '@/components/ui/chip/ChipState';
+import Pagination from '@/components/ui/Pagination';
 import Tag from '@/components/ui/Tag';
 
 export default function MyPage() {
+  const [currentPage, setCurrentPage] = useState(1);
   return (
     <div className="flex flex-col gap-2.5 bg-amber-50 p-10">
       <div className="flex flex-col gap-2.5">
@@ -52,13 +56,6 @@ export default function MyPage() {
           <ChipStatus text="개설 확정" status="confirmed" />
           개설 대기 (waiting) - 아이콘 없음
           <ChipStatus text="개설 대기" status="waiting" />
-          {/* Tag */}
-          <div className="flex gap-2.5">
-            왼쪽 둥근 모서리 태그
-            <Tag text="오늘 21시 마감" variant="left-rounded" />
-            오른쪽 둥근 모서리 태그
-            <Tag text="오늘 21시 마감" variant="right-rounded" />
-          </div>
         </div>
         {/* Tag */}
         <div>
