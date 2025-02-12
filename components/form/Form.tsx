@@ -54,7 +54,7 @@ function LabelHeader({ children, className }: BaseProps) {
 }
 
 const baseInputStyle =
-  "h-11 px-4 py-2.5 bg-[#fcfcfc] rounded-xl justify-start items-center gap-2.5 inline-flex overflow-hidden w-full text-[#bfbfbf] text-base font-medium font-['Pretendard'] leading-normal ";
+  "hover:border-gray-500 h-11 px-4 py-2.5 bg-[#fcfcfc] rounded-xl justify-start items-center gap-2.5 inline-flex overflow-hidden w-full text-[#bfbfbf] text-base font-medium font-['Pretendard'] leading-normal ";
 
 function Input({ className, name, ...rest }: InputProps) {
   const {

@@ -47,7 +47,7 @@ const PASSWORD_RULES: RegisterOptions = {
   required: generateRequiredMessage('password'),
   minLength: {
     value: MIN_PASSWORD_LENGTH,
-    message: `비밀번호는 최소 ${MIN_PASSWORD_LENGTH}자 이상입니다.`,
+    message: `비밀번호가 ${MIN_PASSWORD_LENGTH}자 이상이 되도록 해 주세요.`,
   },
   pattern: {
     value: PASSWORD_PATTERN,
