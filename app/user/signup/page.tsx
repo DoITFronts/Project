@@ -6,8 +6,8 @@ import Image from 'next/image';
 
 export default function Signup() {
   return (
-    <div className="bg-white py-52">
-      <div className="px-[700px]">
+    <div className="bg-white py-52 flex justify-center items-center">
+      <div className="w-[402px]">
         <div className="flex justify-center items-center mb-[50px]">
           <Image src={Logo} alt="번개팅 로고" width={147.6} height={32.4} />
         </div>
