@@ -14,7 +14,7 @@ import Icon from '../shared/Icon';
 import Button from '../ui/Button';
 
 interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
-  onSubmit: (data) => void;
+  onSubmit: () => void;
 }
 interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {}
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -97,6 +97,7 @@ function PasswordInput({ className, name, ...rest }: InputProps) {
     register,
     formState: { errors },
     getValues,
+    trigger,
   } = useFormContext();
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
@@ -132,6 +133,7 @@ function PasswordInput({ className, name, ...rest }: InputProps) {
           {...rest}
           type={inputType}
           placeholder={placeholder}
+          onBlur={() => trigger(name)}
         />
         <button className="absolute bottom-2 right-4" onClick={togglePasswordVisibility}>
           {EyeIcon}

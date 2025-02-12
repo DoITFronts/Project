@@ -22,11 +22,20 @@ const EMAIL_PATTERN = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PASSWORD_PATTERN = /^[A-Za-z\d!@#$%^&*]+$/;
 const MAX_NICKNAME_LENGTH = 20;
 const MIN_PASSWORD_LENGTH = 8;
+const MIN_NAME_LENGTH = 2;
 
 const generateRequiredMessage = (name: Field): string => {
   if (name === 'passwordConfirmation') return `${FIELD_DICTIONARY[name]}을 입력해주세요.`;
 
-  return `${josa(FIELD_DICTIONARY[name], '은/는')} 필수 입력입니다.`;
+  return `${josa(FIELD_DICTIONARY[name], '을/를')} 입력해 주세요.`;
+};
+
+const NAME_RULES: RegisterOptions = {
+  required: generateRequiredMessage('name'),
+  maxLength: {
+    value: MIN_NAME_LENGTH,
+    message: `이름은 최소 ${MAX_NICKNAME_LENGTH}자 입니다.`,
+  },
 };
 
 const EMAIL_RULES: RegisterOptions = {
@@ -49,7 +58,7 @@ const PASSWORD_RULES: RegisterOptions = {
   required: generateRequiredMessage('password'),
   minLength: {
     value: MIN_PASSWORD_LENGTH,
-    message: `비밀번호가 ${MIN_PASSWORD_LENGTH}자 이상이 되도록 해 주세요.`,
+    message: `비밀번호는 최소 ${MIN_PASSWORD_LENGTH}자 입니다.`,
   },
   pattern: {
     value: PASSWORD_PATTERN,
@@ -73,11 +82,11 @@ const BIRTH_VERIFY_RULES: RegisterOptions = {
 };
 
 const VALIDATION_RULES: Record<Field, RegisterOptions> = {
+  name: NAME_RULES,
   email: EMAIL_RULES,
+  nickname: NICKNAME_RULES,
   password: PASSWORD_RULES,
   passwordConfirmation: {},
-  nickname: NICKNAME_RULES,
-  name: NICKNAME_RULES,
   birthVerify: BIRTH_VERIFY_RULES,
 };
 
