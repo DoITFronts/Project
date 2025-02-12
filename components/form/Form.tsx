@@ -1,6 +1,5 @@
 'use client';
 
-import Button from '../ui/Button';
 import VALIDATION_RULES, { type Field, PASSWORD_CONFIRM_RULES } from '@/lib/formValidation';
 import cn from 'clsx';
 import {
@@ -11,9 +10,11 @@ import {
   useState,
 } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
+import Icon from '../shared/Icon';
+import Button from '../ui/Button';
 
 interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
-  onSubmit: () => void;
+  onSubmit: (data) => void;
 }
 interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {}
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -27,11 +28,14 @@ interface BaseProps {
 export default function Form({ onSubmit, id, className, children }: FormProps) {
   const methods = useForm();
 
-  const formClass = cn('', className);
+  const handleFormSubmit = (data: any) => {
+    console.log('📌 Form Data:', data); // 👉 콘솔 출력
+    onSubmit(data); // 기존 onSubmit 함수 호출
+  };
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} id={id} className={formClass}>
+      <form onSubmit={methods.handleSubmit(handleFormSubmit)} id={id} className={className}>
         {children}
       </form>
     </FormProvider>
@@ -54,17 +58,21 @@ function LabelHeader({ children, className }: BaseProps) {
 }
 
 const baseInputStyle =
-  "hover:border-gray-500 h-11 px-4 py-2.5 bg-[#fcfcfc] rounded-xl justify-start items-center gap-2.5 inline-flex overflow-hidden w-full text-[#bfbfbf] text-base font-medium font-['Pretendard'] leading-normal ";
+  "h-11 px-4 py-2.5 bg-[#fcfcfc] rounded-xl justify-start items-center gap-2.5 inline-flex overflow-hidden w-full text-base font-medium font-['Pretendard'] leading-normal";
 
+//   기본 인풋
 function Input({ className, name, ...rest }: InputProps) {
   const {
     register,
     formState: { errors },
+    trigger,
   } = useFormContext();
 
   const inputClass = cn(
     baseInputStyle,
-    { 'outline outline-1 outline-error': !!errors[name] },
+    {
+      'outline outline-2 outline-red-500 focus:outline-none focus:border-gray-600': !!errors[name],
+    },
     className,
   );
   const placeholder = rest.placeholder ? rest.placeholder : name;
@@ -76,14 +84,14 @@ function Input({ className, name, ...rest }: InputProps) {
         className={inputClass}
         {...rest}
         placeholder={placeholder}
+        onBlur={() => trigger(name)}
       />
       {errors[name] && <ErrorMessage className="">{String(errors[name].message)}</ErrorMessage>}
     </>
   );
 }
 
-// const eyeButtonStyle = 'h-24 w-24 text-gray-200';
-
+// 비밀번호 입력 인풋
 function PasswordInput({ className, name, ...rest }: InputProps) {
   const {
     register,
@@ -97,14 +105,16 @@ function PasswordInput({ className, name, ...rest }: InputProps) {
 
   const inputClass = cn(
     baseInputStyle,
-    { 'outline outline-1 outline-error': !!errors[name] },
+    {
+      'outline outline-2 outline-red-500 focus:outline-none focus:border-gray-600': !!errors[name],
+    },
     className,
   );
-  //   const EyeIcon = showPassword ? (
-  //     <OpenEye className={eyeButtonStyle} />
-  //   ) : (
-  //     <ClosedEye className={eyeButtonStyle} />
-  //   );
+  const EyeIcon = showPassword ? (
+    <Icon path="user/visibility" />
+  ) : (
+    <Icon path="user/unVisibility" />
+  );
   const inputType = showPassword ? 'text' : 'password';
   const placeholder = rest.placeholder ? rest.placeholder : name;
 
@@ -123,11 +133,8 @@ function PasswordInput({ className, name, ...rest }: InputProps) {
           type={inputType}
           placeholder={placeholder}
         />
-        <button
-          className="absolute bottom-10 right-16 xl:bottom-20"
-          onClick={togglePasswordVisibility}
-        >
-          {/* {EyeIcon} */}
+        <button className="absolute bottom-2 right-4" onClick={togglePasswordVisibility}>
+          {EyeIcon}
         </button>
       </div>
       {errors[name] && <ErrorMessage>{String(errors[name].message)}</ErrorMessage>}
@@ -135,6 +142,7 @@ function PasswordInput({ className, name, ...rest }: InputProps) {
   );
 }
 
+// 제출 버튼
 function Submit({ className, children }: BaseProps) {
   const { formState } = useFormContext();
 
@@ -145,7 +153,10 @@ function Submit({ className, children }: BaseProps) {
   );
 }
 function ErrorMessage({ className, children }: BaseProps) {
-  const errrorClass = cn('text-red', className);
+  const errrorClass = cn(
+    "text-[#ff0026] text-sm font-semibold font-['Pretendard'] leading-tight",
+    className,
+  );
 
   return <span className={errrorClass}>{children}</span>;
 }

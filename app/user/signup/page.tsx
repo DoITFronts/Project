@@ -12,8 +12,8 @@ export default function Signup() {
           <Image src={Logo} alt="번개팅 로고" width={147.6} height={32.4} />
         </div>
         <Form
-          onSubmit={() => {
-            console.log('회원가입 폼 제출');
+          onSubmit={(data) => {
+            console.log('🚀 제출된 데이터:', data);
           }}
         >
           <Form.Label className="pb-3">
@@ -31,6 +31,15 @@ export default function Signup() {
               name="email"
               placeholder="이메일을 입력해 주세요"
               autoComplete="email"
+              required
+            />
+          </Form.Label>
+          <Form.Label className="pb-3">
+            <Form.LabelHeader className="pb-2">닉네임</Form.LabelHeader>
+            <Form.Input
+              name="nickname"
+              placeholder="닉네임을 입력해 주세요"
+              autoComplete="nickname"
               required
             />
           </Form.Label>

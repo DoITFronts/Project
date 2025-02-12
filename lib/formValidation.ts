@@ -1,21 +1,23 @@
 import { RegisterOptions } from 'react-hook-form';
+import { josa } from 'es-hangul';
 
 export type Field =
+  | 'name'
   | 'email'
+  | 'nickname'
   | 'password'
   | 'passwordConfirmation'
-  | 'nickname'
-  | 'name'
   | 'birthVerify';
 
 const FIELD_DICTIONARY: Record<Field, string> = {
+  name: '이름',
   email: '이메일',
+  nickname: '닉네임',
   password: '비밀번호',
   passwordConfirmation: '비밀번호 확인',
-  nickname: '닉네임',
-  name: '이름',
   birthVerify: '본인인증',
 };
+
 const EMAIL_PATTERN = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PASSWORD_PATTERN = /^[A-Za-z\d!@#$%^&*]+$/;
 const MAX_NICKNAME_LENGTH = 20;
@@ -24,7 +26,7 @@ const MIN_PASSWORD_LENGTH = 8;
 const generateRequiredMessage = (name: Field): string => {
   if (name === 'passwordConfirmation') return `${FIELD_DICTIONARY[name]}을 입력해주세요.`;
 
-  return `${(FIELD_DICTIONARY[name], '은/는')} 필수 입력입니다.`;
+  return `${josa(FIELD_DICTIONARY[name], '은/는')} 필수 입력입니다.`;
 };
 
 const EMAIL_RULES: RegisterOptions = {
@@ -60,13 +62,23 @@ export const PASSWORD_CONFIRM_RULES = (passwordValue: string): RegisterOptions =
   validate: (value) => value === passwordValue || '비밀번호가 일치하지 않습니다.',
 });
 
+const BIRTH_VERIFY_PATTERN = /^(19|20)\d{2}\.(0[1-9]|1[0-2])\.(0[1-9]|[12][0-9]|3[01])$/;
+
+const BIRTH_VERIFY_RULES: RegisterOptions = {
+  required: generateRequiredMessage('birthVerify'),
+  pattern: {
+    value: BIRTH_VERIFY_PATTERN,
+    message: 'yyyy.mm.dd 형식으로 작성해 주세요.',
+  },
+};
+
 const VALIDATION_RULES: Record<Field, RegisterOptions> = {
   email: EMAIL_RULES,
   password: PASSWORD_RULES,
   passwordConfirmation: {},
   nickname: NICKNAME_RULES,
-  name: {},
-  birthVerify: {},
+  name: NICKNAME_RULES,
+  birthVerify: BIRTH_VERIFY_RULES,
 };
 
 export default VALIDATION_RULES;
