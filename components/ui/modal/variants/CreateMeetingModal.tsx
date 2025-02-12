@@ -28,8 +28,20 @@ export default function CreateMeetingModal() {
   };
 
   const handleMeetingName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMeetingName(e.target.value);
+    const value = e.target.value;
+    if (/^[가-힣a-zA-Z0-9\s]*$/.test(value)) {
+      setMeetingName(value);
+    }
   };
+
+  useEffect(() => {
+    console.log(!!meetingName);
+    console.log(!!meetingPlace);
+    console.log(!!meetingDate);
+    console.log(!!deadlineDate);
+    console.log(!!meetingType);
+    console.log(!!participantCount);
+  });
 
   // TODO?: 따로 행정구역(~도 ~시)파일을 만들어서 지역을 검색했을 때 자동 완성 되는 기능을 넣어볼까 합니다.
   const handleMeetingPlace = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,6 +62,17 @@ export default function CreateMeetingModal() {
       setDeadlineDate(date);
     }
   };
+
+  const isFormValid =
+    !!meetingName &&
+    meetingName.length >= 2 &&
+    meetingName.length <= 30 &&
+    !!meetingPlace &&
+    !!meetingDate &&
+    !!deadlineDate &&
+    deadlineDate <= meetingDate &&
+    !!meetingType &&
+    !!participantCount;
 
   const handleParticipantChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -153,7 +176,7 @@ export default function CreateMeetingModal() {
         </form>
         <div className="w-full flex justify-center mt-4">
           {/* TODO: form value 모두 작성 시, 버튼 활성화 로직 추가 */}
-          <Button color="filled" size="lg" disabled={true} className="w-full">
+          <Button color="filled" size="lg" disabled={!isFormValid} className="w-full">
             확인
           </Button>
         </div>
