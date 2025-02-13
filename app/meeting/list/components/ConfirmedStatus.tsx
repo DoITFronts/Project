@@ -6,7 +6,7 @@ function ConfirmedStatus({ isCompleted }: { isCompleted: boolean }) {
   return (
     <div className="inline-flex h-6 items-center justify-start gap-1">
       <CheckIcon variant="filled-orange" />
-      <div className="font-['Pretendard'] text-sm font-medium leading-tight text-orange-500">
+      <div className="font-['Pretendard'] text-base font-semibold leading-tight text-[#ffd500]">
         개설확정
       </div>
     </div>
