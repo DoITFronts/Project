@@ -9,10 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "clsx": "^2.1.1",
     "@types/react-datepicker": "^7.0.0",
+    "clsx": "^2.1.1",
     "husky": "^9.1.7",
     "next": "15.1.6",
+    "msw": "^1.2.3",
     "prettier": "^3.4.2",
     "react": "^19.0.0",
     "react-datepicker": "^8.0.0",

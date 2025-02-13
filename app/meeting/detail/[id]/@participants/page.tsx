@@ -5,12 +5,15 @@ import { useEffect, useState } from 'react';
 
 export default function Participants() {
   const { id } = useParams();
-  const [participants, setParticipants] = useState([]);
+  const [participants, setParticipants] = useState<string[]>([]);
 
   useEffect(() => {
+    if (!id) return;
+
     fetch(`/api/events/${id}/participants`)
       .then((res) => res.json())
-      .then((data) => setParticipants(data));
+      .then((data) => setParticipants(data))
+      .catch((error) => console.error('Failed to load participants:', error));
   }, [id]);
 
   return (
