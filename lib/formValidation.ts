@@ -19,7 +19,7 @@ const FIELD_DICTIONARY: Record<Field, string> = {
 };
 
 const EMAIL_PATTERN = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const PASSWORD_PATTERN = /^[A-Za-z\d!@#$%^&*]+$/;
+const PASSWORD_PATTERN = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]+$/;
 const MAX_NICKNAME_LENGTH = 20;
 const MIN_PASSWORD_LENGTH = 8;
 const MIN_NAME_LENGTH = 2;
@@ -71,13 +71,18 @@ export const PASSWORD_CONFIRM_RULES = (passwordValue: string): RegisterOptions =
   validate: (value) => value === passwordValue || '비밀번호가 일치하지 않습니다.',
 });
 
-const BIRTH_VERIFY_PATTERN = /^(19|20)\d{2}\.(0[1-9]|1[0-2])\.(0[1-9]|[12][0-9]|3[01])$/;
+const BIRTH_VERIFY_PATTERN = /^(19|20)\d{2}\.(0[1-9]|1[0-2])\.(0[1-9]|1\d|2[0-9]|3[01])$/;
 
 const BIRTH_VERIFY_RULES: RegisterOptions = {
   required: generateRequiredMessage('birthVerify'),
-  pattern: {
-    value: BIRTH_VERIFY_PATTERN,
-    message: 'yyyy.mm.dd 형식으로 작성해 주세요.',
+  pattern: { value: BIRTH_VERIFY_PATTERN, message: 'yyyy.mm.dd 형식으로 작성해 주세요.' },
+  validate: (value) => {
+    const [year, month, day] = value.split('.').map(Number);
+    const date = new Date(year, month - 1, day);
+    return (
+      (date.getFullYear() === year && date.getMonth() + 1 === month && date.getDate() === day) ||
+      '올바른 날짜를 입력해 주세요.'
+    );
   },
 };
 
