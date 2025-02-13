@@ -5,6 +5,7 @@ import Logo from '@/public/assets/logo.svg';
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import Icon from '@/components/shared/Icon';
+import Link from 'next/link';
 
 export default function Signin() {
   return (
@@ -45,9 +46,9 @@ export default function Signin() {
         </Form>
         <div className="flex justify-center items-center gap-2 font-['Pretendard'] text-[15px] text-neutral-800 font-bold mt-3">
           처음이신가요?
-          <a className="text-gray-300 underline" href="/user/signup">
+          <Link className="text-gray-300 underline" href="/user/signup">
             회원가입 하기
-          </a>
+          </Link>
         </div>
       </div>
     </div>
