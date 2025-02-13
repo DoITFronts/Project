@@ -1,7 +1,7 @@
 'use client';
 
 import Form from '@/components/form/Form';
-import Logo from '@/public/Logo.svg';
+import Logo from '@/public/assets/logo.svg';
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import Icon from '@/components/shared/Icon';
