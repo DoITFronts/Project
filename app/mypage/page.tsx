@@ -1,7 +1,3 @@
-'use client';
-
-import { useState } from 'react';
-        
 import ProfileCard from '@/app/mypage/components/PropfileCard';
 import BottomFloatingBar from '@/components/layout/BottomFloatingBar';
 import CheckIcon from '@/components/shared/Icons/CheckIcon';
@@ -9,11 +5,8 @@ import BoxSelect from '@/components/ui/BoxSelect';
 import Chip from '@/components/ui/chip/Chip';
 import ChipInfo from '@/components/ui/chip/ChipInfo';
 import ChipStatus from '@/components/ui/chip/ChipState';
-import Pagination from '@/components/ui/Pagination';
-import Tag from '@/components/ui/Tag';
 
 export default function MyPage() {
-  const [currentPage, setCurrentPage] = useState(1);
   return (
     <div className="flex flex-col gap-2.5 bg-amber-50 p-10">
       <div className="flex flex-col gap-2.5">
@@ -67,7 +60,7 @@ export default function MyPage() {
         </div>
         {/* BoxSelect */}
         <div className="flex gap-2.5">
-          <BoxSelect title="달램핏" subtitle="오피스 스트레칭" />
+          <BoxSelect defaultVariant="dark-lg" title="달램핏" subtitle="오피스 스트레칭" />
         </div>
       </div>
       <BottomFloatingBar title="운동하러 가기" subtitle="운동하러 가기" />

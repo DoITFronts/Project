@@ -3,8 +3,7 @@ type EventData = {
   title: string;
   imageUrl: string;
   location: string;
-  date: string;
-  time: string;
+  datetime: string;
 };
 
 async function fetchEventById(id: string): Promise<EventData> {
@@ -13,8 +12,7 @@ async function fetchEventById(id: string): Promise<EventData> {
     title: `Mocked Event ${id}`,
     imageUrl: 'https://coen.store/1.jpg',
     location: 'Seoul',
-    date: '2025-02-13',
-    time: '19:00',
+    datetime: '2025-02-14T10:35:00',
   });
 }
 

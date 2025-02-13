@@ -13,8 +13,8 @@ export default function BottomFloatingBar({ title, subtitle }: BottomFloatingBar
   const [isJoined, setIsJoined] = useState(false);
 
   return (
-    <div className="flex h-[84px] w-full flex-col flex-wrap items-center justify-center overflow-hidden border-t-2 border-gray-900 bg-white p-5">
-      <div className="max-w-996px flex w-full items-center justify-between">
+    <div className="fixed bottom-0 left-0 z-[100] flex h-[84px] w-full flex-col flex-wrap items-center justify-center overflow-hidden border-t-2 border-gray-900 bg-white p-5">
+      <div className="flex w-full max-w-5xl items-center justify-between">
         <div className="flex flex-col gap-1">
           <div className="text-base font-semibold leading-normal text-gray-900">{title} 🏃‍♂️</div>
           <div className="text-xs font-medium leading-none text-gray-700">{subtitle}</div>
