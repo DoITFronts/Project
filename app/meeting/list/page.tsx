@@ -58,13 +58,7 @@ export default function MeetingList() {
             맛집 탐방 같이 갈 사람, 누구 없나요?
           </div>
         </div>
-        <Button
-          color="white"
-          size="sm"
-          className="bg-white"
-          type="submit"
-          onClick={() => handleClickCreateMeeting()}
-        >
+        <Button color="white" size="sm" type="submit" onClick={() => handleClickCreateMeeting()}>
           번개 만들기
         </Button>
       </div>
