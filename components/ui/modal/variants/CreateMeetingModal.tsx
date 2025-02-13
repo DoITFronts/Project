@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import CustomDatePicker from '../datePicker';
 import Button from '@/components/ui/Button';
 import Icon from '@/components/shared/Icon';
+import axios from 'axios';
 
 type MeetingType = '달램핏' | '달램핏2' | '달램핏3'; //TODO: 실제 타입값으로 변경
 
@@ -12,28 +13,30 @@ export default function CreateMeetingModal() {
   const { closeModal } = useModalStore();
   const [meetingName, setMeetingName] = useState('');
   const [meetingPlace, setMeetingPlace] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [meetingDate, setMeetingDate] = useState(new Date());
   const [deadlineDate, setDeadlineDate] = useState(new Date());
   const [meetingType, setMeetingType] = useState<MeetingType | null>(null);
   const [participantCount, setParticipantCount] = useState('');
 
   // TODO: 추후에 데이터 연결 시 보내는 postData.
-  const postData = {
-    name: meetingName,
-    locationn: meetingPlace,
-    type: meetingType,
-    dateTime: meetingDate,
-    registrationEnd: deadlineDate,
-    capacity: participantCount,
-  };
 
   const handleMeetingName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMeetingName(e.target.value);
+    const value = e.target.value;
+    if (/^[가-힣a-zA-Z0-9\s]*$/.test(value)) {
+      setMeetingName(value);
+    }
   };
 
   // TODO?: 따로 행정구역(~도 ~시)파일을 만들어서 지역을 검색했을 때 자동 완성 되는 기능을 넣어볼까 합니다.
   const handleMeetingPlace = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMeetingPlace(e.target.value);
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setImageFile(e.target.files[0]);
+    }
   };
 
   const handleMeetingType = (type: MeetingType) => {
@@ -50,6 +53,50 @@ export default function CreateMeetingModal() {
       setDeadlineDate(date);
     }
   };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    if (imageFile) {
+      formData.append('image', imageFile);
+    }
+    const meetingData = {
+      name: meetingName,
+      location: meetingPlace,
+      type: meetingType,
+      dateTime: meetingDate.toISOString(),
+      registrationEnd: deadlineDate.toISOString(),
+      capacity: parseInt(participantCount),
+    };
+
+    formData.append('meetingData', JSON.stringify(meetingData));
+
+    try {
+      const response = await axios.post('/api/meetings', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      if (response.data.success) {
+        closeModal();
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+    }
+  };
+
+  const isFormValid =
+    !!meetingName &&
+    meetingName.length >= 2 &&
+    meetingName.length <= 30 &&
+    !!meetingPlace &&
+    !!meetingDate &&
+    !!deadlineDate &&
+    deadlineDate <= meetingDate &&
+    !!meetingType &&
+    !!participantCount;
 
   const handleParticipantChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -68,7 +115,7 @@ export default function CreateMeetingModal() {
             <Icon path="X" width="24" height="24" />
           </button>
         </div>
-        <form className="w-full h-auto flex flex-col gap-6">
+        <form className="w-full h-auto flex flex-col gap-6" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-3 w-full">
             <label htmlFor="meetingName" className="font-semibold text-black">
               모임 이름
@@ -94,10 +141,22 @@ export default function CreateMeetingModal() {
 
           {/* TODO: 파일명 제출 버튼 위치 바꾸기 */}
           <div className="w-full flex flex-col gap-3">
-            <label htmlFor="image" className="font-semibold text-black">
-              이미지
-            </label>
-            <input type="file" className="flex justify-end" />
+            <span className="font-semibold text-black">이미지</span>
+            <div className="flex justify-between">
+              <input
+                type="file"
+                id="image"
+                onChange={handleImageChange}
+                accept="image/*"
+                className="bg-gray-50 px-4 py-2.5 rounded-[12px] w-[360px] file:hidden"
+              />
+              <label
+                htmlFor="image"
+                className="flex items-center justify-center text-[#EA580C] font-semibold cursor-pointer w-[100px] h-auto bg-white border border-orange-600 rounded-[12px] "
+              >
+                이미지
+              </label>
+            </div>
           </div>
           <div className="w-full flex flex-col gap-3">
             <span className="font-semibold text-black">선택 서비스</span>
@@ -153,7 +212,7 @@ export default function CreateMeetingModal() {
         </form>
         <div className="w-full flex justify-center mt-4">
           {/* TODO: form value 모두 작성 시, 버튼 활성화 로직 추가 */}
-          <Button color="filled" size="lg" disabled={true} className="w-full">
+          <Button color="filled" size="lg" disabled={!isFormValid} className="w-full">
             확인
           </Button>
         </div>
