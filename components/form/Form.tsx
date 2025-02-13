@@ -51,7 +51,7 @@ function Label({ children, className }: LabelProps) {
 //인풋 라벨 헤더
 function LabelHeader({ children, className }: BaseProps) {
   const headerClass = cn(
-    "font-['Pretendard'] text-[#595959] text-sm font-bold leading-tight",
+    "font-['Pretendard'] text-black-8 text-sm font-bold leading-tight",
     className,
   );
 
@@ -60,7 +60,7 @@ function LabelHeader({ children, className }: BaseProps) {
 
 //인풋 기본 스타일
 const baseInputStyle =
-  "h-11 px-4 py-2.5 bg-[#fcfcfc] rounded-xl justify-start items-center gap-2.5 inline-flex overflow-hidden w-full text-base font-medium font-['Pretendard'] leading-normal";
+  "h-11 px-4 py-2.5 bg-black-2 rounded-xl justify-start items-center gap-2.5 inline-flex overflow-hidden w-full text-base font-medium font-['Pretendard'] leading-normal";
 
 const baseInputErrorStyle = 'outline outline-2 outline-red-500 focus:outline-gray-500';
 
@@ -165,12 +165,12 @@ function Submit({ className, children }: BaseProps) {
   );
 }
 function ErrorMessage({ className, children }: BaseProps) {
-  const errrorClass = cn(
-    "text-[#ff0026] text-sm font-semibold font-['Pretendard'] leading-tight",
+  const errorClass = cn(
+    "text-red-6 text-sm font-semibold font-['Pretendard'] leading-tight",
     className,
   );
 
-  return <span className={errrorClass}>{children}</span>;
+  return <span className={errorClass}>{children}</span>;
 }
 
 Form.Label = Label;
