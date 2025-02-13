@@ -67,7 +67,6 @@ export default function Signup() {
             <Form.Input
               name="birthVerify"
               placeholder="YYYY.MM.DD 생년월일을 입력해 주세요"
-              autoComplete="birthVerify"
               required
             />
           </Form.Label>
