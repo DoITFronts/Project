@@ -19,7 +19,6 @@ export default function GNB() {
   return (
     <nav className="w-full md:h-[60px] h-[57px] bg-black shadow-md flex items-center xl:px-[360px] md:px-6 px-3">
       <div className="flex justify-between w-full">
-        {/* 왼쪽덩어리 */}
         <div className="flex items-center md:gap-x-[78px] gap-x-[31px] justify-between">
           <Link href="/" className="flex md:w-20 md:h-5 w-[75px] h-[17px]]">
             <Image src={Logo} alt="번개팅 메인 로고" width={80} height={20} />
@@ -30,8 +29,6 @@ export default function GNB() {
             <NavItem href="/c" label="리뷰" currentPath={pathname} />
           </div>
         </div>
-
-        {/* 오른쪽덩어리 */}
         <div>
           {isLoggedIn ? (
             // TODO: user 개인 Profile 분기처리
