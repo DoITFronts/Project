@@ -36,7 +36,7 @@ const baseStyle =
   "flex items-center justify-center rounded-xl font-semibold font-['Pretendard'] overflow-hidden gap-2.5 text-center";
 
 const styleByColor: Record<ButtonColor, string> = {
-  filled: 'text-white bg-orange-600 hover:bg-orange-700 active:bg-orange-800 disabled:bg-gray-400',
+  filled: 'text-white bg-black hover:bg-black-11 active:bg-black-8 disabled:bg-black-6',
   white:
-    'bg-white border border-orange-600 text-orange-600 hover:border-orange-700 hover:text-orange-700 active:border-orange-800 active:text-orange-800 disabled:border-gray-400 disabled:text-gray-400',
+    'bg-white border border-black text-black hover:border-black-11 hover:text-black-11 active:border-black-8 active:text-black-8 disabled:border-black-6 disabled:text-black-6',
 };
