@@ -64,11 +64,7 @@ export default function Signup() {
           </Form.Label>
           <Form.Label className="pb-10">
             <Form.LabelHeader className="pb-2">본인인증</Form.LabelHeader>
-            <Form.Input
-              name="birthVerify"
-              placeholder="YYYY.MM.DD 생년월일을 입력해 주세요"
-              required
-            />
+            <Form.Input name="birth" placeholder="YYYY.MM.DD 생년월일을 입력해 주세요" required />
           </Form.Label>
           <Form.Submit className="w-full">회원가입</Form.Submit>
         </Form>
