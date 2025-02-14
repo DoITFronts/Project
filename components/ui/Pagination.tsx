@@ -7,21 +7,21 @@ interface PaginationProps {
   totalPages: number;
   currentPage: number;
   size?: 'sm' | 'lg';
-  onPageChange: (page: number) => void;
+  onPageChangeAction: (page: number) => void;
 }
 
 export default function Pagination({
   totalPages,
   currentPage,
   size = 'sm',
-  onPageChange,
+  onPageChangeAction,
 }: PaginationProps) {
   const [selectedPage, setSelectedPage] = useState(currentPage);
 
   const handlePageChange = (page: number) => {
     if (page < 1 || page > totalPages) return;
     setSelectedPage(page);
-    onPageChange(page);
+    onPageChangeAction(page);
   };
 
   const buttonSize =
