@@ -66,6 +66,7 @@ const config: Config = {
         bold: '700',
       },
       fontFamily: {
+        dunggeunmo: ['DungGeunMo', 'sans-serif'],
         pretandard: ['Pretendard', 'sans-serif'],
       },
     },
