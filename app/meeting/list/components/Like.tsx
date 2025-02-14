@@ -1,10 +1,14 @@
-import Image from 'next/image';
+import HeartIcon from '@/components/shared/Icons/HeartIcon';
 
-function Like() {
+function Like({ isLiked, onClick }: { isLiked: boolean; onClick: () => void }) {
   return (
-    <div className="flex size-12 justify-center rounded-full border-2 border-gray-200 bg-white">
-      <Image src="" width={24} height={24} alt="ic_heart" />
-    </div>
+    <button
+      type="button"
+      className="absolute left-[14px] top-[14px] flex justify-center"
+      onClick={onClick}
+    >
+      <HeartIcon variant={isLiked ? 'active' : 'inactive'} />
+    </button>
   );
 }
 
