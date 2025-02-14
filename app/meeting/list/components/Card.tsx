@@ -1,11 +1,12 @@
 import { ReactNode } from 'react';
 
-import ConfirmedStatus from './ConfirmedStatus';
+import ConfirmedStatus from '../../components/ConfirmedStatus';
+import Participant from '../../components/Participant';
+import ProgressBar from '../../components/ProgressBar';
+
 import DateDisplay from './DateDisplay';
 import Join from './Join';
 import Like from './Like';
-import Participant from './Participant';
-import ProgressBar from './ProgressBar';
 import TimeDisplay from './TimeDisplay';
 import Title from './Title';
 

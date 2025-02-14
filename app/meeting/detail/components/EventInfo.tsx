@@ -11,7 +11,7 @@ export default function EventInfo({
   datetime: string;
 }) {
   return (
-    <div className="flex h-[215px] flex-col gap-x-2.5">
+    <div className="flex h-[215px] flex-col gap-2.5">
       <Tag text="12시 마감" />
       <div className="flex flex-col items-start gap-2">
         <div className="inline-flex h-[29px] items-center justify-center gap-1.5">

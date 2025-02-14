@@ -19,9 +19,7 @@ export default function Tag({ text = '오늘 마감!' }: { text?: string }) {
             />
           </svg>
         </div>
-        <div className="font-pretendard text-[12px] font-semibold leading-[20px] text-white">
-          {text}
-        </div>
+        <div className="font-pretendard text-[12px] leading-[20px] text-white">{text}</div>
       </div>
     </div>
   );
