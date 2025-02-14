@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
+import Icon from '@/components/shared/Icon';
 import Button from '@/components/ui/Button';
 import Chip from '@/components/ui/chip/Chip';
 import DropDown from '@/components/ui/DropDown';
@@ -81,16 +82,24 @@ export default function MeetingList() {
           <DropDown
             options={meetingLocationFirst}
             onSelect={handleSelectFirstLocation}
-            placeholder={selectedFirstLocation}
-            className="inline-flex h-10 flex-col items-start justify-center gap-2.5 rounded-xl border border-[#8c8c8c] bg-white px-2.5 py-2 text-center font-['Pretendard'] text-sm font-medium leading-tight text-[#8c8c8c]"
+            trigger={
+              <div className="inline-flex h-10 flex-row items-center justify-center rounded-xl border border-[#8c8c8c] bg-white px-2.5 py-2 text-center font-['Pretendard'] text-sm font-medium leading-tight text-[#8c8c8c]">
+                지역 전체
+                <Icon path="chevron_down" />
+              </div>
+            }
             optionClassName="justify-start pl-3 py-[10px]"
           />
         </div>
         <DropDown
           options={meetingLocationSecond}
           onSelect={handleSelectSecondLocation}
-          placeholder={selectedSecondLocation}
-          className="inline-flex h-10 flex-col items-start justify-center gap-2.5 rounded-xl border border-[#8c8c8c] bg-white px-2.5 py-2 text-center font-['Pretendard'] text-sm font-medium leading-tight text-[#8c8c8c]"
+          trigger={
+            <div className="inline-flex h-10 flex-row items-center justify-center rounded-xl border border-[#8c8c8c] bg-white px-2.5 py-2 text-center font-['Pretendard'] text-sm font-medium leading-tight text-[#8c8c8c]">
+              동 전체
+              <Icon path="chevron_down" />
+            </div>
+          }
           optionClassName="justify-start pl-3 py-[10px]"
         />
         <button
@@ -98,7 +107,7 @@ export default function MeetingList() {
           onClick={() => handleClickCalendar()}
           className="inline-flex h-10 flex-col items-start justify-center gap-2.5 rounded-xl border border-[#8c8c8c] bg-white px-2.5 py-2 text-center font-['Pretendard'] text-sm font-medium leading-tight text-[#8c8c8c]"
         >
-          캘린더
+          날짜
         </button>
       </div>
 
