@@ -17,7 +17,8 @@
     "canceledAt": "2025-02-11T04:00:57.498Z",
     "description": "성남시에서 즐거운 술 모임! 성남시에서 즐거운 술 모임! 성남시에서 즐거운 술 모임! 성남시에서 즐거운 술 모임! 성남시에서 즐거운 술 모임! 성남시에서 즐거운 술 모임! 성남시에서 즐거운 술 모임! 성남시에서 즐거운 술 모임! 성남시에서 즐거운 술 모임! 성남시에서 즐거운 술 모임! 성남시에서 즐거운 술 모임! ",
     "isLiked": false,
-    "isConfirmed": true
+    "isConfirmed": true,
+    "isCompleted": false
   },
   {
     "teamId": 1,
@@ -37,7 +38,8 @@
     "canceledAt": "2025-02-11T04:00:57.498Z",
     "description": "유쾌한 동작구 술자리!",
     "isLiked": true,
-    "isConfirmed": false
+    "isConfirmed": false,
+    "isCompleted": true
   },
   {
     "teamId": 2,
@@ -57,7 +59,8 @@
     "canceledAt": "2025-02-11T05:00:57.498Z",
     "description": "강남에서 핫한 술 모임!",
     "isLiked": true,
-    "isConfirmed": true
+    "isConfirmed": true,
+    "isCompleted": false
   },
   {
     "teamId": 3,
@@ -77,7 +80,8 @@
     "canceledAt": "2025-02-11T06:00:57.498Z",
     "description": "강서구에서 시원한 술 한잔!",
     "isLiked": false,
-    "isConfirmed": false
+    "isConfirmed": false,
+    "isCompleted": true
   },
   {
     "teamId": 4,
@@ -97,7 +101,8 @@
     "canceledAt": "2025-02-11T07:00:57.498Z",
     "description": "고양시에서 즐기는 술 파티!",
     "isLiked": true,
-    "isConfirmed": true
+    "isConfirmed": true,
+    "isCompleted": false
   },
   {
     "teamId": 5,
@@ -117,7 +122,8 @@
     "canceledAt": "2025-02-11T08:00:57.498Z",
     "description": "마포 감성 카페 모임!",
     "isLiked": false,
-    "isConfirmed": false
+    "isConfirmed": false,
+    "isCompleted": true
   },
   {
     "teamId": 6,
@@ -137,7 +143,8 @@
     "canceledAt": "2025-02-11T09:00:57.498Z",
     "description": "송파 힐링 카페 투어!",
     "isLiked": true,
-    "isConfirmed": true
+    "isConfirmed": false,
+    "isCompleted": true
   },
   {
     "teamId": 7,
@@ -157,7 +164,8 @@
     "canceledAt": "2025-02-11T10:00:57.498Z",
     "description": "수원의 숨겨진 카페 발견!",
     "isLiked": false,
-    "isConfirmed": false
+    "isConfirmed": false,
+    "isCompleted": true
   },
   {
     "teamId": 8,
@@ -177,7 +185,8 @@
     "canceledAt": "2025-02-11T11:00:57.498Z",
     "description": "용산 핫플레이스 카페 탐방!",
     "isLiked": true,
-    "isConfirmed": true
+    "isConfirmed": false,
+    "isCompleted": true
   },
   {
     "teamId": 9,
@@ -197,7 +206,8 @@
     "canceledAt": "2025-02-11T12:00:57.498Z",
     "description": "안산 분위기 좋은 카페에서!",
     "isLiked": false,
-    "isConfirmed": false
+    "isConfirmed": false,
+    "isCompleted": true
   },
   {
     "teamId": 10,
@@ -217,7 +227,8 @@
     "canceledAt": "2025-02-11T13:00:57.498Z",
     "description": "구로 조용한 카페에서 힐링!",
     "isLiked": true,
-    "isConfirmed": true
+    "isConfirmed": true,
+    "isCompleted": false
   },
   {
     "teamId": 11,
@@ -237,7 +248,8 @@
     "canceledAt": "2025-02-11T14:00:57.498Z",
     "description": "서초 보드게임 매니아 모여라!",
     "isLiked": false,
-    "isConfirmed": false
+    "isConfirmed": false,
+    "isCompleted": true
   },
   {
     "teamId": 12,
@@ -257,7 +269,8 @@
     "canceledAt": "2025-02-11T15:00:57.498Z",
     "description": "부천 맛집 탐험대!",
     "isLiked": true,
-    "isConfirmed": true
+    "isConfirmed": true,
+    "isCompleted": false
   },
   {
     "teamId": 13,
@@ -277,7 +290,8 @@
     "canceledAt": "2025-02-11T16:00:57.498Z",
     "description": "성북구 숨은 맛집 찾기!",
     "isLiked": false,
-    "isConfirmed": false
+    "isConfirmed": false,
+    "isCompleted": true
   },
   {
     "teamId": 14,
@@ -297,7 +311,8 @@
     "canceledAt": "2025-02-11T17:00:57.498Z",
     "description": "화성 맛집 정복!",
     "isLiked": true,
-    "isConfirmed": true
+    "isConfirmed": false,
+    "isCompleted": true
   },
   {
     "teamId": 15,
@@ -317,7 +332,8 @@
     "canceledAt": "2025-02-11T18:00:57.498Z",
     "description": "양천구 맛집 털기!",
     "isLiked": false,
-    "isConfirmed": false
+    "isConfirmed": false,
+    "isCompleted": true
   },
   {
     "teamId": 16,
@@ -337,7 +353,8 @@
     "canceledAt": "2025-02-11T19:00:57.498Z",
     "description": "평택 현지인 추천 맛집!",
     "isLiked": true,
-    "isConfirmed": true
+    "isConfirmed": false,
+    "isCompleted": true
   },
   {
     "teamId": 17,
@@ -357,7 +374,8 @@
     "canceledAt": "2025-02-11T20:00:57.498Z",
     "description": "강동 보드게임 고수들의 만남!",
     "isLiked": false,
-    "isConfirmed": false
+    "isConfirmed": false,
+    "isCompleted": true
   },
   {
     "teamId": 18,
@@ -377,7 +395,8 @@
     "canceledAt": "2025-02-11T21:00:57.498Z",
     "description": "의정부 보드게임 한판 승부!",
     "isLiked": true,
-    "isConfirmed": true
+    "isConfirmed": false,
+    "isCompleted": true
   },
   {
     "teamId": 19,
@@ -397,6 +416,7 @@
     "canceledAt": "2025-02-11T22:00:57.498Z",
     "description": "노원 보드게임 친목 모임!",
     "isLiked": false,
-    "isConfirmed": false
+    "isConfirmed": false,
+    "isCompleted": true
   }
 ]
