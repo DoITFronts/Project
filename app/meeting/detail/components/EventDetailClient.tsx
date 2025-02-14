@@ -1,5 +1,6 @@
 'use client';
 
+import AvatarGroup from '@/app/meeting/detail/components/AvatarGroup';
 import EventInfo from '@/app/meeting/detail/components/EventInfo';
 import FallbackImage from '@/components/shared/FallbackImage';
 
@@ -23,17 +24,7 @@ export default function EventDetailClient({ event, participants }: EventParticip
       </div>
       <div className="w-[calc(100%-518px)]">
         <EventInfo title={event.title} location={event.location} datetime={event.datetime} />
-        <h3 className="text-lg font-bold">참가자 목록</h3>
-        <div className="mt-3 flex space-x-2">
-          {participants.map((avatar) => (
-            <img
-              key={avatar}
-              src={avatar}
-              alt="참가자"
-              className="size-8 rounded-full border-2 border-white"
-            />
-          ))}
-        </div>
+        <AvatarGroup count={participants.length} />
       </div>
     </div>
   );

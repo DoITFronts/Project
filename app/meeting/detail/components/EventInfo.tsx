@@ -42,7 +42,7 @@ export default function EventInfo({
         </div>
         <ChipInfo datetime={datetime} />
       </div>
-      <div className="font-['Pretendard'] text-base font-medium leading-snug text-[#8c8c8c]">
+      <div className="font-['Pretendard'] text-base leading-snug text-[#8c8c8c]">
         혼자 하면 집중 안 되고 자꾸 딴짓하게 되는데, 같이 하면 의욕도 생기고 덜 지루하지 않나요?
         공부든, 작업이든, 독서든 다 좋아요. 중간중간 가벼운 대화도 환영! 우리 같이 카공해요~
       </div>
