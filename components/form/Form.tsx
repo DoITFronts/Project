@@ -159,7 +159,7 @@ function Submit({ className, children }: BaseProps) {
   const { formState } = useFormContext();
 
   return (
-    <Button type="button" className={className} color="filled" disabled={!formState.isValid}>
+    <Button type="submit" className={className} color="filled" disabled={!formState.isValid}>
       {children}
     </Button>
   );
