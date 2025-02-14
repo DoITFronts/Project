@@ -74,7 +74,7 @@ export default function CustomTimeInput({ date, onTimeChange, value, onChange }:
     <div className="flex items-start gap-4 h-full">
       {/* 시간 선택 */}
       <div ref={hoursRef} className="flex flex-col h-[242px] overflow-y-scroll">
-        <div className="w-[42px] h-[33px] bg-orange-600 rounded-lg mb-2 flex justify-center items-center flex-shrink-0">
+        <div className="w-[42px] h-[33px] bg-black rounded-lg mb-2 flex justify-center items-center flex-shrink-0">
           <div className="text-center text-white text-sm font-medium">
             {String(displayHour).padStart(2, '0')}
           </div>
@@ -85,7 +85,7 @@ export default function CustomTimeInput({ date, onTimeChange, value, onChange }:
               type="button"
               key={hour}
               onClick={() => handleHourChange(hour)}
-              className="w-[42px] h-[33px] rounded-lg flex justify-center items-center flex-shrink-0 hover:bg-orange-50"
+              className="w-[42px] h-[33px] rounded-lg flex justify-center items-center flex-shrink-0 hover:bg-gray-50"
             >
               <div className="text-center text-gray-900 text-sm font-medium">
                 {String(hour).padStart(2, '0')}
@@ -100,7 +100,7 @@ export default function CustomTimeInput({ date, onTimeChange, value, onChange }:
 
       {/* 분 선택 */}
       <div ref={minutesRef} className="flex flex-col h-[242px] overflow-y-scroll">
-        <div className="w-[42px] h-[33px] bg-orange-600 rounded-lg mb-2 flex justify-center items-center flex-shrink-0">
+        <div className="w-[42px] h-[33px] bg-black rounded-lg mb-2 flex justify-center items-center flex-shrink-0">
           <div className="text-center text-white text-sm font-medium">
             {String(currentMinute).padStart(2, '0')}
           </div>
@@ -111,7 +111,7 @@ export default function CustomTimeInput({ date, onTimeChange, value, onChange }:
               type="button"
               key={minute}
               onClick={() => handleMinuteChange(minute)}
-              className="w-[42px] h-[33px] rounded-lg flex justify-center items-center hover:bg-orange-50"
+              className="w-[42px] h-[33px] rounded-lg flex justify-center items-center hover:bg-gray-50"
             >
               <div className="text-center text-gray-900 text-sm font-medium">
                 {String(minute).padStart(2, '0')}
@@ -126,21 +126,21 @@ export default function CustomTimeInput({ date, onTimeChange, value, onChange }:
 
       {/* AM/PM 선택 */}
       <div className="flex flex-col">
-        <div className="w-[42px] h-[33px] bg-orange-600 rounded-lg mb-2 flex justify-center items-center">
+        <div className="w-[42px] h-[33px] bg-black rounded-lg mb-2 flex justify-center items-center">
           <div className="text-center text-white text-sm font-medium">{isPm ? 'PM' : 'AM'}</div>
         </div>
         <div className="flex flex-col gap-1">
           <button
             type="button"
             onClick={() => handleAmPmChange(false)}
-            className="w-[42px] h-[33px] rounded-lg flex justify-center items-center hover:bg-orange-50"
+            className="w-[42px] h-[33px] rounded-lg flex justify-center items-center hover:bg-gray-50"
           >
             <div className="text-center text-gray-900 text-sm font-medium">AM</div>
           </button>
           <button
             type="button"
             onClick={() => handleAmPmChange(true)}
-            className="w-[42px] h-[33px] rounded-lg flex justify-center items-center hover:bg-orange-50"
+            className="w-[42px] h-[33px] rounded-lg flex justify-center items-center hover:bg-gray-50"
           >
             <div className="text-center text-gray-900 text-sm font-medium">PM</div>
           </button>
