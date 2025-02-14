@@ -1,7 +1,6 @@
 'use client';
 
 import clsx from 'clsx';
-import { useState } from 'react';
 
 import CheckIcon from '@/components/shared/Icons/CheckIcon';
 

@@ -38,7 +38,7 @@
 
 .react-datepicker {
   @apply p-3 !important;
-  font-family: 'Pretendard' !important;
+  font-family: 'Pretendard', serif !important;
 }
 
 .react-datepicker__month-container {
@@ -102,3 +102,5 @@
 .hide-time-select .react-datepicker__time-container {
   display: none;
 }
+
+@import url('https://fonts.cdnfonts.com/css/dunggeunmo');
