@@ -7,12 +7,13 @@ import Button from '@/components/ui/Button';
 import Icon from '@/components/shared/Icon';
 import axios from 'axios';
 
-type MeetingType = '술' | '카페' | '보드게임' | '맛집'; //TODO: 실제 타입값으로 변경
+type MeetingType = '술' | '카페' | '보드게임' | '맛집';
 const meetingTypes: MeetingType[] = ['술', '카페', '보드게임', '맛집'];
 
 export default function CreateMeetingModal() {
   const { closeModal } = useModalStore();
   const [meetingName, setMeetingName] = useState('');
+  const [meetingSummary, setMeetingSummary] = useState('');
   const [meetingPlace, setMeetingPlace] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [meetingDate, setMeetingDate] = useState(new Date());
@@ -27,6 +28,11 @@ export default function CreateMeetingModal() {
     if (/^[가-힣a-zA-Z0-9\s]*$/.test(value)) {
       setMeetingName(value);
     }
+  };
+
+  const handleMeetingSummary = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setMeetingSummary(value);
   };
 
   // TODO?: 따로 행정구역(~도 ~시)파일을 만들어서 지역을 검색했을 때 자동 완성 되는 기능을 넣어볼까 합니다.
@@ -65,6 +71,7 @@ export default function CreateMeetingModal() {
     }
     const meetingData = {
       name: meetingName,
+      summary: meetingSummary,
       location: meetingPlace,
       type: meetingType,
       dateTime: meetingDate.toISOString(),
@@ -92,6 +99,7 @@ export default function CreateMeetingModal() {
     !!meetingName &&
     meetingName.length >= 2 &&
     meetingName.length <= 30 &&
+    !!meetingSummary &&
     !!meetingPlace &&
     !!meetingDate &&
     !!deadlineDate &&
@@ -135,6 +143,7 @@ export default function CreateMeetingModal() {
             <input
               type="text"
               placeholder="모임 소개글을 작성해 주세요."
+              onChange={handleMeetingSummary}
               className="text-black-8 w-full bg-black-2 px-4 py-2.5 rounded-[12px] placeholder:text-black-6"
             />
           </div>
