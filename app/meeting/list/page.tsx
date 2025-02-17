@@ -77,7 +77,6 @@ export default function MeetingList() {
 
   // 좋아요 핸들러
   const handleClickLike = () => null; // TODO: 낙관적 업데이트를 통한 좋아요 상태 업데이트 필요
-  y;
   return (
     <div className="container mx-auto mt-[72px] max-w-[1200px]">
       <div className="mb-[52px] flex items-center justify-between">

@@ -1,6 +1,5 @@
 import Link from 'next/link';
 
-import AvatarGroup from '@/app/meeting/detail/components/AvatarGroup';
 import Card from '@/app/meeting/list/components/Card';
 
 import Button from '../Button';
@@ -11,7 +10,7 @@ interface MeetingProgressProps {
   capacity: number;
   isConfirmed: boolean;
   isCompleted: boolean;
-  // children?: React.ReactNode;
+  children?: React.ReactNode;
   optionClass?: string;
 }
 
@@ -21,7 +20,7 @@ export default function MeetingProgress({
   capacity,
   isConfirmed,
   isCompleted,
-  // children,
+  children,
   optionClass,
 }: MeetingProgressProps) {
   return (
@@ -30,7 +29,7 @@ export default function MeetingProgress({
         <div className={`${optionClass} flex items-center gap-2`}>
           <div className="flex flex-row gap-2">
             <Card.Participant participantCount={participantCount} capacity={capacity} />
-            <AvatarGroup count={10} />
+            {children}
           </div>
           <Card.ConfirmedStatus isConfirmed={isConfirmed} />
         </div>

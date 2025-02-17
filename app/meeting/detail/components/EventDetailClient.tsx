@@ -1,5 +1,6 @@
 'use client';
 
+import AvatarGroup from '@/app/meeting/detail/components/AvatarGroup';
 import Card from '@/app/meeting/list/components/Card';
 import FallbackImage from '@/components/shared/FallbackImage';
 import MeetingProgress from '@/components/ui/card/MeetingProgress';
@@ -47,7 +48,10 @@ export default function EventDetailClient({ event, participants }: EventParticip
             capacity={20}
             isConfirmed
             isCompleted={false}
-          />
+            optionClass="justifycontent: spacebetween"
+          >
+            <AvatarGroup count={10} />
+          </MeetingProgress>
         </div>
       </div>
     </Card>
