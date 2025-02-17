@@ -77,7 +77,7 @@ export default function MeetingList() {
 
   // 좋아요 핸들러
   const handleClickLike = () => null; // TODO: 낙관적 업데이트를 통한 좋아요 상태 업데이트 필요
-
+  y;
   return (
     <div className="container mx-auto mt-[72px] max-w-[1200px]">
       <div className="mb-[52px] flex items-center justify-between">
@@ -146,7 +146,7 @@ export default function MeetingList() {
         {/* 탭에 맞는 번개 리스트 보여주기 */}
         <div className="grid grid-cols-3 gap-x-6 gap-y-10">
           {filteredMeetings.map((meeting) => (
-            <Card key={meeting.id}>
+            <Card key={meeting.id} mode="list">
               <div className="flex h-[430px] flex-col justify-between overflow-hidden">
                 <div className="relative flex h-[200px] w-96 items-center justify-center overflow-hidden">
                   {/* 좌상한 우하단 흰 박스 */}

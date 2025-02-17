@@ -7,11 +7,14 @@ type EventData = {
   title: string;
   location: string;
   datetime: string;
+  description: string;
+  isLiked: boolean;
 };
 
 export default async function EventDetail({ params }: { params: { id: string } }) {
-  const event: EventData = await fetchEventById(params.id);
-  const participants = await fetchParticipants(params.id);
+  const { id } = params;
+  const event: EventData = await fetchEventById(id);
+  const participants = await fetchParticipants(id);
 
   if (!event) return <div>이 모임은 존재하지 않습니다.</div>;
 

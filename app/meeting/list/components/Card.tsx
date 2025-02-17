@@ -1,22 +1,26 @@
 import { ReactNode } from 'react';
 
+import ChipInfo from '@/components/ui/chip/ChipInfo';
+
 import ConfirmedStatus from '../../components/ConfirmedStatus';
 import Participant from '../../components/Participant';
 import ProgressBar from '../../components/ProgressBar';
 
-import DateDisplay from './DateDisplay';
 import Join from './Join';
 import Like from './Like';
-import TimeDisplay from './TimeDisplay';
 import Title from './Title';
 
-function Card({ children }: { children: ReactNode }) {
-  return <div>{children}</div>;
+interface CardProps {
+  children: ReactNode;
+  mode?: 'list' | 'detail';
+}
+
+function Card({ children, mode = 'list' }: CardProps) {
+  return <div className={mode === 'list' ? 'card-list' : 'card-detail'}>{children}</div>;
 }
 
 Card.Title = Title;
-Card.DateDisplay = DateDisplay;
-Card.TimeDisplay = TimeDisplay;
+Card.ChipInfo = ChipInfo;
 Card.Like = Like;
 Card.Participant = Participant;
 Card.ConfirmedStatus = ConfirmedStatus;
