@@ -1,13 +1,14 @@
 'use client';
 import useModalStore from '@/store/useModalStore';
 import BoxSelect from '../../BoxSelect';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import CustomDatePicker from '../datePicker';
 import Button from '@/components/ui/Button';
 import Icon from '@/components/shared/Icon';
 import axios from 'axios';
 
-type MeetingType = '달램핏' | '달램핏2' | '달램핏3'; //TODO: 실제 타입값으로 변경
+type MeetingType = '술' | '카페' | '보드게임' | '맛집'; //TODO: 실제 타입값으로 변경
+const meetingTypes: MeetingType[] = ['술', '카페', '보드게임', '맛집'];
 
 export default function CreateMeetingModal() {
   const { closeModal } = useModalStore();
@@ -110,75 +111,100 @@ export default function CreateMeetingModal() {
     <div className="w-[520px] h-auto p-6 bg-white rounded-xl shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] border border-black flex-col justify-start items-start gap-2.5 inline-flex overflow-hidden">
       <div className="flex flex-col gap-6 w-full h-auto">
         <div className="w-full flex justify-between ">
-          <span className="font-bold text-black">모임 만들기</span>
+          <span className="text-xl text-black font-dunggeunmo">{'< 모임 만들기 >'}</span>
           <button onClick={closeModal}>
             <Icon path="X" width="24" height="24" />
           </button>
         </div>
         <form className="w-full h-auto flex flex-col gap-6" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-3 w-full">
-            <label htmlFor="meetingName" className="font-semibold text-black">
+            <label htmlFor="meetingName" className="font-dunggeunmo text-base text-black-11">
               모임 이름
             </label>
             <input
               type="text"
               placeholder="모임 이름을 작성해 주세요."
               onChange={handleMeetingName}
-              className="text-black w-full bg-gray-50 px-4 py-2.5 rounded-[12px]"
+              className="text-black-8 w-full bg-black-2 px-4 py-2.5 rounded-[12px] placeholder:text-black-6"
             />
           </div>
           <div className="w-full flex flex-col gap-3">
-            <label htmlFor="meetingPlace" className="font-semibold text-black">
-              모임 장소
+            <label htmlFor="meetingPlace" className="font-dunggeunmo text-base text-black-11">
+              장소
             </label>
             <input //TODO: 나중에 드롭다운으로 바꾼 다음, 지역 검색 가능하게 할까??
               type="text"
               onChange={handleMeetingPlace}
               placeholder="장소를 선택해 주세요"
-              className="text-black w-full bg-gray-50 px-4 py-2.5 rounded-[12px]"
+              className="text-black-8 w-full bg-black-2 px-4 py-2.5 rounded-[12px] placeholder:text-black-6"
             />
           </div>
 
           {/* TODO: 파일명 제출 버튼 위치 바꾸기 */}
           <div className="w-full flex flex-col gap-3">
-            <span className="font-semibold text-black">이미지</span>
-            <div className="flex justify-between">
+            <span className="font-dunggeunmo text-base text-black-11">이미지</span>
+            <div className="relative flex justify-between w-full">
               <input
                 type="file"
                 id="image"
                 onChange={handleImageChange}
                 accept="image/*"
-                className="bg-gray-50 px-4 py-2.5 rounded-[12px] w-[360px] file:hidden"
+                className="absolute w-[360px] opacity-0 file:hidden cursor-pointer "
               />
+              <div
+                className={`bg-black-2 px-4 py-2.5 rounded-[12px] w-[360px]  ${imageFile ? 'text-black-8' : 'text-black-6'}`}
+              >
+                {imageFile ? imageFile.name : '이미지를 첨부해 주세요'}
+              </div>
               <label
                 htmlFor="image"
-                className="flex items-center justify-center text-[#EA580C] font-semibold cursor-pointer w-[100px] h-auto bg-white border border-orange-600 rounded-[12px] "
+                className={`flex items-center justify-center w-[100px] cursor-pointer h-auto py-2.5 text-sm font-semibold rounded-[12px] border  ${imageFile ? 'text-black border-black' : 'text-black-6 border-black-6'}`}
               >
-                이미지
+                파일 찾기
               </label>
             </div>
           </div>
           <div className="w-full flex flex-col gap-3">
-            <span className="font-semibold text-black">선택 서비스</span>
+            <span className="font-dunggeunmo text-base text-blac-11k">카테고리</span>
             <div className="w-full flex justify-between gap-3">
-              <BoxSelect
-                onClick={() => handleMeetingType('달램핏')}
-                title="달램핏"
-                subtitle="오피스 스트레칭"
-                isChecked={meetingType === '달램핏'}
-              />
-              <BoxSelect
-                onClick={() => handleMeetingType('달램핏2')}
-                title="달램핏2"
-                subtitle="오피스 스트레칭"
-                isChecked={meetingType === '달램핏2'}
-              />
-              <BoxSelect
-                onClick={() => handleMeetingType('달램핏3')}
-                title="달램핏3"
-                subtitle="오피스 스트레칭"
-                isChecked={meetingType === '달램핏3'}
-              />
+              {meetingTypes.map((type) => (
+                <div
+                  key={type}
+                  className={`w-full border rounded-[12px] cursor-pointer border-black-6 pl-[6px] pr-2.5 py-2 flex items-center ${meetingType === type ? 'bg-black-10 border-black-10' : ''}`}
+                  onClick={() => handleMeetingType(type)}
+                >
+                  <div className="w-full flex justify-between items-center">
+                    <div className="size-[24px] flex items-center justify-center">
+                      <div className="border border-black-6 w-4 h-4 rounded-[5px] bg-white flex items-center justify-center">
+                        {meetingType === type ? (
+                          <svg
+                            width="10"
+                            height="7"
+                            viewBox="0 0 10 7"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M1.00004 2.5L4.50009 6C6.98524 3.21054 6.46948 3.78946 8.95464 1"
+                              stroke="#595959"
+                              strokeWidth="1.4"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        ) : (
+                          ''
+                        )}
+                      </div>
+                    </div>
+                    <div
+                      className={`text-sm ${meetingType === type ? 'text-white' : 'text-black-6'}`}
+                    >
+                      {type}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
           <div className="w-full flex justify-between gap-2">
@@ -198,12 +224,12 @@ export default function CreateMeetingModal() {
             </div>
           </div>
           <div className="flex flex-col gap-3 w-full">
-            <label htmlFor="모집 정원" className="text-black font-semibold">
+            <label htmlFor="모집 정원" className="text-black-11 font-dunggeunmo text-base">
               모집 정원
             </label>
             <input
               type="text"
-              className="text-black w-full bg-gray-50 px-4 py-2.5 rounded-[12px]"
+              className="text-black-8 w-full bg-gray-50 px-4 py-2.5 rounded-[12px]"
               placeholder="최소 5인 이상 입력해 주세요."
               onChange={handleParticipantChange}
               value={participantCount}

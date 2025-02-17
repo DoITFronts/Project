@@ -6,7 +6,7 @@ interface DropDownProps {
   /** 트리거를 컴포넌트로 받음.  */
   trigger: React.ReactNode;
   /** 드롭다운에 표시될 옵션 배열 */
-  options: string[];
+  options: string[] | React.ReactNode;
   /** 옵션 선택 시 호출되는 콜백 함수 */
   onSelect: (selected: string) => void;
   /** 드롭다운 옵션 아이템에 적용될 클래스 */
@@ -66,17 +66,23 @@ export default function DropDown({ options, onSelect, optionClassName, trigger }
       </button>
 
       {isOpen && (
-        <ul className="absolute z-10 w-fit mt-1 rounded-lg bg-white shadow-lg">
-          {options.map((option, index) => (
-            <li
-              key={`${option}-${index}`}
-              onClick={() => handleSelected(option)}
-              className={`${optionClassName} ${index === 0 ? 'rounded-t-lg' : ''} ${index === options.length - 1 ? 'rounded-b-lg' : ''}`}
-            >
-              {option}
-            </li>
-          ))}
-        </ul>
+        <div className="absolute z-10 w-fit mt-1 rounded-lg bg-white shadow-lg">
+          {Array.isArray(options) ? (
+            <ul>
+              {options.map((option, index) => (
+                <li
+                  key={`${option}-${index}`}
+                  onClick={() => onSelect(option)}
+                  className={optionClassName}
+                >
+                  {option}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            options
+          )}
+        </div>
       )}
     </div>
   );
