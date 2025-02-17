@@ -1,7 +1,5 @@
 import React from 'react';
 
-import BottomFloatingBar from '@/components/layout/BottomFloatingBar';
-
 export default function EventLayout({
   children,
   reviews,
@@ -15,8 +13,7 @@ export default function EventLayout({
     <div className="mx-auto max-w-5xl p-4">
       <div className="flex">{children}</div>
       <div className="mt-14">{description}</div>
-      <div className="mt-6">{reviews}</div>
-      <BottomFloatingBar title="번개팅" subtitle="지금 당장 신청해보라능" />
+      <div className="mb-16 mt-6">{reviews}</div>
     </div>
   );
 }

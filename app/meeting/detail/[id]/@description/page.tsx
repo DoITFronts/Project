@@ -31,7 +31,7 @@ async function Description() {
       <div className="font-dunggeunmo text-2xl font-normal text-black">{detail.title}</div>
       <div className="font-['Pretendard'] text-base font-medium leading-normal text-neutral-800">
         {detail.description.split('\n').map((line) => (
-          <p key={detail.description} className="mt-2">
+          <p key={line} className="mt-2">
             {line}
           </p>
         ))}
