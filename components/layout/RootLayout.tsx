@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <Gnb />
       <div className="my-16 flex-1 overflow-auto">{children}</div>
       {pathname.includes('/meeting/detail') && (
-        <BottomFloatingBar title="번개팅" subtitle="지금 당장 신청해보라능" />
+        <BottomFloatingBar key={pathname} title="번개팅" subtitle="지금 당장 신청해보라능" />
       )}
       <Modal />
     </div>
