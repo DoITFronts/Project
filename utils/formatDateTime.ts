@@ -12,7 +12,7 @@ function formatDateTime(datetimeStr: string, locale = 'ko-KR'): string {
     hour12: false,
   });
 
-  return `${formattedDate} ${formattedTime}`;
+  return `${formattedDate} · ${formattedTime}`;
 }
 
 export default formatDateTime;
