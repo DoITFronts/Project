@@ -108,8 +108,8 @@ export default function CreateMeetingModal() {
   };
 
   return (
-    <div className="w-[520px] h-auto p-6 bg-white rounded-xl shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] border border-black flex-col justify-start items-start gap-2.5 inline-flex overflow-hidden">
-      <div className="flex flex-col gap-6 w-full h-auto">
+    <div className="w-[520px] max-h-[95vh] p-6 bg-white rounded-xl shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] border border-black flex-col justify-start items-start gap-2.5 inline-flex oveflow-hidden">
+      <div className="flex flex-col gap-6 w-full h-auto overflow-y-auto [&::-webkit-scrollbar]:hidden">
         <div className="w-full flex justify-between ">
           <span className="text-xl text-black font-dunggeunmo">{'< 모임 만들기 >'}</span>
           <button onClick={closeModal}>
@@ -125,6 +125,16 @@ export default function CreateMeetingModal() {
               type="text"
               placeholder="모임 이름을 작성해 주세요."
               onChange={handleMeetingName}
+              className="text-black-8 w-full bg-black-2 px-4 py-2.5 rounded-[12px] placeholder:text-black-6"
+            />
+          </div>
+          <div className="w-full flex flex-col gap-3">
+            <label htmlFor="meetingSummary" className="font-dunggeunmo text-base text-black-11">
+              모임 소개글
+            </label>
+            <input
+              type="text"
+              placeholder="모임 소개글을 작성해 주세요."
               className="text-black-8 w-full bg-black-2 px-4 py-2.5 rounded-[12px] placeholder:text-black-6"
             />
           </div>
