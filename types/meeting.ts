@@ -5,7 +5,6 @@ export type MeetingInfo = {
   location: string;
   datetime: string;
   summary: string;
-  description: string;
   isLiked: boolean;
   maxParticipants: number;
   currentParticipants: number;
@@ -15,6 +14,11 @@ export type Participant = {
   id: string;
   name: string;
   profileImage: string;
+};
+
+export type Detail = {
+  title: string;
+  description: string;
 };
 
 export type Review = {
@@ -29,6 +33,6 @@ export type Review = {
 export type MeetingDetail = {
   info: MeetingInfo;
   participants: Participant[];
-  details: string[];
+  details: Detail;
   reviews: Review[];
 };

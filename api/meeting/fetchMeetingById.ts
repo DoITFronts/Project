@@ -6,3 +6,5 @@ const fetchMeetingById = async (id: string): Promise<MeetingDetail> => {
 };
 
 fetchMeetingById('1').then((data) => console.log(data));
+
+export default fetchMeetingById;
