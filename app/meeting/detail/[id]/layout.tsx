@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function EventLayout({
+export default function MeetingLayout({
   children,
   reviews,
   description,

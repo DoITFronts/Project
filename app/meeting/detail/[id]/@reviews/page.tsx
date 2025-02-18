@@ -4,20 +4,21 @@ import fetchMeetingById from '@/api/meeting/fetchMeetingById';
 import ReviewItem from '@/components/ui/review/ReviewItem';
 import { MeetingDetail } from '@/types/meeting';
 
-export default async function ReviewList({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const meeting: MeetingDetail = await fetchMeetingById(id);
+export default async function ReviewList({ params }: { params: { id: string } }) {
+  if (!params.id) return <p>⚠️ 이벤트 ID가 필요합니다.</p>;
+
+  const meeting: MeetingDetail = await fetchMeetingById(params.id);
 
   return (
     <div className="flex-col items-start justify-start gap-[18px]">
       <div className="font-['DungGeunMo'] text-2xl font-normal text-black">이전 번개 리뷰</div>
       <div className="mt-4 space-y-4">
-        {meeting.reviews.map((review, index) => (
+        {meeting?.reviews.map((review, index) => (
           <React.Fragment key={review.id}>
             <ReviewItem
               date={review.date}
               content={review.content}
-              count={review.rating}
+              count={review.count}
               username={review.writer}
             />
             {index < meeting.reviews.length - 1 && (

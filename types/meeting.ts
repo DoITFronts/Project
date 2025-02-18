@@ -27,7 +27,7 @@ export type Review = {
   profileImage: string;
   content: string;
   date: string;
-  rating: number;
+  count: number;
 };
 
 export type MeetingDetail = {

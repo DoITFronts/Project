@@ -1,10 +1,15 @@
-import { MeetingDetail } from '@/types/meeting';
+const fetchMeetingById = async (id: string) => {
+  if (!id) {
+    throw new Error('Invalid event ID');
+  }
 
-const fetchMeetingById = async (id: string): Promise<MeetingDetail> => {
-  const response = await fetch(`/api/meeting/detail/:${id}`);
+  const apiUrl = `/api/meeting/detail/${id}`;
+
+  const response = await fetch(apiUrl);
+
+  if (!response.ok) throw new Error('API Error');
+
   return response.json();
 };
-
-fetchMeetingById('1').then((data) => console.log(data));
 
 export default fetchMeetingById;

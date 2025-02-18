@@ -47,7 +47,7 @@ const mockMeetingDetail: MeetingDetail = {
       profileImage: 'https://randomuser.me/api/portraits/men/4.jpg',
       content: '정말 유익한 시간이었어요. 다음에도 참여하고 싶어요!',
       date: '2025-02-10',
-      rating: 5,
+      count: 5,
     },
     {
       id: '2',
@@ -55,7 +55,7 @@ const mockMeetingDetail: MeetingDetail = {
       profileImage: 'https://randomuser.me/api/portraits/women/5.jpg',
       content: '다들 집중해서 공부하는 분위기가 너무 좋았어요!',
       date: '2025-02-08',
-      rating: 4,
+      count: 4,
     },
   ],
 };
