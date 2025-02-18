@@ -13,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <div className="flex h-screen flex-col">
       <Gnb />
-      <div className="my-16 flex-1 overflow-auto">{children}</div>
+      <div className="mt-16 flex-1 overflow-auto">{children}</div>
       {pathname.includes('/meeting/detail') && (
         <BottomFloatingBar key={pathname} title="번개팅" subtitle="지금 당장 신청해보라능" />
       )}

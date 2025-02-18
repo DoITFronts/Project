@@ -11,8 +11,8 @@ type EventData = {
   isLiked: boolean;
 };
 
-export default async function EventDetail({ params }: { params: { id: string } }) {
-  const { id } = params;
+export default async function EventDetail({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const event: EventData = await fetchEventById(id);
   const participants = await fetchParticipants(id);
 
