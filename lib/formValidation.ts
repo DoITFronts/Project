@@ -100,7 +100,7 @@ const VALIDATION_RULES: Record<Field, RegisterOptions> = {
   nickname: NICKNAME_RULES,
   password: PASSWORD_RULES,
   passwordConfirmation: {},
-  birth: BIRTH_RULES,
+  birth: {},
 };
 
 export default VALIDATION_RULES;
