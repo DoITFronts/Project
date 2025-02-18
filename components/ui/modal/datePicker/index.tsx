@@ -26,7 +26,7 @@ export default function CustomDatePicker({ label, selected, onChange }: DatePick
 
   return (
     <div className="flex flex-col gap-2">
-      <span className="text-sm font-semibold text-gray-800">{label}</span>
+      <span className="text-base font-dunggeunmo text-black-11">{label}</span>
       <DatePicker
         className="w-full"
         calendarClassName="bg-white h-[266px] rounded-xl border border-gray-200 !flex overflow-hidden"

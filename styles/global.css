@@ -1,7 +1,9 @@
+@import url('https://fonts.cdnfonts.com/css/dunggeunmo');
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  
+
   --font-xs: 12px;
   --line-xs: 16px;
 
@@ -29,12 +31,18 @@
   --font-semibold: 600;
   --font-bold: 700;
 
-  --font-family-pretandard: "Pretendard", sans-serif;
+  --font-family-pretandard: 'Pretendard', sans-serif;
 }
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 
 .react-datepicker {
   @apply p-3 !important;
@@ -74,7 +82,7 @@
 }
 
 .react-datepicker__day--selected {
-  @apply bg-orange-600 rounded-lg text-white !important;
+  @apply bg-black rounded-lg text-white !important;
 }
 
 .react-datepicker__time-container {
@@ -92,7 +100,7 @@
 }
 
 .react-datepicker__time-list-item--selected {
-  @apply bg-orange-600 text-white !important;
+  @apply bg-black text-white !important;
 }
 
 .react-datepicker__navigation {
@@ -102,5 +110,3 @@
 .hide-time-select .react-datepicker__time-container {
   display: none;
 }
-
-@import url('https://fonts.cdnfonts.com/css/dunggeunmo');
