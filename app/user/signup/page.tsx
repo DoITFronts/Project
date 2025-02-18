@@ -13,7 +13,7 @@ export default function Signup() {
           <Image src={Logo} alt="번개팅 로고" width={147.6} height={32.4} />
         </div>
         <Form
-          onSubmit={(data: any): void => {
+          onSubmit={(data: SignUpRequestData) => {
             console.log('제출된 데이터:', data);
           }}
         >
