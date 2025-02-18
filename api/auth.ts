@@ -1,10 +1,7 @@
-import axios from 'axios';
+import instance from './instance/axios';
 
 const signupUser = async (data: SignUpRequestData) => {
-  const response = await axios.post('/api/v1/join', data, {
-    headers: { 'Content-Type': 'application/json' },
-    withCredentials: true,
-  });
+  const response = await instance.post('/api/v1/join', data);
   return response.data;
 };
 
