@@ -5,7 +5,7 @@ export default function FallbackImage() {
     <Image
       src="/assets/fallback/img.png"
       alt="fallback img"
-      className="size-full object-contain"
+      className="size-full bg-indigo-500 object-contain"
       width="518"
       height="270"
     />
