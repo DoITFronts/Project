@@ -1,22 +1,43 @@
 'use client';
 
+import { useState } from 'react';
 import Form from '@/components/form/Form';
 import Logo from '@/public/assets/logo.svg';
 import Image from 'next/image';
 import Link from 'next/link';
+import { signupUser } from '@/api/auth';
+import Router from 'next/router';
 
 export default function Signup() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const [submittedData, setSubmittedData] = useState<SignUpRequestData | null>(null);
+
+  const handleSignup = async (data: SignUpRequestData) => {
+    try {
+      console.log('제출된 데이터:', data);
+      setSubmittedData(data);
+      setIsLoading(true);
+      setError(null);
+      const response = await signupUser(data);
+      console.log('회원가입 응답:', response);
+      setSuccess('회원가입 성공! 로그인 페이지로 이동합니다.');
+      Router.push('user/signin');
+    } catch (err) {
+      setError('회원가입에 실패했습니다. 다시 시도해 주세요.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="bg-white py-52 flex justify-center items-center">
       <div className="w-[402px]">
         <div className="flex justify-center items-center mb-[50px]">
           <Image src={Logo} alt="번개팅 로고" width={147.6} height={32.4} />
         </div>
-        <Form
-          onSubmit={(data: SignUpRequestData) => {
-            console.log('제출된 데이터:', data);
-          }}
-        >
+        <Form onSubmit={handleSignup}>
           <Form.Label className="pb-3">
             <Form.LabelHeader className="pb-2">이름</Form.LabelHeader>
             <Form.Input
@@ -71,7 +92,7 @@ export default function Signup() {
               type="date"
             />
           </Form.Label>
-          <Form.Submit className="w-full">회원가입</Form.Submit>
+          <Form.Submit className="w-full">{isLoading ? '회원가입 중...' : '회원가입'}</Form.Submit>
         </Form>
         <div className="flex justify-center items-center gap-2 font-['Pretendard'] text-[15px] text-neutral-800 font-bold mt-3">
           이미 회원이신가요?{' '}
