@@ -13,7 +13,7 @@ export default function EventLayout({
     <div className="mx-auto max-w-5xl p-4">
       <div className="flex">{children}</div>
       <div className="mt-14">{description}</div>
-      <div className="mb-16 mt-6">{reviews}</div>
+      <div className="mb-24 mt-6">{reviews}</div>
     </div>
   );
 }

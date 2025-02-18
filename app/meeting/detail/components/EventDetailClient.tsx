@@ -13,14 +13,10 @@ type EventData = {
   datetime: string;
   description: string;
   isLiked: boolean;
+  participants?: string[];
 };
 
-type EventParticipantsProps = {
-  event: EventData;
-  participants: string[];
-};
-
-export default function EventDetailClient({ event, participants }: EventParticipantsProps) {
+export default function EventDetailClient({ event }: { event: EventData }) {
   const handleClickLike = () => null;
   return (
     <Card mode="detail">
@@ -44,7 +40,7 @@ export default function EventDetailClient({ event, participants }: EventParticip
           </div>
           <MeetingProgress
             id={1}
-            participantCount={participants.length}
+            participantCount={event.participants?.length ?? 0}
             capacity={20}
             isConfirmed
             isCompleted={false}
