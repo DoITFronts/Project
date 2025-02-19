@@ -6,9 +6,10 @@ import Logo from '@/public/assets/logo.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 import { signupUser } from '@/api/auth';
-import Router from 'next/router';
+import { useRouter } from 'next/navigation';
 
 export default function Signup() {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -22,8 +23,8 @@ export default function Signup() {
       setError(null);
       const response = await signupUser(data);
       console.log('회원가입 응답:', response);
-      setSuccess('회원가입 성공! 로그인 페이지로 이동합니다.');
-      Router.push('user/signin');
+      alert('회원가입 성공! 로그인 페이지로 이동합니다.');
+      router.push('/user/signin');
     } catch (err) {
       setError('회원가입에 실패했습니다. 다시 시도해 주세요.');
     } finally {
