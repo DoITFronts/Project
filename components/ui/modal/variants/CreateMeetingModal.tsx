@@ -20,7 +20,7 @@ export default function CreateMeetingModal() {
   const [deadlineDate, setDeadlineDate] = useState(new Date());
   const [meetingType, setMeetingType] = useState<MeetingType | null>(null);
   const [participantCount, setParticipantCount] = useState('');
-
+  const [minParticipants, setMinParticipants] = useState('');
   // TODO: 추후에 데이터 연결 시 보내는 postData.
 
   const handleMeetingName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,6 +58,21 @@ export default function CreateMeetingModal() {
   const handleDeadlineDateChange = (date: Date | null) => {
     if (date) {
       setDeadlineDate(date);
+    }
+  };
+
+  const handleParticipantChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // 숫자만 입력되도록
+    if (/^\d*$/.test(value)) {
+      setParticipantCount(value);
+    }
+  };
+
+  const handleMinParticipantsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (/^\d*$/.test(value)) {
+      setMinParticipants(value);
     }
   };
 
@@ -106,14 +121,6 @@ export default function CreateMeetingModal() {
     deadlineDate <= meetingDate &&
     !!meetingType &&
     !!participantCount;
-
-  const handleParticipantChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    // 숫자만 입력되도록
-    if (/^\d*$/.test(value)) {
-      setParticipantCount(value);
-    }
-  };
 
   return (
     <div className="w-[520px] max-h-[95vh] p-6 bg-white rounded-xl shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] border border-black flex-col justify-start items-start gap-2.5 inline-flex oveflow-hidden">
@@ -248,10 +255,22 @@ export default function CreateMeetingModal() {
             </label>
             <input
               type="text"
-              className="text-black-8 w-full bg-gray-50 px-4 py-2.5 rounded-[12px]"
-              placeholder="최소 5인 이상 입력해 주세요."
+              className="text-black-8 w-full bg-black-2 px-4 py-2.5 rounded-[12px] placeholder:text-black-6"
+              placeholder="최대 인원을 입력해 주세요."
               onChange={handleParticipantChange}
               value={participantCount}
+            />
+          </div>
+          <div className="flex flex-col gap-3 w-full">
+            <label htmlFor="최소 인원" className="text-black-11 font-dunggeunmo text-base">
+              최소 인원
+            </label>
+            <input
+              type="text"
+              placeholder="최소 인원을 입력해 주세요."
+              className="text-black-8 w-full bg-black-2 px-4 py-2.5 rounded-[12px] placeholder:text-black-6"
+              onChange={handleMinParticipantsChange}
+              value={minParticipants}
             />
           </div>
         </form>
