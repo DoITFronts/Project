@@ -6,3 +6,8 @@ interface SignUpRequestData {
   nickname: string;
   birth: string;
 }
+
+interface SignInRequestData {
+  email: string;
+  password: string;
+}

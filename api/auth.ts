@@ -5,4 +5,9 @@ const signupUser = async (data: SignUpRequestData) => {
   return response.data;
 };
 
-export { signupUser };
+const signinUser = async (data: SignInRequestData) => {
+  const response = await instance.post('/api/v1/login', data);
+  return response.data;
+};
+
+export { signupUser, signinUser };
