@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useState, useEffect, useMemo } from 'react';
 import DatePicker from 'react-datepicker';
 
+import mockMeetings from '@/api/data/mockMeetings.json';
 import Icon from '@/components/shared/Icon';
 import Button from '@/components/ui/Button';
 import MeetingProgress from '@/components/ui/card/MeetingProgress';
@@ -11,7 +12,6 @@ import Chip from '@/components/ui/chip/Chip';
 import ChipInfo from '@/components/ui/chip/ChipInfo';
 import DropDown from '@/components/ui/DropDown';
 import EmptyMessage from '@/components/ui/EmptyMessage';
-import mockMeetings from '@/data/mockMeetings.json';
 import useModalStore from '@/store/useModalStore';
 
 import Card from './components/Card';
@@ -109,19 +109,6 @@ export default function MeetingList() {
   // 좋아요 핸들러
   const handleClickLike = () => null; // TODO: 낙관적 업데이트를 통한 좋아요 상태 업데이트 필요
 
-  // 날짜 변경 핸들러
-  const handleDateChange = (date: Date | null) => setSelectedDate(date);
-
-  // 날짜 기반 필터링
-  useEffect(() => {
-    const filtered = mockMeetings.filter((meeting) => {
-      const meetingDate = new Date(meeting.dateTime);
-      return !selectedDate || meetingDate.toDateString() === selectedDate.toDateString();
-    });
-
-    setFilteredMeetings(filtered);
-  }, [selectedDate]);
-
   return (
     <div className="container mx-auto mt-[72px] max-w-[1200px]">
       <div className="mb-[52px] flex items-center justify-between">
@@ -194,27 +181,24 @@ export default function MeetingList() {
       {/* TODO: 처음 10개는 SSR로 받아오고, 이후 Client Side에서 무한스크롤로 데이터 fetching 필요 */}
       <div className="meeting-list ">
         {/* 탭에 맞는 번개 리스트 보여주기 */}
-        {filteredMeetings.length === 0 ? (
-          <EmptyMessage firstLine="아직 번개가 없어요" secondLine="지금 번개를 만들어 보세요!" />
-        ) : (
-          <div className="mb-10 grid grid-cols-3 gap-x-6 gap-y-10">
-            {filteredMeetings.map((meeting) => (
-              <Card key={meeting.id}>
-                <div className="flex h-[430px] flex-col justify-between overflow-hidden">
-                  <div className="relative flex h-[200px] w-96 items-center justify-center overflow-hidden">
-                    {/* 좌상한 우하단 흰 박스 */}
-                    <div className="absolute left-0 top-0 z-0 size-[10px] bg-white" />
-                    <div className="absolute bottom-0 right-0 z-0 size-[10px] bg-white" />
-                    <Image
-                      src="/assets/card/example_image.png"
-                      width={384}
-                      height={200}
-                      alt="thumbnail"
-                      className="w-96"
-                    />
-                    {/* 좋아요 버튼 */}
-                    <Card.Like isLiked={meeting.isLiked} onClick={handleClickLike} />
-                  </div>
+        <div className="grid grid-cols-3 gap-x-6 gap-y-10">
+          {filteredMeetings.map((meeting) => (
+            <Card key={meeting.id}>
+              <div className="flex h-[430px] flex-col justify-between overflow-hidden">
+                <div className="relative flex h-[200px] w-96 items-center justify-center overflow-hidden">
+                  {/* 좌상한 우하단 흰 박스 */}
+                  <div className="absolute left-0 top-0 z-0 size-[10px] bg-white" />
+                  <div className="absolute bottom-0 right-0 z-0 size-[10px] bg-white" />
+                  <Image
+                    src="/assets/card/example_image.png"
+                    width={384}
+                    height={200}
+                    alt="thumbnail"
+                    className="w-96"
+                  />
+                  {/* 좋아요 버튼 */}
+                  <Card.Like isLiked={meeting.isLiked} onClick={handleClickLike} />
+                </div>
 
                   {/* 번개 정보 */}
                   <div className="flex h-[206px] flex-col justify-between">
