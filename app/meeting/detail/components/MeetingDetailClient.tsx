@@ -14,7 +14,7 @@ export default function MeetingDetailClient({ meeting }: { meeting: MeetingDetai
   const { data, error } = useQuery({
     queryKey: ['event', meeting.info.id],
     queryFn: () => fetchMeetingById(meeting.info.id),
-    initialData: meeting, // ✅ 서버에서 받은 초기 데이터 사용
+    initialData: meeting,
   });
 
   if (error) return <p>⚠️ 데이터를 불러오는 중 오류가 발생했습니다.</p>;

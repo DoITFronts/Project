@@ -8,10 +8,8 @@ import MeetingDetailClient from '@/app/meeting/detail/components/MeetingDetailCl
 import { MeetingDetail } from '@/types/meeting';
 
 export default function DetailPage() {
-  const params = useParams(); // ✅ 패럴라우팅에서 `params.id` 가져오기
+  const params = useParams();
   const meetingId = params.id as string;
-
-  // React Query를 사용한 API 데이터 가져오기
   const {
     data: meeting,
     isLoading,
@@ -19,8 +17,8 @@ export default function DetailPage() {
   } = useQuery<MeetingDetail>({
     queryKey: ['event', meetingId],
     queryFn: () => fetchMeetingById(meetingId),
-    enabled: !!meetingId, // ✅ `meetingId`가 있을 때만 요청 실행
-    staleTime: 1000 * 60 * 5, // 5분 동안 캐싱 유지
+    enabled: !!meetingId,
+    staleTime: 1000 * 60 * 5,
   });
 
   if (!meetingId) return <p>⚠️ 이벤트 ID가 필요합니다.</p>;
