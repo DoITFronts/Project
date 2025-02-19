@@ -11,7 +11,7 @@ const handlers = [
       return res(ctx.status(400), ctx.json({ error: 'Missing event ID' }));
     }
 
-    console.log('Received ID:', id);
+    console.log('handler Received ID:', id);
 
     return res(ctx.status(200), ctx.json({ ...mockMeetingDetail, id }));
   }),
