@@ -7,19 +7,20 @@ import Button from '@/components/ui/Button';
 import Icon from '@/components/shared/Icon';
 import axios from 'axios';
 
-type MeetingType = '술' | '카페' | '보드게임' | '맛집'; //TODO: 실제 타입값으로 변경
+type MeetingType = '술' | '카페' | '보드게임' | '맛집';
 const meetingTypes: MeetingType[] = ['술', '카페', '보드게임', '맛집'];
 
 export default function CreateMeetingModal() {
   const { closeModal } = useModalStore();
   const [meetingName, setMeetingName] = useState('');
+  const [meetingSummary, setMeetingSummary] = useState('');
   const [meetingPlace, setMeetingPlace] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [meetingDate, setMeetingDate] = useState(new Date());
   const [deadlineDate, setDeadlineDate] = useState(new Date());
   const [meetingType, setMeetingType] = useState<MeetingType | null>(null);
   const [participantCount, setParticipantCount] = useState('');
-
+  const [minParticipants, setMinParticipants] = useState('');
   // TODO: 추후에 데이터 연결 시 보내는 postData.
 
   const handleMeetingName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,6 +28,11 @@ export default function CreateMeetingModal() {
     if (/^[가-힣a-zA-Z0-9\s]*$/.test(value)) {
       setMeetingName(value);
     }
+  };
+
+  const handleMeetingSummary = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setMeetingSummary(value);
   };
 
   // TODO?: 따로 행정구역(~도 ~시)파일을 만들어서 지역을 검색했을 때 자동 완성 되는 기능을 넣어볼까 합니다.
@@ -55,6 +61,21 @@ export default function CreateMeetingModal() {
     }
   };
 
+  const handleParticipantChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // 숫자만 입력되도록
+    if (/^\d*$/.test(value)) {
+      setParticipantCount(value);
+    }
+  };
+
+  const handleMinParticipantsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (/^\d*$/.test(value)) {
+      setMinParticipants(value);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -65,6 +86,7 @@ export default function CreateMeetingModal() {
     }
     const meetingData = {
       name: meetingName,
+      summary: meetingSummary,
       location: meetingPlace,
       type: meetingType,
       dateTime: meetingDate.toISOString(),
@@ -92,6 +114,7 @@ export default function CreateMeetingModal() {
     !!meetingName &&
     meetingName.length >= 2 &&
     meetingName.length <= 30 &&
+    !!meetingSummary &&
     !!meetingPlace &&
     !!meetingDate &&
     !!deadlineDate &&
@@ -99,17 +122,9 @@ export default function CreateMeetingModal() {
     !!meetingType &&
     !!participantCount;
 
-  const handleParticipantChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    // 숫자만 입력되도록
-    if (/^\d*$/.test(value)) {
-      setParticipantCount(value);
-    }
-  };
-
   return (
-    <div className="w-[520px] h-auto p-6 bg-white rounded-xl shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] border border-black flex-col justify-start items-start gap-2.5 inline-flex overflow-hidden">
-      <div className="flex flex-col gap-6 w-full h-auto">
+    <div className="w-[520px] max-h-[95vh] p-6 bg-white rounded-xl shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] border border-black flex-col justify-start items-start gap-2.5 inline-flex oveflow-hidden">
+      <div className="flex flex-col gap-6 w-full h-auto overflow-y-auto [&::-webkit-scrollbar]:hidden">
         <div className="w-full flex justify-between ">
           <span className="text-xl text-black font-dunggeunmo">{'< 모임 만들기 >'}</span>
           <button onClick={closeModal}>
@@ -125,6 +140,17 @@ export default function CreateMeetingModal() {
               type="text"
               placeholder="모임 이름을 작성해 주세요."
               onChange={handleMeetingName}
+              className="text-black-8 w-full bg-black-2 px-4 py-2.5 rounded-[12px] placeholder:text-black-6"
+            />
+          </div>
+          <div className="w-full flex flex-col gap-3">
+            <label htmlFor="meetingSummary" className="font-dunggeunmo text-base text-black-11">
+              모임 소개글
+            </label>
+            <input
+              type="text"
+              placeholder="모임 소개글을 작성해 주세요."
+              onChange={handleMeetingSummary}
               className="text-black-8 w-full bg-black-2 px-4 py-2.5 rounded-[12px] placeholder:text-black-6"
             />
           </div>
@@ -229,10 +255,22 @@ export default function CreateMeetingModal() {
             </label>
             <input
               type="text"
-              className="text-black-8 w-full bg-gray-50 px-4 py-2.5 rounded-[12px]"
-              placeholder="최소 5인 이상 입력해 주세요."
+              className="text-black-8 w-full bg-black-2 px-4 py-2.5 rounded-[12px] placeholder:text-black-6"
+              placeholder="최대 인원을 입력해 주세요."
               onChange={handleParticipantChange}
               value={participantCount}
+            />
+          </div>
+          <div className="flex flex-col gap-3 w-full">
+            <label htmlFor="최소 인원" className="text-black-11 font-dunggeunmo text-base">
+              최소 인원
+            </label>
+            <input
+              type="text"
+              placeholder="최소 인원을 입력해 주세요."
+              className="text-black-8 w-full bg-black-2 px-4 py-2.5 rounded-[12px] placeholder:text-black-6"
+              onChange={handleMinParticipantsChange}
+              value={minParticipants}
             />
           </div>
         </form>

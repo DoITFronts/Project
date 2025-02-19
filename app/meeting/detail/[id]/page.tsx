@@ -1,22 +1,29 @@
-import fetchEventById from '@/api/meeting/fetchEventById';
-import fetchParticipants from '@/api/meeting/fetchParticipants';
-import EventDetailClient from '@/app/meeting/detail/components/EventDetailClient';
+'use client';
 
-type EventData = {
-  id: string;
-  title: string;
-  location: string;
-  datetime: string;
-  description: string;
-  isLiked: boolean;
-};
+import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'next/navigation';
 
-export default async function EventDetail({ params }: { params: { id: string } }) {
-  const { id } = params;
-  const event: EventData = await fetchEventById(id);
-  const participants = await fetchParticipants(id);
+import fetchMeetingById from '@/api/meeting/fetchMeetingById';
+import MeetingDetailClient from '@/app/meeting/detail/components/MeetingDetailClient';
+import { MeetingDetail } from '@/types/meeting';
 
-  if (!event) return <div>이 모임은 존재하지 않습니다.</div>;
+export default function DetailPage() {
+  const params = useParams();
+  const meetingId = params.id as string;
+  const {
+    data: meeting,
+    isLoading,
+    error,
+  } = useQuery<MeetingDetail>({
+    queryKey: ['event', meetingId],
+    queryFn: () => fetchMeetingById(meetingId),
+    enabled: !!meetingId,
+    staleTime: 1000 * 60 * 5,
+  });
 
-  return <EventDetailClient event={event} participants={participants} />;
+  if (!meetingId) return <p>⚠️ 이벤트 ID가 필요합니다.</p>;
+  if (isLoading) return <p>🔄 데이터를 불러오는 중...</p>;
+  if (error || !meeting) return <p>⚠️ 데이터를 불러오는 중 오류가 발생했습니다.</p>;
+
+  return <MeetingDetailClient meeting={meeting} />;
 }

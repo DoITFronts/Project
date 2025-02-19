@@ -3,12 +3,12 @@
 import Image from 'next/image';
 import { useState, useEffect, useMemo } from 'react';
 
+import mockMeetings from '@/api/data/mockMeetings.json';
 import Icon from '@/components/shared/Icon';
 import Button from '@/components/ui/Button';
 import MeetingProgress from '@/components/ui/card/MeetingProgress';
 import Chip from '@/components/ui/chip/Chip';
 import DropDown from '@/components/ui/DropDown';
-import mockMeetings from '@/data/mockMeetings.json';
 import useModalStore from '@/store/useModalStore';
 
 import Card from './components/Card';
