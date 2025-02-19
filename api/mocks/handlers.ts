@@ -5,7 +5,7 @@ import mockMeetingDetail from '@/api/data/mockMeetingDetail';
 
 const handlers = [
   rest.get('/api/meeting/detail/:id', (req, res, ctx) => {
-    const id = req.params.id as string;
+    const { id } = req.params;
 
     if (!id) {
       return res(ctx.status(400), ctx.json({ error: 'Missing event ID' }));

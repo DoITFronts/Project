@@ -5,20 +5,26 @@ import MeetingDetailClient from '@/app/meeting/detail/components/MeetingDetailCl
 import { MeetingDetail } from '@/types/meeting';
 
 export default async function DetailPage({ params }: { params: { id: string } }) {
-  if (!params.id) return <p>⚠️ 이벤트 ID가 필요합니다.</p>;
+  const { id } = params;
+  if (!params?.id) {
+    return <p>⚠️ 이벤트 ID가 필요합니다.</p>;
+  }
 
-  const queryClient = new QueryClient();
+  try {
+    const queryClient = new QueryClient();
+    await queryClient.prefetchQuery({
+      queryKey: ['event', id],
+      queryFn: async () => fetchMeetingById(id),
+    });
 
-  await queryClient.prefetchQuery({
-    queryKey: ['event', params.id],
-    queryFn: () => fetchMeetingById(params.id),
-  });
-
-  const meeting: MeetingDetail = await fetchMeetingById(params.id);
-
-  return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <MeetingDetailClient meeting={meeting} />
-    </HydrationBoundary>
-  );
+    const meeting: MeetingDetail = await fetchMeetingById(params.id);
+    return (
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <MeetingDetailClient meeting={meeting} />
+      </HydrationBoundary>
+    );
+  } catch (error) {
+    console.error('Error fetching meeting details:', error);
+    return <p>⚠️ 데이터를 불러오는 중 오류가 발생했습니다.</p>;
+  }
 }

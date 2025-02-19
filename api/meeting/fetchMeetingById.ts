@@ -3,11 +3,11 @@ const fetchMeetingById = async (id: string) => {
     throw new Error('Invalid event ID');
   }
 
-  const apiUrl = `/api/meeting/detail/${id}`;
+  const apiUrl = `/api/meeting/detail/${encodeURIComponent(id)}`;
 
   const response = await fetch(apiUrl);
 
-  if (!response.ok) throw new Error('API Error');
+  if (!response.ok) throw new Error(`API Error: ${response.status}`);
 
   return response.json();
 };
