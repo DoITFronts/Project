@@ -13,20 +13,19 @@ export default function Signup() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const [submittedData, setSubmittedData] = useState<SignUpRequestData | null>(null);
 
   const handleSignup = async (data: SignUpRequestData) => {
     try {
-      console.log('제출된 데이터:', data);
-      setSubmittedData(data);
       setIsLoading(true);
       setError(null);
+      console.log('제출된 회원가입 데이터:', data);
       const response = await signupUser(data);
       console.log('회원가입 응답:', response);
-      alert('회원가입 성공! 로그인 페이지로 이동합니다.');
+      setSuccess('회원가입 성공!');
       router.push('/user/signin');
-    } catch (err) {
+    } catch (err: any) {
       setError('회원가입에 실패했습니다. 다시 시도해 주세요.');
+      //TODO: email 중복 error 처리하기
     } finally {
       setIsLoading(false);
     }

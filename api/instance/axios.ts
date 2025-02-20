@@ -1,12 +1,9 @@
-import axios, { AxiosInstance } from 'axios';
+import axios from 'axios';
 
-const instance: AxiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-    // Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
-  },
+const axiosInstance = axios.create({
+  baseURL: process.env.REACT_APP_API_BASE_URL,
+  headers: { 'Content-Type': 'application/json' },
   withCredentials: true,
 });
 
-export default instance;
+export default axiosInstance;
