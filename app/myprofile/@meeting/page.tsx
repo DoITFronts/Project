@@ -28,12 +28,12 @@ export default function Page() {
           {ACTIVITY_TABS.map((activity) => (
             <button
               key={activity}
-              className="pr-[6px] pl-2.5 py-2 rounded-[12px] border border-black-1"
+              className={`pr-[6px] pl-2.5 py-2 rounded-[12px] border border-black-1 text-black-6 ${selectedActivityTab === activity ? 'bg-black text-white' : ''}`}
               onClick={() => handleActivityClick(activity)}
             >
               <div className="w-full flex justify-between items-center">
                 <div className="size-[24px] flex items-center justify-center">
-                  <div className="border border-black-6 w-4 h-4 rounded-[5px] flex items-center justify-center">
+                  <div className="border bg-white border-black-6 w-4 h-4 rounded-[5px] flex items-center justify-center">
                     {selectedActivityTab === activity ? (
                       <svg
                         width="10"
