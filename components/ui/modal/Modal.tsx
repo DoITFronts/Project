@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import useModalStore from '@/store/useModalStore';
 import CreateMeetingModal from './variants/CreateMeetingModal';
 import ProfileModal from './variants/ProfileModal';
@@ -36,6 +36,19 @@ import SignUpModal from './variants/SignUpModal';
 
 export default function Modal() {
   const { isOpen, modalType, closeModal } = useModalStore();
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleBackdropClick = (e: React.MouseEvent) => {

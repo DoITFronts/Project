@@ -41,7 +41,7 @@ export default function MeetingProgress({
       </div>
 
       {/* 번개 참여 버튼 */}
-      <Link href={`/meeting/list/${id}`}>
+      <Link href={`/meeting/detail/${id}`}>
         <Button className="ml-6" disabled={isCompleted}>
           {isCompleted ? '마감' : '번개 참여'}
         </Button>
