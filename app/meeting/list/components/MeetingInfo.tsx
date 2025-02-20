@@ -26,7 +26,7 @@ export default function MeetingInfo({
             alt="thumbnail"
             className="w-96"
           />
-          <Card.Like isLiked={meetings.isLiked} onClick={onClick} />
+          <Card.Like isLiked={meetings.isLiked} onClick={onClick} meetingId={meetings.id} />
         </div>
 
         <div className="flex h-[206px] flex-col justify-between">

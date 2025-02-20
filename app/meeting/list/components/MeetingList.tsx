@@ -1,10 +1,11 @@
 'use client';
 
-import { useInfiniteQuery, useMutation } from '@tanstack/react-query';
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useState, useEffect, useMemo } from 'react';
 import DatePicker from 'react-datepicker';
 
 import fetchMeeting from '@/api/meeting/fetchMeeting';
+import toggleLike from '@/api/meeting/toggleLike';
 import Icon from '@/components/shared/Icon';
 import Button from '@/components/ui/Button';
 import Chip from '@/components/ui/chip/Chip';
@@ -52,12 +53,47 @@ function FilterDropdown({
 }
 
 export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
+  const queryClient = useQueryClient();
   const { openModal } = useModalStore();
   const [selectedTab, setSelectedTab] = useState('전체');
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedFirstLocation, setSelectedFirstLocation] = useState(defaultFirstOption);
   const [selectedSecondLocation, setSelectedSecondLocation] = useState(defaultSecondOption);
   const [observerNode, setObserverNode] = useState<HTMLDivElement | null>(null);
+
+  // 좋아요 Mutation
+  const likeMutation = useMutation({
+    mutationFn: (meetingId: number) => toggleLike(meetingId),
+    onMutate: async (meetingId: number) => {
+      await queryClient.cancelQueries({ queryKey: ['meetings'] });
+
+      // 현재 캐시된 데이터 스냅샷 저장
+      const previousMeetings = queryClient.getQueryData<Meeting[]>(['meetings']);
+
+      // 새로운 좋아요 상태 적용 (낙관적 업데이트)
+      queryClient.setQueryData(['meetings'], (oldData: any) => {
+        if (!oldData) return oldData;
+        return {
+          ...oldData,
+          pages: oldData.pages.map((page: Meeting[]) =>
+            page.map((meeting) =>
+              meeting.id === meetingId ? { ...meeting, isLiked: !meeting.isLiked } : meeting,
+            ),
+          ),
+        };
+      });
+
+      return { previousMeetings };
+    },
+    onError: (_err, _meetingId, context) => {
+      if (context?.previousMeetings) {
+        queryClient.setQueryData(['meetings'], context.previousMeetings);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['meetings'] });
+    },
+  });
 
   // useInfiniteQuery를 사용해 번개 데이터 가져오기
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
@@ -134,7 +170,9 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
   };
 
   // 좋아요 버튼 클릭 핸들러
-  const handleClickLike = () => null; // TODO: 낙관적 업데이트를 통한 좋아요 상태 업데이트 필요
+  const handleClickLike = (meetingId: number) => {
+    likeMutation.mutate(meetingId);
+  };
 
   // 날짜 변경 핸들러
   const handleDateChange = (date: Date | null) => setSelectedDate(date);
@@ -204,7 +242,7 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
               <MeetingInfo
                 key={`${meeting.id}-${index}`}
                 meetings={meeting}
-                onClick={handleClickLike}
+                onClick={() => handleClickLike(meeting.id)}
               />
             ))}
           </div>
