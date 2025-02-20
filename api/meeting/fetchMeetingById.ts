@@ -1,7 +1,5 @@
-const fetchMeetingById = async (id: string) => {
-  if (!id) {
-    throw new Error('Invalid event ID');
-  }
+async function fetchMeetingById(id: string) {
+  console.log(`📡 Fetching meeting ID: ${id}`); // 요청 로그 추가
 
   const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
   const apiUrl = `${baseURL}/api/meeting/detail/${id}`;
@@ -23,6 +21,6 @@ const fetchMeetingById = async (id: string) => {
     console.error('Error fetching meeting details:', error);
     throw error;
   }
-};
+}
 
 export default fetchMeetingById;

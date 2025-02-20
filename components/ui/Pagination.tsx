@@ -6,14 +6,12 @@ import { useState } from 'react';
 interface PaginationProps {
   totalPages: number;
   currentPage: number;
-  size?: 'sm' | 'lg';
   onPageChangeAction: (page: number) => void;
 }
 
 export default function Pagination({
   totalPages,
   currentPage,
-  size = 'sm',
   onPageChangeAction,
 }: PaginationProps) {
   const [selectedPage, setSelectedPage] = useState(currentPage);
@@ -24,10 +22,6 @@ export default function Pagination({
     onPageChangeAction(page);
   };
 
-  const buttonSize =
-    size === 'sm' ? 'w-[34px] h-[34px] p-2.5 rounded-md' : 'w-12 h-12 p-2.5 rounded-lg';
-  const numberSize = size === 'sm' ? 'text-sm' : 'text-base';
-
   const renderPageNumbers = () => {
     const pages = [];
     for (let i = 1; i <= totalPages; i += 1) {
@@ -36,21 +30,29 @@ export default function Pagination({
           <button
             key={i}
             type="button"
-            aria-label="Go to page"
+            aria-label={`Go to page ${i}`}
             className={clsx(
-              buttonSize,
-              'flex items-center justify-center bg-white font-medium',
-              selectedPage === i ? 'font-semibold text-[#1e1e1e]' : 'text-[#c4c4c4]',
+              'flex size-12 items-center justify-center rounded-lg p-2.5',
+              selectedPage === i
+                ? 'bg-[#fcfcfc] font-bold text-[#595959]'
+                : 'bg-white text-[#bfbfbf]',
             )}
             onClick={() => handlePageChange(i)}
           >
-            <span className={numberSize}>{i}</span>
+            {i}
           </button>,
         );
       } else if (i === selectedPage - 2 || i === selectedPage + 2) {
         pages.push(
-          <div key={i} className={clsx(buttonSize, 'flex items-center justify-center')}>
-            <span className="text-[#c4c4c4]">...</span>
+          <div
+            key={i}
+            className="flex size-12 items-center justify-center rounded-lg bg-[#fcfcfc] p-2.5"
+          >
+            <div className="flex gap-0.5">
+              <div className="size-[3px] rounded-full bg-[#bfbfbf]" />
+              <div className="size-[3px] rounded-full bg-[#bfbfbf]" />
+              <div className="size-[3px] rounded-full bg-[#bfbfbf]" />
+            </div>
           </div>,
         );
       }
@@ -59,45 +61,58 @@ export default function Pagination({
   };
 
   return (
-    <div className="relative flex w-[516px] justify-center gap-2 overflow-hidden rounded-[5px] p-5">
+    <div className="flex h-12 items-center gap-2.5">
+      {/* 이전 페이지 버튼 */}
       <button
         type="button"
         aria-label="Previous page"
-        className={clsx(buttonSize, 'flex items-center justify-center bg-white')}
+        className="flex size-12 items-center justify-center"
         onClick={() => handlePageChange(selectedPage - 1)}
         disabled={selectedPage === 1}
       >
         <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
+          width="48"
+          height="48"
+          viewBox="0 0 48 48"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            d="M8.53494 12.7151C8.23485 12.3975 8.23485 11.9008 8.53494 11.5832L13.9942 5.8047C14.5062 5.26275 15.4174 5.6251 15.4174 6.37066V17.9276C15.4174 18.6732 14.5062 19.0355 13.9942 18.4936L8.53494 12.7151Z"
-            fill={selectedPage === 1 ? '#E5E7EB' : '#1F2937'}
+            d="M0 8C0 3.58172 3.58172 0 8 0H40C44.4183 0 48 3.58172 48 8V40C48 44.4183 44.4183 48 40 48H8C3.58172 48 0 44.4183 0 40V8Z"
+            fill="white"
+          />
+          <path
+            d="M19.8408 24.7477C19.3933 24.3499 19.3933 23.6507 19.8408 23.2529L26.3356 17.4797C26.9805 16.9064 28 17.3642 28 18.2271V29.7734C28 30.6363 26.9805 31.0941 26.3356 30.5208L19.8408 24.7477Z"
+            fill={selectedPage === 1 ? '#E5E7EB' : '#F0F0F0'}
           />
         </svg>
       </button>
-      {renderPageNumbers()}
+
+      {/* 페이지 번호 */}
+      <div className="flex gap-1">{renderPageNumbers()}</div>
+
+      {/* 다음 페이지 버튼 */}
       <button
         type="button"
-        aria-label="Previous page"
-        className={clsx(buttonSize, 'flex items-center justify-center bg-white')}
+        aria-label="Next page"
+        className="flex size-12 items-center justify-center"
         onClick={() => handlePageChange(selectedPage + 1)}
         disabled={selectedPage === totalPages}
       >
         <svg
-          width="8"
-          height="14"
-          viewBox="0 0 8 14"
+          width="48"
+          height="48"
+          viewBox="0 0 48 48"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            d="M6.88254 7.71513C7.18263 7.3975 7.18263 6.90085 6.88254 6.58321L1.42328 0.8047C0.911278 0.262753 9.82285e-05 0.625104 9.82285e-05 1.37066L9.82285e-05 12.9276C9.82285e-05 13.6732 0.911274 14.0355 1.42328 13.4936L6.88254 7.71513Z"
-            fill={selectedPage === totalPages ? '#E5E7EB' : '#1F2937'}
+            d="M0 8C0 3.58172 3.58172 0 8 0H40C44.4183 0 48 3.58172 48 8V40C48 44.4183 44.4183 48 40 48H8C3.58172 48 0 44.4183 0 40V8Z"
+            fill="white"
+          />
+          <path
+            d="M27.1592 24.7474C27.6067 24.3496 27.6067 23.6504 27.1592 23.2526L20.6644 17.4794C20.0195 16.9062 19 17.364 19 18.2268V29.7732C19 30.636 20.0195 31.0938 20.6644 30.5206L27.1592 24.7474Z"
+            fill={selectedPage === totalPages ? '#E5E7EB' : '#F0F0F0'}
           />
         </svg>
       </button>
