@@ -8,7 +8,7 @@ function ProfileIcon({ theme, size = 'medium' }: ProfileIconProps) {
 
   const backgroundColor = theme === 'dark' ? '#BFBFBF' : '#F0F0F0';
   const pathColor = theme === 'dark' ? '#F0F0F0' : '#BFBFBF';
-  const dimensions = size === 'small' ? 20 : 30;
+ 
 
   const predefinedSizes = {
     small: 20,
