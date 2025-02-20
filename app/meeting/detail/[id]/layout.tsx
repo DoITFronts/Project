@@ -1,14 +1,12 @@
 import React from 'react';
 
-export default function MeetingLayout({
-  children,
-  reviews,
-  description,
-}: {
+interface MeetingLayoutProps {
   children: React.ReactNode;
   reviews: React.ReactNode | null;
   description: React.ReactNode | null;
-}) {
+}
+
+export default function MeetingLayout({ children, reviews, description }: MeetingLayoutProps) {
   return (
     <div className="mx-auto max-w-5xl p-4">
       <div className="flex">{children}</div>
