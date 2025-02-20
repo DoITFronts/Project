@@ -14,7 +14,7 @@ import Icon from '../shared/Icon';
 import Button from '../ui/Button';
 
 interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
-  onSubmit: (data: any) => void; // 수정된 부분: 데이터 매개변수를 받도록 변경
+  onSubmit: (data: any) => void;
 }
 interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {}
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
