@@ -83,7 +83,7 @@ export default function DropDown({
                   className={`${optionClassName} ${
                     selectedValue === option
                       ? 'rounded-lg bg-black text-white hover:bg-black hover:text-white'
-                      : 'hover:bg-gray-100'
+                      : 'hover:bg-gray-100 hover:text-black'
                   } cursor-pointer rounded-lg`}
                 >
                   {option}
