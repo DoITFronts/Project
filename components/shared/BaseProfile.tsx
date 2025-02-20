@@ -1,9 +1,20 @@
-function ProfileIcon({ theme }: { theme: 'light' | 'dark' }) {
+interface ProfileIconProps {
+  theme: 'light' | 'dark';
+  size?: number;
+}
+
+function ProfileIcon({ theme, size = 30 }: ProfileIconProps) {
   const backgroundColor = theme === 'dark' ? '#BFBFBF' : '#F0F0F0';
   const pathColor = theme === 'dark' ? '#F0F0F0' : '#BFBFBF';
 
   return (
-    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 30 30"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <rect width="30" height="30" rx="15" fill={backgroundColor} />
       <path
         fillRule="evenodd"
