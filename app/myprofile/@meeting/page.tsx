@@ -76,8 +76,6 @@ export default function Page() {
                   alt="thumbnail"
                   className="w-96"
                 />
-                {/* TODO: 좋아요 **/}
-                <Card.Like isLiked={meeting.isLiked} onClick={() => console.log('hi')} />
               </div>
 
               {/* 번개 정보 */}
