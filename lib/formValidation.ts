@@ -8,7 +8,7 @@ export type Field =
   | 'nickname'
   | 'password'
   | 'passwordConfirmation'
-  | 'birthVerify';
+  | 'birth';
 
 const FIELD_DICTIONARY: Record<Field, string> = {
   name: '이름',
@@ -17,7 +17,7 @@ const FIELD_DICTIONARY: Record<Field, string> = {
   nickname: '닉네임',
   password: '비밀번호',
   passwordConfirmation: '비밀번호 확인',
-  birthVerify: '본인인증',
+  birth: '본인인증',
 };
 
 const EMAIL_PATTERN = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -76,7 +76,7 @@ export const PASSWORD_CONFIRM_RULES = (passwordValue: string): RegisterOptions =
 const BIRTH_VERIFY_PATTERN = /^(19|20)\d{2}\.(0[1-9]|1[0-2])\.(0[1-9]|1\d|2[0-9]|3[01])$/;
 
 const BIRTH_VERIFY_RULES: RegisterOptions = {
-  required: generateRequiredMessage('birthVerify'),
+  required: generateRequiredMessage('birth'),
   pattern: { value: BIRTH_VERIFY_PATTERN, message: 'yyyy.mm.dd 형식으로 작성해 주세요.' },
   validate: (value) => {
     const [year, month, day] = value.split('.').map(Number);
@@ -95,7 +95,7 @@ const VALIDATION_RULES: Record<Field, RegisterOptions> = {
   nickname: NICKNAME_RULES,
   password: PASSWORD_RULES,
   passwordConfirmation: {},
-  birthVerify: BIRTH_VERIFY_RULES,
+  birth: BIRTH_VERIFY_RULES,
 };
 
 export default VALIDATION_RULES;
