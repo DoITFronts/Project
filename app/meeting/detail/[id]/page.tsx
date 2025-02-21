@@ -24,7 +24,11 @@ export default function DetailPage() {
 
     fetchMeetingById(meetingId)
       .then((data) => {
-        setMeeting(data);
+        if (data && data.info && data.info.id) {
+          setMeeting(data);
+        } else {
+          setError(new Error('Invalid event data'));
+        }
         setLoading(false);
       })
       .catch((err) => {

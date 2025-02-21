@@ -4,6 +4,10 @@ import { useQuery } from '@tanstack/react-query';
 
 import fetchMeetingById from '@/api/meeting/fetchMeetingById';
 import AvatarGroup from '@/app/meeting/detail/components/AvatarGroup';
+import {
+  MeetingDetailError,
+  MeetingDetailSkeleton,
+} from '@/app/meeting/detail/components/skeleton/MeetingDetailSkeleton';
 import Card from '@/app/meeting/list/components/Card';
 import FallbackImage from '@/components/shared/FallbackImage';
 import MeetingProgress from '@/components/ui/card/MeetingProgress';
@@ -15,9 +19,11 @@ export default function MeetingDetailClient({ meeting }: { meeting: MeetingDetai
     queryKey: ['event', meeting?.info?.id],
     queryFn: () => fetchMeetingById(meeting.info.id),
     initialData: meeting,
+    enabled: !!meeting.info.id,
   });
 
-  if (error) return <p>⚠️ 데이터를 불러오는 중 오류가 발생했습니다.</p>;
+  if (error) return <MeetingDetailError onRetry={() => window.location.reload()} />;
+  if (!data?.info?.id) return <MeetingDetailSkeleton />;
 
   return (
     <Card mode="detail">

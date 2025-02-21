@@ -2,6 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
 
 import fetchMeetingById from '@/api/meeting/fetchMeetingById';
@@ -31,6 +32,12 @@ export default function DescriptionPage() {
   if (!meetingId) return <p>⚠️ 이벤트 ID가 필요합니다.</p>;
   if (isLoading) return <DescriptionSkeleton />;
   if (error || !meeting) return <DescriptionError onRetry={refetch} />;
+  if (!meeting?.details?.description)
+    return (
+      <p className="flex h-[200px] items-center justify-center text-gray-500">
+        아직 상세 설명이 없습니다.
+      </p>
+    );
 
   return (
     <div className="h-[300px] font-['Pretendard'] text-base font-medium leading-normal text-neutral-800">
