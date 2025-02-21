@@ -4,6 +4,7 @@ import { josa } from 'es-hangul';
 export type Field =
   | 'name'
   | 'email'
+  | 'username'
   | 'nickname'
   | 'password'
   | 'passwordConfirmation'
@@ -12,6 +13,7 @@ export type Field =
 const FIELD_DICTIONARY: Record<Field, string> = {
   name: '이름',
   email: '이메일',
+  username: '유저네임',
   nickname: '닉네임',
   password: '비밀번호',
   passwordConfirmation: '비밀번호 확인',
@@ -89,6 +91,7 @@ const BIRTH_VERIFY_RULES: RegisterOptions = {
 const VALIDATION_RULES: Record<Field, RegisterOptions> = {
   name: NAME_RULES,
   email: EMAIL_RULES,
+  username: {},
   nickname: NICKNAME_RULES,
   password: PASSWORD_RULES,
   passwordConfirmation: {},
