@@ -5,27 +5,39 @@ import { useParams } from 'next/navigation';
 import React from 'react';
 
 import fetchMeetingById from '@/api/meeting/fetchMeetingById';
+import {
+  ReviewListError,
+  ReviewListSkeleton,
+} from '@/app/meeting/detail/components/skeleton/ReviewSkeleton';
 import ReviewItem from '@/components/ui/review/ReviewItem';
 import { MeetingDetail } from '@/types/meeting';
 
 export default function ReviewList() {
   const params = useParams();
   const meetingId = params.id as string;
+
   const {
     data: meeting,
     isLoading,
     error,
+    refetch,
   } = useQuery<MeetingDetail>({
     queryKey: ['event', meetingId],
     queryFn: () => fetchMeetingById(meetingId),
     enabled: !!meetingId,
     staleTime: 1000 * 60 * 5,
+    retry: 2,
   });
 
   if (!meetingId) return <p>⚠️ 이벤트 ID가 필요합니다.</p>;
-  if (isLoading) return <p>🔄 데이터를 불러오는 중...</p>;
-  if (error || !meeting) return <p>⚠️ 데이터를 불러오는 중 오류가 발생했습니다.</p>;
-  if (!meeting?.reviews?.length) return <p>아직 리뷰가 없습니다.</p>;
+  if (isLoading) return <ReviewListSkeleton />;
+  if (error || !meeting) return <ReviewListError onRetry={refetch} />;
+  if (!meeting?.reviews?.length)
+    return (
+      <p className="flex h-[200px] items-center justify-center text-gray-500">
+        아직 리뷰가 없습니다.
+      </p>
+    );
 
   return (
     <div className="flex-col items-start justify-start gap-[18px]">

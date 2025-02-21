@@ -12,7 +12,7 @@ import { MeetingDetail } from '@/types/meeting';
 
 export default function MeetingDetailClient({ meeting }: { meeting: MeetingDetail }) {
   const { data, error } = useQuery({
-    queryKey: ['event', meeting.info.id],
+    queryKey: ['event', meeting?.info.id],
     queryFn: () => fetchMeetingById(meeting.info.id),
     initialData: meeting,
   });
