@@ -1,6 +1,6 @@
 export default function Tag({ text = '오늘 마감!' }: { text?: string }) {
   return (
-    <div className="inline-flex h-[28px] w-[88px] items-center justify-center gap-[10px] overflow-hidden rounded-[24px] bg-[#ff5e76] px-[10px] py-[4px]">
+    <div className="inline-flex h-[28px] w-fit items-center justify-center gap-[10px] overflow-hidden rounded-[24px] bg-[#ff5e76] px-[10px] py-[4px]">
       <div className="flex items-center gap-[4px]">
         <div className="relative">
           <svg
@@ -19,9 +19,7 @@ export default function Tag({ text = '오늘 마감!' }: { text?: string }) {
             />
           </svg>
         </div>
-        <div className="font-pretendard text-[12px] font-semibold leading-[20px] text-white">
-          {text}
-        </div>
+        <div className="font-pretendard text-[12px] leading-[20px] text-white">{text}</div>
       </div>
     </div>
   );

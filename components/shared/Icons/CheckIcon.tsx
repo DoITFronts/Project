@@ -19,9 +19,9 @@ export default function CheckIcon({ size = 'sm', variant = 'default' }: CheckIco
         <path
           d="M7.08398 10.7245L9.17459 12.8151L12.7856 9.2041"
           stroke="white"
-          stroke-width="1.4"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     );
