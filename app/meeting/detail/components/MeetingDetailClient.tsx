@@ -26,7 +26,7 @@ export default function MeetingDetailClient({ meeting }: { meeting: MeetingDetai
           <div className="absolute left-0 top-0 z-0 size-[10px] bg-white" />
           <div className="absolute bottom-0 right-0 z-0 size-[10px] bg-white" />
           <FallbackImage />
-          <Card.Like isLiked={data.info.isLiked} onClick={() => null} />
+          <Card.Like meetingId={data.info.id} isLiked={data.info.isLiked} onClick={() => null} />
         </div>
         <div className="flex h-[271px] w-[calc(100%-518px)] flex-col justify-between">
           <div className="flex flex-col gap-[10px]">

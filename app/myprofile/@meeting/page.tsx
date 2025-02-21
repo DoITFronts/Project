@@ -1,10 +1,12 @@
 'use client';
-import Chip from '@/components/ui/chip/Chip';
-import { useState } from 'react';
-import mockMeetings from '@/data/mockMeetings.json';
+
 import Image from 'next/image';
+import { useState } from 'react';
+
+import mockMeetings from '@/api/data/mockMeetings';
 import Card from '@/app/meeting/list/components/Card';
 import MeetingProgress from '@/components/ui/card/MeetingProgress';
+import Chip from '@/components/ui/chip/Chip';
 
 const MENU_TABS = ['나의 번개', '내가 만든 번개', '리뷰', '채팅'];
 const ACTIVITY_TABS = ['술', '카페', '보드 게임', '맛집'];
@@ -15,25 +17,25 @@ export default function Page() {
   const handleMenuClick = (tab: string) => setSelecetedMenuTab(tab);
   const handleActivityClick = (tab: string) => setSelectedActivityTab(tab);
   return (
-    <div className="w-full h-auto flex flex-col gap-10">
-      <div className="w-auto h-auto flex flex-col gap-5">
-        <div className="w-auto h-auto flex gap-3 items-center">
+    <div className="flex h-auto w-full flex-col gap-10">
+      <div className="flex size-auto flex-col gap-5">
+        <div className="flex size-auto items-center gap-3">
           {MENU_TABS.map((tab) => (
             <button className="cursor-pointer" key={tab} onClick={() => handleMenuClick(tab)}>
               <Chip text={tab} size="lg" mode={tab === selectedMenuTab ? 'dark' : 'light'} />
             </button>
           ))}
         </div>
-        <div className="w-auto h-auto flex gap-3 items-center">
+        <div className="flex size-auto items-center gap-3">
           {ACTIVITY_TABS.map((activity) => (
             <button
               key={activity}
-              className={`pr-[6px] pl-2.5 py-2 rounded-[12px] border border-black-1 text-black-6 ${selectedActivityTab === activity ? 'bg-black text-white' : ''}`}
+              className={`border-black-1 rounded-[12px] border py-2 pl-2.5 pr-[6px] text-black-6 ${selectedActivityTab === activity ? 'bg-black text-white' : ''}`}
               onClick={() => handleActivityClick(activity)}
             >
-              <div className="w-full flex justify-between items-center">
-                <div className="size-[24px] flex items-center justify-center">
-                  <div className="border bg-white border-black-6 w-4 h-4 rounded-[5px] flex items-center justify-center">
+              <div className="flex w-full items-center justify-between">
+                <div className="flex size-[24px] items-center justify-center">
+                  <div className="flex size-4 items-center justify-center rounded-[5px] border border-black-6 bg-white">
                     {selectedActivityTab === activity ? (
                       <svg
                         width="10"
