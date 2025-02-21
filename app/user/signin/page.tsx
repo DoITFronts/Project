@@ -12,7 +12,6 @@ import { signinUser } from '@/api/auth';
 export default function Signin() {
   const router = useRouter();
 
-  //✅ 로그인 처리
   const handleSignin = async (data: SignInRequestData) => {
     try {
       console.log('제출된 로그인 데이터:', data);

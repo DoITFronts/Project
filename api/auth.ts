@@ -1,5 +1,4 @@
-import axiosInstance from './instance/axios';
-
+import axiosInstance from './api';
 //회원가입
 const signupUser = async (data: SignUpRequestData) => {
   const response = await axiosInstance.post('/api/v1/join', data);
