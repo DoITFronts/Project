@@ -32,7 +32,9 @@ export default function Signin() {
     <div className="bg-white py-52 flex justify-center items-center">
       <div className="w-[402px]">
         <div className="flex justify-center items-center mb-[50px]">
-          <Image src={Logo} alt="번개팅 로고" width={147.6} height={32.4} />
+          <Link href={'/'}>
+            <Image src={Logo} alt="번개팅 로고" width={147.6} height={32.4} />
+          </Link>{' '}
         </div>
         <Form onSubmit={handleSignin}>
           <Form.Label className="pb-3">
