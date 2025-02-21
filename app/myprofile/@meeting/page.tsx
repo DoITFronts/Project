@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import mockMeetings from '@/api/data/mockMeetings';
 import Card from '@/app/meeting/list/components/Card';
@@ -14,8 +14,21 @@ export default function Page() {
   const [selectedMenuTab, setSelecetedMenuTab] = useState('');
   const [selectedActivityTab, setSelectedActivityTab] = useState('');
   const [meetings, setMeetings] = useState(mockMeetings);
+
+  const filterdMeetings = useMemo(() => {
+    if (!selectedActivityTab) return mockMeetings;
+    return mockMeetings.filter((meeting) => meeting.category === selectedActivityTab);
+  }, [selectedActivityTab]);
+
   const handleMenuClick = (tab: string) => setSelecetedMenuTab(tab);
-  const handleActivityClick = (tab: string) => setSelectedActivityTab(tab);
+  const handleActivityClick = (tab: string) => {
+    if (tab === selectedActivityTab) {
+      setSelectedActivityTab('');
+    } else {
+      setSelectedActivityTab(tab);
+    }
+  };
+
   return (
     <div className="flex h-auto w-full flex-col gap-10">
       <div className="flex size-auto flex-col gap-5">
@@ -64,7 +77,7 @@ export default function Page() {
         </div>
       </div>
       <div className="grid grid-cols-3 gap-x-6 gap-y-10">
-        {meetings.map((meeting) => (
+        {filterdMeetings.map((meeting) => (
           <Card key={meeting.id} mode="list">
             <div className="flex h-[430px] flex-col justify-between overflow-hidden">
               <div className="relative flex h-[200px] w-96 items-center justify-center overflow-hidden">
