@@ -48,7 +48,14 @@ export default function GNB() {
       <div className="flex w-full justify-between">
         <div className="flex items-center justify-between gap-x-[31px] md:gap-x-[78px]">
           <Link href="/" className="flex h-[17px] w-[75px] md:h-5 md:w-20">
-            <Image src={Logo} alt="번개팅 메인 로고" width={80} height={20} />
+            <Image
+              src={Logo}
+              alt="번개팅 메인 로고"
+              width={80}
+              height={20}
+              priority
+              loading="eager"
+            />
           </Link>
           <div className="mr-5 flex gap-x-3 md:gap-x-6">
             <NavItem href="/meeting/list" label="번개 찾기" currentPath={pathname} />

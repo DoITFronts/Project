@@ -1,7 +1,7 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import fetchMeetingById from '@/api/meeting/fetchMeetingById';
 import MeetingDetailClient from '@/app/meeting/detail/components/MeetingDetailClient';
@@ -15,22 +15,27 @@ export default function DetailPage() {
   const params = useParams();
   const meetingId = params.id as string;
 
-  const {
-    data: meeting,
-    isLoading,
-    error,
-    refetch,
-  } = useQuery<MeetingDetail>({
-    queryKey: ['event', meetingId],
-    queryFn: () => fetchMeetingById(meetingId),
-    enabled: !!meetingId,
-    staleTime: 1000 * 60 * 5,
-    retry: 2,
-  });
+  const [meeting, setMeeting] = useState<MeetingDetail | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    if (!meetingId) return;
+
+    fetchMeetingById(meetingId)
+      .then((data) => {
+        setMeeting(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err);
+        setLoading(false);
+      });
+  }, [meetingId]);
 
   if (!meetingId) return <p>⚠️ 이벤트 ID가 필요합니다.</p>;
-  if (isLoading) return <MeetingDetailSkeleton />;
-  if (error || !meeting) return <MeetingDetailError onRetry={refetch} />;
+  if (loading) return <MeetingDetailSkeleton />;
+  if (error || !meeting) return <MeetingDetailError onRetry={() => window.location.reload()} />;
 
   return <MeetingDetailClient meeting={meeting} />;
 }

@@ -11,7 +11,11 @@ export const metadata: Metadata = {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        <title>번개팅</title>
+      </head>
       <body>
+        <link rel="preconnect" href="/" />
         <RootLayout>{children}</RootLayout>
       </body>
     </html>
