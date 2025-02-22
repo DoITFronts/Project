@@ -14,7 +14,7 @@ import Icon from '../shared/Icon';
 import Button from '../ui/Button';
 
 interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
-  onSubmit: () => void;
+  onSubmit: (data: any) => void;
 }
 interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {}
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -28,9 +28,8 @@ interface BaseProps {
 export default function Form({ onSubmit, id, className, children }: FormProps) {
   const methods = useForm();
 
-  //[Test] 폼데이터 출력 테스트용
   const handleFormSubmit = (data: any) => {
-    console.log('📌 Form Data:', data);
+    onSubmit(data);
   };
 
   return (
@@ -159,7 +158,7 @@ function Submit({ className, children }: BaseProps) {
   const { formState } = useFormContext();
 
   return (
-    <Button type="button" className={className} color="filled" disabled={!formState.isValid}>
+    <Button type="submit" className={className} color="filled" disabled={!formState.isValid}>
       {children}
     </Button>
   );
