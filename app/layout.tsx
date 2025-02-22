@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 import '@/styles/global.css';
 import RootLayout from '@/components/layout/RootLayout';
