@@ -61,7 +61,10 @@ export default function GNB() {
             // TODO: user 개인 Profile 분기처리
             <Icon path="profile/userProfileDefault" width="37px" height="37px" />
           ) : (
-            <NavItem href="/user/signin" label="로그인" currentPath={pathname} />
+            <div className="flex gap-5 mr-4">
+              <NavItem href="/user/signin" label="로그인" currentPath={pathname} />
+              <NavItem href="/user/signup" label="회원가입" currentPath={pathname} />
+            </div>
           )}
         </div>
       </div>
