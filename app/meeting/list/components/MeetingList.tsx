@@ -55,7 +55,7 @@ function FilterDropdown({
 export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
   const queryClient = useQueryClient();
   const { openModal } = useModalStore();
-  const [selectedTab, setSelectedTab] = useState('전체');
+  const [selectedCategory, setSelectedCategory] = useState('전체');
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedFirstLocation, setSelectedFirstLocation] = useState(defaultFirstOption);
   const [selectedSecondLocation, setSelectedSecondLocation] = useState(defaultSecondOption);
@@ -63,8 +63,8 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
 
   // 좋아요 Mutation
   const likeMutation = useMutation({
-    mutationFn: (meetingId: number) => toggleLike(meetingId),
-    onMutate: async (meetingId: number) => {
+    mutationFn: (meetingId: string) => toggleLike(meetingId),
+    onMutate: async (meetingId: string) => {
       await queryClient.cancelQueries({ queryKey: ['meetings'] });
 
       // 현재 캐시된 데이터 스냅샷 저장
@@ -99,14 +99,14 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: [
       'meetings',
-      selectedTab,
+      selectedCategory,
       selectedFirstLocation,
       selectedSecondLocation,
       selectedDate,
     ],
     queryFn: ({ pageParam = 2 }) =>
       fetchMeeting({
-        tab: selectedTab,
+        category: selectedCategory,
         location_1: selectedFirstLocation,
         location_2: selectedSecondLocation,
         date: selectedDate,
@@ -147,8 +147,8 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
     [selectedFirstLocation],
   );
 
-  // 탭 변경
-  const handleTabClick = (tab: string) => setSelectedTab(tab);
+  // 카테고리 변경
+  const handleCategoryClick = (category: string) => setSelectedCategory(category);
 
   // 첫 번째 지역 선택
   const handleSelectFirstLocation = (selected: string) => {
@@ -170,7 +170,7 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
   };
 
   // 좋아요 버튼 클릭 핸들러
-  const handleClickLike = (meetingId: number) => {
+  const handleClickLike = (meetingId: string) => {
     likeMutation.mutate(meetingId);
   };
 
@@ -196,14 +196,18 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
 
       {/* 번개 카테고리 */}
       <div className="mb-10 flex gap-3">
-        {meetingTypes.map((tab) => (
+        {meetingTypes.map((category) => (
           <button
-            key={tab}
+            key={category}
             type="button"
-            onClick={() => handleTabClick(tab)}
+            onClick={() => handleCategoryClick(category)}
             className="cursor-pointer focus:outline-none"
           >
-            <Chip text={tab} size="lg" mode={selectedTab === tab ? 'dark' : 'light'} />
+            <Chip
+              text={category}
+              size="lg"
+              mode={selectedCategory === category ? 'dark' : 'light'}
+            />
           </button>
         ))}
       </div>
