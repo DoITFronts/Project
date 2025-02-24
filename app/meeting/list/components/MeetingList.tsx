@@ -1,6 +1,7 @@
 'use client';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useState, useEffect, useMemo } from 'react';
 import DatePicker from 'react-datepicker';
 
@@ -55,11 +56,78 @@ function FilterDropdown({
 export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
   const queryClient = useQueryClient();
   const { openModal } = useModalStore();
-  const [selectedCategory, setSelectedCategory] = useState('전체');
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedFirstLocation, setSelectedFirstLocation] = useState(defaultFirstOption);
-  const [selectedSecondLocation, setSelectedSecondLocation] = useState(defaultSecondOption);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  // URL에서 가져온 검색 조건을 상태로 관리
+  const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || '전체');
+  const [selectedFirstLocation, setSelectedFirstLocation] = useState(
+    searchParams.get('location_1') || defaultFirstOption,
+  );
+  const [selectedSecondLocation, setSelectedSecondLocation] = useState(
+    searchParams.get('location_2') || defaultSecondOption,
+  );
+  const [selectedDate, setSelectedDate] = useState(
+    searchParams.get('date') ? new Date(searchParams.get('date') as string) : null,
+  );
   const [observerNode, setObserverNode] = useState<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    setSelectedCategory(searchParams.get('category') || '전체');
+    setSelectedFirstLocation(searchParams.get('location_1') || defaultFirstOption);
+    setSelectedSecondLocation(searchParams.get('location_2') || defaultSecondOption);
+    setSelectedDate(searchParams.get('date') ? new Date(searchParams.get('date') as string) : null);
+  }, [searchParams]);
+
+  // URL을 변경하여 상태 업데이트
+  const updateSearchParams = (key: string, value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (value) {
+      params.set(key, value);
+    } else {
+      params.delete(key);
+    }
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
+
+  //  카테고리 변경 핸들러
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory(category);
+    updateSearchParams('category', category === '전체' ? '' : category);
+  };
+
+  // 첫 번째 지역 선택
+  const handleSelectFirstLocation = (selected: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    // 첫 번째 지역을 업데이트
+    if (selected === defaultFirstOption) {
+      params.delete('location_1');
+      params.delete('location_2'); // 첫 번째 지역을 초기화하면 두 번째 지역도 초기화
+    } else {
+      params.set('location_1', selected);
+
+      // 현재 선택된 두 번째 지역이 유효한지 확인 후 유지
+      const validSecondLocations = REGION_DATA[selected] || [];
+      if (!validSecondLocations.includes(selectedSecondLocation)) {
+        params.delete('location_2');
+      }
+    }
+
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
+
+  // 두 번째 지역 선택
+  const handleSelectSecondLocation = (selected: string) => {
+    setSelectedSecondLocation(selected);
+    updateSearchParams('location_2', selected);
+  };
+
+  // 날짜 변경 핸들러
+  const handleDateChange = (date: Date | null) => {
+    setSelectedDate(date);
+    updateSearchParams('date', date ? date.toISOString().split('T')[0] : '');
+  };
 
   // 좋아요 Mutation
   const likeMutation = useMutation({
@@ -131,18 +199,6 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
     [selectedFirstLocation],
   );
 
-  // 카테고리 변경
-  const handleCategoryClick = (category: string) => setSelectedCategory(category);
-
-  // 첫 번째 지역 선택
-  const handleSelectFirstLocation = (selected: string) => {
-    setSelectedFirstLocation(selected);
-    setSelectedSecondLocation(defaultSecondOption);
-  };
-
-  // 두 번째 지역 선택
-  const handleSelectSecondLocation = (selected: string) => setSelectedSecondLocation(selected);
-
   // 번개 생성 모달 핸들러
   const handleClickCreateMeeting = () => {
     openModal('create');
@@ -158,11 +214,8 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
     likeMutation.mutate(meetingId);
   };
 
-  // 날짜 변경 핸들러
-  const handleDateChange = (date: Date | null) => setSelectedDate(date);
-
   return (
-    <div className="container mx-auto mt-[72px] max-w-[1200px]">
+    <div className="container mx-auto mt-[72px] max-w-[1200px] px-4">
       {/* 제목 */}
       <div className="mb-[52px] flex items-center justify-between">
         <div className="inline-flex h-[68px] flex-col items-start justify-start gap-[9px]">
