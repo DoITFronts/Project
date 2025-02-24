@@ -7,20 +7,27 @@ import mockMeetings from '@/api/data/mockMeetings';
 import Card from '@/app/meeting/list/components/Card';
 import MeetingProgress from '@/components/ui/card/MeetingProgress';
 import Chip from '@/components/ui/chip/Chip';
+import Button from '@/components/ui/Button';
+import Icon from '@/components/shared/Icon';
 
 const MENU_TABS = ['나의 번개', '내가 만든 번개', '리뷰', '채팅'];
 const ACTIVITY_TABS = ['술', '카페', '보드 게임', '맛집'];
 export default function Page() {
   const [selectedMenuTab, setSelecetedMenuTab] = useState('');
   const [selectedActivityTab, setSelectedActivityTab] = useState('');
-  const [meetings, setMeetings] = useState(mockMeetings);
 
   const filterdMeetings = useMemo(() => {
     if (!selectedActivityTab) return mockMeetings;
     return mockMeetings.filter((meeting) => meeting.category === selectedActivityTab);
   }, [selectedActivityTab]);
 
-  const handleMenuClick = (tab: string) => setSelecetedMenuTab(tab);
+  const handleMenuClick = (tab: string) => {
+    if (tab === selectedMenuTab) {
+      setSelecetedMenuTab('');
+    } else {
+      setSelecetedMenuTab(tab);
+    }
+  };
   const handleActivityClick = (tab: string) => {
     if (tab === selectedActivityTab) {
       setSelectedActivityTab('');
@@ -122,13 +129,25 @@ export default function Page() {
                 </div>
 
                 {/* 인원, 개설 여부, ProgressBar */}
-                <MeetingProgress
-                  id={meeting.id}
-                  participantCount={meeting.participantCount}
-                  capacity={meeting.capacity}
-                  isConfirmed={meeting.isConfirmed}
-                  isCompleted={meeting.isCompleted}
-                />
+                <div className="w-full h-auto flex gap-6">
+                  <MeetingProgress
+                    id={meeting.id}
+                    participantCount={meeting.participantCount}
+                    capacity={meeting.capacity}
+                    isConfirmed={meeting.isConfirmed}
+                    isCompleted={meeting.isCompleted}
+                  />
+                  <div className="w-[160px] h-[44px] flex gap-3">
+                    <Button
+                      color="white"
+                      children={'참여 취소'}
+                      className="px-5 py-2.5 text-base font-semibold h-[44px] w-full"
+                    />
+                    <div className="w-full h-[44px] p-2.5 bg-yellow-6 rounded-[12px]">
+                      <Icon path="chat" width="28px" height="24px" />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </Card>

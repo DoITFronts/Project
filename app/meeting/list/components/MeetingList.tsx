@@ -63,8 +63,8 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
 
   // 좋아요 Mutation
   const likeMutation = useMutation({
-    mutationFn: (meetingId: number) => toggleLike(meetingId),
-    onMutate: async (meetingId: number) => {
+    mutationFn: (meetingId: string) => toggleLike(meetingId),
+    onMutate: async (meetingId: string) => {
       await queryClient.cancelQueries({ queryKey: ['meetings'] });
 
       // 현재 캐시된 데이터 스냅샷 저장
@@ -170,7 +170,7 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
   };
 
   // 좋아요 버튼 클릭 핸들러
-  const handleClickLike = (meetingId: number) => {
+  const handleClickLike = (meetingId: string) => {
     likeMutation.mutate(meetingId);
   };
 
