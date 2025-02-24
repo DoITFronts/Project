@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
 import MeetingProgress from '@/components/ui/card/MeetingProgress';
+import Category from '@/components/ui/chip/Category';
 import ChipInfo from '@/components/ui/chip/ChipInfo';
 import { Meeting } from '@/types/meeting.types';
 
@@ -27,6 +28,9 @@ export default function MeetingInfo({
             className="w-96"
           />
           <Card.Like isLiked={meetings.isLiked} onClick={onClick} meetingId={meetings.id} />
+          <div className="absolute right-[14px] top-[17.5px]">
+            <Category type={meetings.category} />
+          </div>
         </div>
 
         <div className="flex h-[206px] flex-col justify-between">
