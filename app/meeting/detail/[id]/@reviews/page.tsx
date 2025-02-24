@@ -40,7 +40,7 @@ export default function ReviewList() {
     );
 
   return (
-    <div className="flex-col items-start justify-start gap-[18px]">
+    <div className="flex-col">
       <div className="font-['DungGeunMo'] text-2xl font-normal text-black">이전 번개 리뷰</div>
       <div className="mt-4 space-y-4">
         {meeting.reviews.map((review, index) => (

@@ -40,8 +40,8 @@ export default function DescriptionPage() {
     );
 
   return (
-    <div className="h-[300px] font-['Pretendard'] text-base font-medium leading-normal text-neutral-800">
-      <div className="font-dunggeunmo text-2xl font-normal text-black">
+    <div className="min-h-[300px] font-['Pretendard'] text-base font-medium leading-normal text-neutral-800">
+      <div className="mb-4 font-dunggeunmo text-2xl font-normal text-black">
         {meeting?.details?.title}
       </div>
       <ReactMarkdown>{meeting?.details?.description}</ReactMarkdown>

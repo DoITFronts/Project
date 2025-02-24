@@ -1,6 +1,7 @@
-export type MeetingInfo = {
+export type MeetingDetail = {
   id: string;
   title: string;
+  category: string;
   imageUrl: string;
   location: string;
   datetime: string;
@@ -8,31 +9,26 @@ export type MeetingInfo = {
   isLiked: boolean;
   maxParticipants: number;
   currentParticipants: number;
-};
-
-export type Participant = {
-  id: string;
-  name: string;
-  profileImage: string;
-};
-
-export type Detail = {
-  title: string;
-  description: string;
-};
-
-export type Review = {
-  id: string;
-  writer: string;
-  profileImage: string;
-  content: string;
-  date: string;
-  count: number;
-};
-
-export type MeetingDetail = {
-  info: MeetingInfo;
-  participants: Participant[];
-  details: Detail;
-  reviews: Review[];
+  host: {
+    id: string;
+    name: string;
+    profileImage: string;
+  };
+  participants: {
+    id: string;
+    name: string;
+    profileImage: string;
+  }[];
+  details: {
+    title: string;
+    description: string;
+  };
+  reviews: {
+    id: string;
+    writer: string;
+    profileImage: string;
+    content: string;
+    date: string;
+    count: number;
+  }[];
 };

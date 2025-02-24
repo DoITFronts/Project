@@ -24,14 +24,17 @@ export default function DetailPage() {
 
     fetchMeetingById(meetingId)
       .then((data) => {
-        if (data && data.info && data.info.id) {
+        if (data?.id) {
           setMeeting(data);
+          setError(null);
         } else {
+          console.error('Invalid event data:', data);
           setError(new Error('Invalid event data'));
         }
         setLoading(false);
       })
       .catch((err) => {
+        console.error('Failed to fetch meeting data:', err);
         setError(err);
         setLoading(false);
       });
@@ -39,7 +42,8 @@ export default function DetailPage() {
 
   if (!meetingId) return <p>⚠️ 이벤트 ID가 필요합니다.</p>;
   if (loading) return <MeetingDetailSkeleton />;
-  if (error || !meeting) return <MeetingDetailError onRetry={() => window.location.reload()} />;
+  if (error) return <MeetingDetailError onRetry={() => window.location.reload()} />;
+  if (!meeting) return <p>⚠️ 유효한 이벤트 데이터가 없습니다.</p>;
 
   return <MeetingDetailClient meeting={meeting} />;
 }
