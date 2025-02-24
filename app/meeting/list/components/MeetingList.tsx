@@ -1,16 +1,16 @@
 'use client';
 
-import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState, useEffect, useMemo } from 'react';
 import DatePicker from 'react-datepicker';
 
-import fetchMeeting from '@/api/meeting/fetchMeeting';
 import toggleLike from '@/api/meeting/toggleLike';
 import Icon from '@/components/shared/Icon';
 import Button from '@/components/ui/Button';
 import Chip from '@/components/ui/chip/Chip';
 import DropDown from '@/components/ui/DropDown';
 import EmptyMessage from '@/components/ui/EmptyMessage';
+import useMeeting from '@/hooks/useMeeting';
 import useModalStore from '@/store/useModalStore';
 import { Meeting } from '@/types/meeting.types';
 
@@ -96,37 +96,21 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
   });
 
   // useInfiniteQuery를 사용해 번개 데이터 가져오기
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: [
-      'meetings',
-      selectedCategory,
-      selectedFirstLocation,
-      selectedSecondLocation,
-      selectedDate,
-    ],
-    queryFn: ({ pageParam = 2 }) =>
-      fetchMeeting({
-        category: selectedCategory,
-        location_1: selectedFirstLocation,
-        location_2: selectedSecondLocation,
-        date: selectedDate,
-        page: pageParam,
-        limit: 10,
-      }),
-    initialPageParam: 2,
-    getNextPageParam: (lastPage, allPages) =>
-      lastPage.length === 10 ? allPages.length + 1 : undefined,
-    initialData: {
-      pages: [initialMeetings],
-      pageParams: [1],
-    },
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useMeeting({
+    category: selectedCategory,
+    location1: selectedFirstLocation,
+    location2: selectedSecondLocation,
+    date: selectedDate,
+    per_page: 10,
+    initialMeetings,
   });
 
-  // useMutation을 이용한 좋아요 업데이트
+  // 번개 데이터 통합
+  const meetings = data?.pages.flatMap((page) => page.data) || [];
 
   // IntersectionObserver를 이용한 무한 스크롤 구현
   useEffect(() => {
-    if (!observerNode || !hasNextPage) return;
+    if (!observerNode || !hasNextPage) return undefined;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -238,13 +222,13 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
 
       {/* 번개 리스트 */}
       <div className="meeting-list">
-        {data.pages.flat().length === 0 ? (
+        {meetings.length === 0 ? (
           <EmptyMessage firstLine="아직 번개가 없어요" secondLine="지금 번개를 만들어 보세요!" />
         ) : (
-          <div className="grid grid-cols-3 gap-x-6 gap-y-10">
-            {data.pages.flat().map((meeting: Meeting, index: number) => (
+          <div className="grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2  lg:grid-cols-3">
+            {meetings.map((meeting: Meeting) => (
               <MeetingInfo
-                key={`${meeting.id}-${index}`}
+                key={`${meeting.id}`}
                 meetings={meeting}
                 onClick={() => handleClickLike(meeting.id)}
               />
