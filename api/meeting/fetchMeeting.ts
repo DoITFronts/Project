@@ -18,7 +18,7 @@ const fetchMeeting = async ({
   if (category !== '전체') queryParams.append('category', category);
   if (location1 !== '지역 전체') queryParams.append('location.region_1depth_name', location1);
   if (location2 !== '동 전체') queryParams.append('location.region_2depth_name', location2);
-  if (date) queryParams.append('date', date.toISOString());
+  if (date) queryParams.append('date', date.toISOString().split('T')[0]);
 
   queryParams.append('_page', page ? page.toString() : '1');
   queryParams.append('_per_page', per_page.toString());
