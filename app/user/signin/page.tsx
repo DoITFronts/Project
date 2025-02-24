@@ -6,23 +6,41 @@ import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import Icon from '@/components/shared/Icon';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { signinUser } from '@/api/auth';
 
 export default function Signin() {
+  const router = useRouter();
+
+  const handleSignin = async (data: SignInRequestData) => {
+    try {
+      console.log('제출된 로그인 데이터:', data);
+      //post요청보내서 response 받기
+      const response = await signinUser(data);
+      //토큰 저장하기
+      const accessToken = response.accessToken;
+      if (accessToken) {
+        localStorage.setItem('accessToken', accessToken);
+        router.push('/');
+      }
+    } catch (error: any) {
+      console.error('Login Failed:', error.response?.data || error.message);
+      throw error;
+    }
+  };
   return (
     <div className="bg-white py-52 flex justify-center items-center">
       <div className="w-[402px]">
         <div className="flex justify-center items-center mb-[50px]">
-          <Image src={Logo} alt="번개팅 로고" width={147.6} height={32.4} />
+          <Link href="/">
+            <Image src={Logo} alt="번개팅 로고" width={147.6} height={32.4} />
+          </Link>
         </div>
-        <Form
-          onSubmit={() => {
-            console.log('로그인 폼 제출');
-          }}
-        >
+        <Form onSubmit={handleSignin}>
           <Form.Label className="pb-3">
             <Form.LabelHeader className="pb-2">이메일</Form.LabelHeader>
             <Form.Input
-              name="email"
+              name="username"
               placeholder="이메일을 입력해 주세요"
               autoComplete="email"
               required

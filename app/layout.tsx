@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { ToastContainer, toast } from 'react-toastify';
 
 import '@/styles/global.css';
 import RootLayout from '@/components/layout/RootLayout';
@@ -13,6 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <body>
         <RootLayout>{children}</RootLayout>
+        <ToastContainer />
       </body>
     </html>
   );
