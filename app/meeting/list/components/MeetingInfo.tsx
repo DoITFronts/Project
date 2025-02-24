@@ -17,7 +17,7 @@ export default function MeetingInfo({
   return (
     <Card>
       <div className="flex h-[430px] flex-col justify-between overflow-hidden">
-        <div className="relative flex h-[200px] w-96 items-center justify-center overflow-hidden">
+        <div className="relative flex h-[200px] w-full items-center justify-center overflow-hidden">
           <div className="absolute left-0 top-0 z-0 size-[10px] bg-white" />
           <div className="absolute bottom-0 right-0 z-0 size-[10px] bg-white" />
           <Image
@@ -25,7 +25,7 @@ export default function MeetingInfo({
             width={384}
             height={200}
             alt="thumbnail"
-            className="w-96"
+            className="w-full"
           />
           <Card.Like isLiked={meetings.isLiked} onClick={onClick} meetingId={meetings.id} />
           <div className="absolute right-[14px] top-[17.5px]">
