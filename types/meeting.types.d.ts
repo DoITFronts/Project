@@ -4,7 +4,7 @@ export interface Location {
 }
 
 export interface Meeting {
-  id: number;
+  id: string;
   category: string;
   name: string;
   dateTime: string;
