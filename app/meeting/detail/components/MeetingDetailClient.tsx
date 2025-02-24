@@ -38,7 +38,10 @@ export default function MeetingDetailClient({ meeting }: { meeting: MeetingDetai
           <div className="flex flex-col gap-[10px]">
             <Tag />
             <div className="flex flex-col gap-2">
-              <Card.Title name={data?.title} location={data?.location} />
+              <Card.Title
+                name={data?.title}
+                location={`${data?.location.region_1depth_name} ${data?.location.region_2depth_name}`}
+              />
               <Card.ChipInfo datetime={data?.datetime} />
             </div>
             <div className="line-clamp-2 overflow-hidden text-ellipsis font-['Pretendard'] text-base font-medium text-[#8c8c8c]">
@@ -46,7 +49,7 @@ export default function MeetingDetailClient({ meeting }: { meeting: MeetingDetai
             </div>
           </div>
           <MeetingProgress
-            id={1}
+            id="1"
             participantCount={data?.participants?.length ?? 0}
             capacity={20}
             isConfirmed

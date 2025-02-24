@@ -44,7 +44,7 @@ export default function DescriptionPage() {
       <div className="mb-4 font-dunggeunmo text-2xl font-normal text-black">
         {meeting?.details?.title}
       </div>
-      <ReactMarkdown>{meeting?.details?.description}</ReactMarkdown>
+      <ReactMarkdown className="flex flex-col gap-1">{meeting?.details?.description}</ReactMarkdown>
     </div>
   );
 }

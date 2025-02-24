@@ -1,9 +1,14 @@
+export interface Location {
+  region_1depth_name: string;
+  region_2depth_name: string;
+}
+
 export type MeetingDetail = {
   id: string;
   title: string;
   category: string;
   imageUrl: string;
-  location: string;
+  location: Location;
   datetime: string;
   summary: string;
   isLiked: boolean;
