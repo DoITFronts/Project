@@ -11,9 +11,10 @@ const signinUser = async (data: SignInRequestData) => {
     console.log('로그인 요청 시작');
     console.log('요청 데이터:', data);
 
-    const response = await axiosInstance.post('/api/v1/login', data, {
-      headers: {
-        'Content-Type': 'application/json',
+    const response = await axiosInstance.get(`/api/v1/login`, {
+      params: {
+        username: data.username,
+        password: data.password,
       },
     });
 
