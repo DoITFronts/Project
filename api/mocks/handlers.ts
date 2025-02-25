@@ -18,6 +18,18 @@ const handlers = [
     return res(ctx.status(200), ctx.json({ ...mockMeetingDetail, id }));
   }),
 
+  rest.put('/api/meetings/detail/:id/description', (req, res, ctx) => {
+    const { id } = req.params;
+    const { description } = req.body as { description: string };
+    return res(
+      ctx.status(200),
+      ctx.json({
+        id,
+        description,
+      })
+    );
+  }),
+
   rest.get('/api/meeting/list', (req, res, ctx) => {
     const category = req.url.searchParams.get('category') || '전체';
     const location1 = req.url.searchParams.get('location_1') || '지역 전체';
