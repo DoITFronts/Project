@@ -1,4 +1,6 @@
 import axiosInstance from './api';
+import Cookies from 'js-cookie';
+
 //회원가입
 const signupUser = async (data: SignUpRequestData) => {
   const response = await axiosInstance.post('/api/v1/join', data);
@@ -29,8 +31,13 @@ const signinUser = async (data: SignInRequestData) => {
       return;
     }
 
+    // 로컬 스토리지에 토큰 저장
     localStorage.setItem('accessToken', accessToken);
     console.log('accessToken 저장 완료:', localStorage.getItem('accessToken'));
+
+    // 쿠키에 토큰 저장 (예: 만료시간 1일 설정)
+    Cookies.set('accessToken', accessToken, { expires: 1 });
+    console.log('accessToken 쿠키에 저장 완료:', Cookies.get('accessToken'));
 
     return response.data;
   } catch (error: any) {
