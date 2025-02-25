@@ -59,7 +59,7 @@ function LabelHeader({ children, className }: BaseProps) {
 
 //인풋 기본 스타일
 const baseInputStyle =
-  "h-11 px-4 py-2.5 bg-black-2 rounded-xl justify-start items-center gap-2.5 inline-flex overflow-hidden w-full text-base font-medium font-['Pretendard'] leading-normal";
+  "h-11 w-full px-4 py-2.5 bg-black-2 rounded-xl justify-start items-center gap-2.5 inline-flex overflow-hidden text-base font-medium font-['Pretendard'] leading-normal";
 
 const baseInputErrorStyle = 'outline outline-2 outline-red-500 focus:outline-gray-500';
 
@@ -165,7 +165,7 @@ function Submit({ className, children }: BaseProps) {
 }
 function ErrorMessage({ className, children }: BaseProps) {
   const errorClass = cn(
-    "text-red-6 text-sm font-semibold font-['Pretendard'] leading-tight",
+    "inline-block mt-2 text-red-6 text-sm font-semibold font-['Pretendard'] leading-tight",
     className,
   );
 

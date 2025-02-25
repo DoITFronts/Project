@@ -29,7 +29,7 @@ export default function Signin() {
     }
   };
   return (
-    <div className="bg-white py-52 flex justify-center items-center">
+    <div className="-mt-[60px] min-h-screen bg-white flex justify-center items-center">
       <div className="w-[402px]">
         <div className="flex justify-center items-center mb-[50px]">
           <Link href="/">
@@ -37,7 +37,7 @@ export default function Signin() {
           </Link>
         </div>
         <Form onSubmit={handleSignin}>
-          <Form.Label className="pb-3">
+          <Form.Label className="pb-6">
             <Form.LabelHeader className="pb-2">이메일</Form.LabelHeader>
             <Form.Input
               name="username"
