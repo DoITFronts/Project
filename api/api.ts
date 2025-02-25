@@ -6,13 +6,13 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-// 요청마다 `Authorization` 헤더를 동적으로 추가 (인터셉트 활용)
-// ~로그인에선 필요없는 부분~
 axiosInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem('accessToken');
-  if (token) {
+
+  if (token && !config.url?.includes('/api/v1/login')) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
   return config;
 });
 
