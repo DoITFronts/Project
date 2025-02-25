@@ -7,7 +7,7 @@ function Like({
 }: {
   meetingId: string;
   isLiked: boolean;
-  onClick: (meetingId: number) => void;
+  onClick: (meetingId: string) => void;
 }) {
   return (
     <button
