@@ -3,7 +3,7 @@ import fetchMeeting from '@/api/meeting/fetchMeeting';
 import MeetingList from './components/MeetingList';
 
 interface PageProps {
-  searchParams: { [key: string]: string | undefined };
+  searchParams: Promise<Record<string, string | undefined>>;
 }
 
 export default async function Page({ searchParams }: PageProps) {
