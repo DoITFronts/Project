@@ -1,5 +1,6 @@
 import axiosInstance from './api';
 import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
 
 //회원가입
 const signupUser = async (data: SignUpRequestData) => {
@@ -33,11 +34,15 @@ const signinUser = async (data: SignInRequestData) => {
 
     // 로컬 스토리지에 토큰 저장
     localStorage.setItem('accessToken', accessToken);
-    console.log('accessToken 저장 완료:', localStorage.getItem('accessToken'));
+    console.log('accessToken 로컬스토리지 저장 완료:', localStorage.getItem('accessToken'));
 
-    // 쿠키에 토큰 저장 (예: 만료시간 1일 설정)
+    // 쿠키에 토큰 저장 (만료시간 1일 설정)
     Cookies.set('accessToken', accessToken, { expires: 1 });
     console.log('accessToken 쿠키에 저장 완료:', Cookies.get('accessToken'));
+
+    // 토큰 디코딩
+    const decodedToken: any = jwtDecode(accessToken);
+    console.log('디코딩된 유저 정보:', decodedToken);
 
     return response.data;
   } catch (error: any) {
@@ -56,4 +61,23 @@ const signinUser = async (data: SignInRequestData) => {
   }
 };
 
-export { signupUser, signinUser };
+// 로그아웃
+const signoutUser = () => {
+  try {
+    // 로컬 스토리지에서 accessToken 삭제
+    localStorage.removeItem('accessToken');
+    console.log('accessToken 로컬스토리지에서 삭제됨:', localStorage.getItem('accessToken'));
+
+    // 쿠키에서 accessToken 삭제
+    Cookies.remove('accessToken');
+    console.log('accessToken 쿠키에서 삭제됨:', Cookies.get('accessToken'));
+
+    // TODO:서버에 로그아웃 요청 (추후에)
+
+    console.log('로그아웃 완료');
+  } catch (error) {
+    console.error('로그아웃 중 오류 발생:', error);
+  }
+};
+
+export { signupUser, signinUser, signoutUser };

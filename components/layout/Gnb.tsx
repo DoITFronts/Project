@@ -12,6 +12,7 @@ import DropDown from '../ui/DropDown';
 
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import { signoutUser } from '@/api/auth';
 
 function NavItem({
   href,
@@ -50,14 +51,21 @@ export default function GNB() {
   }, []);
 
   // 로그아웃
-  const handleLogout = () => {
-    localStorage.removeItem('accessToken');
-    setIsLoggedIn(false);
-    toast.success('로그아웃 되었습니다', {
-      hideProgressBar: true,
-      autoClose: 900,
-    });
-    router.push('/');
+  const handleLogout = async () => {
+    try {
+      await signoutUser();
+      setIsLoggedIn(false);
+      toast.success('로그아웃 되었습니다', {
+        hideProgressBar: true,
+        autoClose: 900,
+      });
+      router.push('/');
+    } catch (error) {
+      toast.error('로그아웃 실패', {
+        hideProgressBar: true,
+        autoClose: 900,
+      });
+    }
   };
 
   // 드롭다운 아이템 Click시 handler
