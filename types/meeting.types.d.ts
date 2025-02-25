@@ -3,6 +3,12 @@ export interface Location {
   region_2depth_name: string;
 }
 
+export interface Host {
+  id: string;
+  name: string;
+  profileImage: string;
+}
+
 export interface Meeting {
   id: string;
   category: string;
@@ -16,4 +22,5 @@ export interface Meeting {
   isLiked: boolean;
   isConfirmed: boolean;
   isCompleted: boolean;
+  host: Host;
 }

@@ -5,6 +5,8 @@ import Category from '@/components/ui/chip/Category';
 import ChipInfo from '@/components/ui/chip/ChipInfo';
 import { Meeting } from '@/types/meeting.types';
 
+import HostInfo from '../../components/HostInfo';
+
 import Card from './Card';
 
 export default function MeetingInfo({
@@ -22,6 +24,7 @@ export default function MeetingInfo({
           <div className="absolute bottom-0 right-0 z-0 size-[10px] bg-white" />
           <Image
             src="/assets/card/example_image.png"
+            // src={meetings.image}
             width={384}
             height={200}
             alt="thumbnail"
@@ -39,6 +42,11 @@ export default function MeetingInfo({
               <Card.Title
                 name={meetings.name}
                 location={`${meetings.location.region_1depth_name} ${meetings.location.region_2depth_name}`}
+              />
+              <HostInfo
+                id={meetings.host.id}
+                name={meetings.host.name}
+                profileImage={meetings.host.profileImage}
               />
               <div className="flex h-[22px] flex-row items-center gap-1">
                 <ChipInfo datetime={meetings.dateTime} />
