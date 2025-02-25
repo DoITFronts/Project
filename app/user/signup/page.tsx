@@ -38,15 +38,15 @@ export default function Signup() {
   };
 
   return (
-    <div className="bg-white py-52 flex justify-center items-center">
+    <div className="-mt-[60px] min-h-screen bg-white flex justify-center items-center">
       <div className="w-[402px]">
         <div className="flex justify-center items-center mb-[50px]">
           <Link href="/">
-            <Image src={Logo} alt="번개팅 로고" width={147.6} height={32.4} />
+            <Image src={Logo} alt="번개팅 로고" width={148} height={33} />
           </Link>
         </div>
         <Form onSubmit={handleSignup}>
-          <Form.Label className="pb-3">
+          <Form.Label className="pb-6">
             <Form.LabelHeader className="pb-2">이름</Form.LabelHeader>
             <Form.Input
               name="name"
@@ -55,7 +55,7 @@ export default function Signup() {
               required
             />
           </Form.Label>
-          <Form.Label className="pb-3">
+          <Form.Label className="pb-6">
             <Form.LabelHeader className="pb-2">이메일</Form.LabelHeader>
             <Form.Input
               name="email"
@@ -64,7 +64,7 @@ export default function Signup() {
               required
             />
           </Form.Label>
-          <Form.Label className="pb-3">
+          <Form.Label className="pb-6">
             <Form.LabelHeader className="pb-2">닉네임</Form.LabelHeader>
             <Form.Input
               name="nickname"
@@ -73,7 +73,7 @@ export default function Signup() {
               required
             />
           </Form.Label>
-          <Form.Label className="pb-3">
+          <Form.Label className="pb-6">
             <Form.LabelHeader className="pb-2">비밀번호</Form.LabelHeader>
             <Form.PasswordInput
               name="password"
@@ -82,7 +82,7 @@ export default function Signup() {
               required
             />
           </Form.Label>
-          <Form.Label className="pb-3">
+          <Form.Label className="pb-6">
             <Form.LabelHeader className="pb-2">비밀번호 확인</Form.LabelHeader>
             <Form.PasswordInput
               name="passwordConfirmation"
@@ -92,7 +92,7 @@ export default function Signup() {
             />
           </Form.Label>
           <Form.Label className="pb-10">
-            <Form.LabelHeader className="pb-2">본인인증</Form.LabelHeader>
+            <Form.LabelHeader className="pb-2">생년월일</Form.LabelHeader>
             <Form.Input
               name="birth"
               placeholder="YYYY.MM.DD 생년월일을 입력해 주세요"
