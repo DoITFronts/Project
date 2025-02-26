@@ -2,8 +2,12 @@
 import { rest } from 'msw';
 
 import mockMeetingDetail from '@/api/data/mockMeetingDetail';
+import mockMyPageReviews from '@/api/data/mockMyPageReviews';
 
 import mockMeetings from '../data/mockMeetings';
+import mockMyPageMeetings from '../data/mockMyPageMeetings';
+
+const MOCK_USER_ID = 'user1';
 
 const handlers = [
   rest.get('/api/meeting/detail/:id', (req, res, ctx) => {
@@ -49,6 +53,37 @@ const handlers = [
     });
 
     return res(ctx.status(200), ctx.json(filteredMeetings));
+  }),
+
+  rest.get('/api/mypage/meetings', (req, res, ctx) => {
+    const category = req.url.searchParams.get('category') || '';
+    const type = req.url.searchParams.get('type') || '나의 번개';
+
+    let filteredMeetings = mockMyPageMeetings;
+
+    if (type === '나의 번개') {
+      filteredMeetings = mockMyPageMeetings.filter((meeting) =>
+        meeting.participants.includes(MOCK_USER_ID),
+      );
+    } else if (type === '내가 만든 번개') {
+      filteredMeetings = mockMyPageMeetings.filter((meeting) => meeting.createdBy === MOCK_USER_ID);
+    }
+
+    if (category) {
+      filteredMeetings = filteredMeetings.filter((meeting) => meeting.category === category);
+    }
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        meetings: filteredMeetings,
+        totalCount: filteredMeetings.length,
+      }),
+    );
+  }),
+
+  rest.get('/api/mypage/reviews', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(mockMyPageReviews));
   }),
 ];
 
