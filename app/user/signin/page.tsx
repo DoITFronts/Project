@@ -29,7 +29,7 @@ export default function Signin() {
     }
   };
   return (
-    <div className="-mt-[60px] min-h-screen bg-white flex justify-center items-center">
+    <div className="min-h-screen py-[10%] bg-white flex justify-center items-center">
       <div className="w-[402px]">
         <div className="flex justify-center items-center mb-[50px]">
           <Link href="/">
