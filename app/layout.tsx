@@ -5,8 +5,9 @@ import '@/styles/global.css';
 import RootLayout from '@/components/layout/RootLayout';
 
 export const metadata: Metadata = {
-  title: '번개팅',
-  description: '같이 달랩은 모임을 위한 서비스입니다.',
+    title: '번개팅',
+    description: '같이 달랩은 모임을 위한 서비스입니다.',
+    manifest: "/manifest.json",
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
