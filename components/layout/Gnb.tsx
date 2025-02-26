@@ -13,6 +13,7 @@ import DropDown from '../ui/DropDown';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { signoutUser } from '@/api/auth';
+import { useMutation } from '@tanstack/react-query';
 
 function NavItem({
   href,
@@ -42,7 +43,7 @@ export default function GNB() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
-  //TODO: 로그인 여부 로직 정리하기
+  //로그인 여부 체크하기
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('accessToken');
@@ -51,29 +52,30 @@ export default function GNB() {
   }, []);
 
   // 로그아웃
-  const handleLogout = async () => {
-    try {
-      await signoutUser();
+  const { mutate: logout } = useMutation({
+    mutationFn: signoutUser,
+    onSuccess: () => {
       setIsLoggedIn(false);
       toast.success('로그아웃 되었습니다', {
         hideProgressBar: true,
         autoClose: 900,
       });
       router.push('/');
-    } catch (error) {
+    },
+    onError: (error) => {
       toast.error('로그아웃 실패', {
         hideProgressBar: true,
         autoClose: 900,
       });
-    }
-  };
+    },
+  });
 
   // 드롭다운 아이템 Click시 handler
   const handleDropDownItem = (item: string) => {
     if (item === '마이페이지') {
       router.push('/myprofile'); // 마이페이지로 이동
     } else if (item === '로그아웃') {
-      handleLogout(); // 로그아웃 처리
+      logout(); // 로그아웃 처리
     }
   };
 

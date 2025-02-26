@@ -37,7 +37,7 @@ export default function Signup() {
     },
   });
 
-  const handleSignup = async (data: SignUpRequestData) => {
+  const handleSignup = (data: SignUpRequestData) => {
     mutation.mutate(data);
   };
 
