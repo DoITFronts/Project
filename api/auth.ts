@@ -14,14 +14,16 @@ const signinUser = async (data: SignInRequestData) => {
     console.log('로그인 요청 시작');
     console.log('요청 데이터:', data);
 
-    const response = await axiosInstance.get(`/api/v1/login`, {
-      params: {
-        username: data.username,
-        password: data.password,
-      },
+    //폼 데이터 형식으로 로그인 데이터값 전달
+    const formData = new FormData();
+    formData.append('username', data.username);
+    formData.append('password', data.password);
+
+    const response = await axiosInstance.post(`/api/v1/login`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
     });
 
-    console.log('로그인 성공');
+    console.log('로그인 성공 (폼데이터전송!)');
     console.log('응답 상태 코드:', response.status);
     console.log('응답 데이터:', response.data);
 
