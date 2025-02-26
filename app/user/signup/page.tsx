@@ -8,33 +8,37 @@ import Link from 'next/link';
 import { signupUser } from '@/api/auth';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import { useMutation } from '@tanstack/react-query';
 
 export default function Signup() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
 
-  const handleSignup = async (data: SignUpRequestData) => {
-    try {
-      setIsLoading(true);
-      setError(null);
+  const mutation = useMutation({
+    mutationFn: signupUser,
+    onMutate: async (data) => {
       console.log('제출된 회원가입 데이터:', data);
-      const response = await signupUser(data);
+      setIsLoading(true);
+    },
+    onSuccess: (response) => {
       console.log('회원가입 응답:', response);
-      setSuccess('회원가입 성공!');
-      //TODO: Toast 디자인 변경
       toast.success('회원가입이 완료되었습니다.', {
         hideProgressBar: true,
         autoClose: 900,
       });
       router.push('/user/signin');
-    } catch (err: any) {
-      setError('회원가입에 실패했습니다. 다시 시도해 주세요.');
-      //TODO: email 중복 error 처리하기
-    } finally {
+    },
+    onError: (err: any) => {
+      console.error('회원가입 실패:', err);
+      // TODO: 이메일 중복 오류 처리하기
+    },
+    onSettled: () => {
       setIsLoading(false);
-    }
+    },
+  });
+
+  const handleSignup = async (data: SignUpRequestData) => {
+    mutation.mutate(data);
   };
 
   return (
