@@ -14,6 +14,7 @@ export interface Meeting {
   category: string;
   name: string;
   dateTime: string;
+  date: string;
   location: Location;
   participantCount: number;
   capacity: number;
