@@ -1,14 +1,21 @@
 'use client';
 import useModalStore from '@/store/useModalStore';
-import BoxSelect from '../../BoxSelect';
 import { useState } from 'react';
 import CustomDatePicker from '../datePicker';
 import Button from '@/components/ui/Button';
 import Icon from '@/components/shared/Icon';
-import axios from 'axios';
+import { CreateMeetingParams } from '@/types/meeting';
+import createMeeting from '@/api/meeting/createMeeting';
 
 type MeetingType = '술' | '카페' | '보드게임' | '맛집';
 const meetingTypes: MeetingType[] = ['술', '카페', '보드게임', '맛집'];
+
+const typeMapping: Record<MeetingType, CreateMeetingParams['category']> = {
+  술: 'ALCOHOL',
+  카페: 'CAFFE',
+  보드게임: 'BOARD_GAME',
+  맛집: 'GOURMET',
+};
 
 export default function CreateMeetingModal() {
   const { closeModal } = useModalStore();
@@ -78,31 +85,30 @@ export default function CreateMeetingModal() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const formData = new FormData();
-
-    if (imageFile) {
-      formData.append('image', imageFile);
+    if (!meetingType) {
+      console.error('모임 유형을 선택해주세요');
+      return;
     }
-    const meetingData = {
-      name: meetingName,
+
+    const apiType = typeMapping[meetingType];
+
+    const meetingData: CreateMeetingParams = {
+      title: meetingName,
       summary: meetingSummary,
-      location: meetingPlace,
-      type: meetingType,
-      dateTime: meetingDate.toISOString(),
-      registrationEnd: deadlineDate.toISOString(),
+      address: '전체 주소',
+      city: '경기도',
+      town: '화성시',
+      category: apiType,
+      targetAt: meetingDate,
+      endAt: deadlineDate,
       capacity: parseInt(participantCount),
+      minCapacity: parseInt(minParticipants) || 1,
+      ...(imageFile && { image: imageFile }),
     };
 
-    formData.append('meetingData', JSON.stringify(meetingData));
-
     try {
-      const response = await axios.post('/api/meetings', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      if (response.data.success) {
+      const response = await createMeeting(meetingData);
+      if (response.success) {
         closeModal();
       }
     } catch (error) {
@@ -276,7 +282,13 @@ export default function CreateMeetingModal() {
         </form>
         <div className="w-full flex justify-center mt-4">
           {/* TODO: form value 모두 작성 시, 버튼 활성화 로직 추가 */}
-          <Button color="filled" size="lg" disabled={!isFormValid} className="w-full">
+          <Button
+            color="filled"
+            size="lg"
+            disabled={!isFormValid}
+            className="w-full"
+            onClick={handleSubmit}
+          >
             확인
           </Button>
         </div>
