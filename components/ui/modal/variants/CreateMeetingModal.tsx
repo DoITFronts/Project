@@ -1,6 +1,6 @@
 'use client';
 import useModalStore from '@/store/useModalStore';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CustomDatePicker from '../datePicker';
 import Button from '@/components/ui/Button';
 import Icon from '@/components/shared/Icon';
@@ -36,6 +36,12 @@ export default function CreateMeetingModal() {
     town: string;
   } | null>(null);
   // TODO: 추후에 데이터 연결 시 보내는 postData.
+  useEffect(() => {
+    if (selectedPlace) {
+      console.log('1depth: ', selectedPlace.city);
+      console.log('2depth: ', selectedPlace.town);
+    }
+  }, [selectedPlace]);
 
   const handleMeetingName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -113,9 +119,9 @@ export default function CreateMeetingModal() {
     const meetingData: CreateMeetingParams = {
       title: meetingName,
       summary: meetingSummary,
-      address: selectedPlace?.address,
-      city: selectedPlace?.city,
-      town: selectedPlace?.town,
+      address: selectedPlace.address,
+      city: selectedPlace.city,
+      town: selectedPlace.town,
       category: apiType,
       targetAt: meetingDate,
       endAt: deadlineDate,
