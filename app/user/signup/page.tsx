@@ -1,44 +1,16 @@
 'use client';
 
-import { useState } from 'react';
 import Form from '@/components/form/Form';
 import Logo from '@/public/assets/logo.svg';
 import Image from 'next/image';
 import Link from 'next/link';
-import { signupUser } from '@/api/auth';
-import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
-import { useMutation } from '@tanstack/react-query';
+import { useSignup } from '@/hooks/useAuth';
 
 export default function Signup() {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-
-  const mutation = useMutation({
-    mutationFn: signupUser,
-    onMutate: async (data) => {
-      console.log('제출된 회원가입 데이터:', data);
-      setIsLoading(true);
-    },
-    onSuccess: (response) => {
-      console.log('회원가입 응답:', response);
-      toast.success('회원가입이 완료되었습니다.', {
-        hideProgressBar: true,
-        autoClose: 900,
-      });
-      router.push('/user/signin');
-    },
-    onError: (err: any) => {
-      console.error('회원가입 실패:', err);
-      // TODO: 이메일 중복 오류 처리하기
-    },
-    onSettled: () => {
-      setIsLoading(false);
-    },
-  });
+  const { mutate } = useSignup();
 
   const handleSignup = (data: SignUpRequestData) => {
-    mutation.mutate(data);
+    mutate(data);
   };
 
   return (
@@ -104,7 +76,7 @@ export default function Signup() {
               type="date"
             />
           </Form.Label>
-          <Form.Submit className="w-full">{isLoading ? '회원가입 중...' : '회원가입'}</Form.Submit>
+          <Form.Submit className="w-full">회원가입</Form.Submit>
         </Form>
         <div className="flex justify-center items-center gap-2 font-['Pretendard'] text-[15px] text-neutral-800 font-bold mt-3">
           이미 회원이신가요?{' '}
