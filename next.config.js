@@ -1,24 +1,24 @@
-const withPWA = require("next-pwa")({
-  dest: "public",
+const withPWA = require('next-pwa')({
+  dest: 'public',
   register: true,
   skipWaiting: true,
-  disable: process.env.NODE_ENV === "development",
+  disable: process.env.NODE_ENV === 'development',
 });
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: process.env.NEXT_PUBLIC_IMAGE_DOMAINS?.split(",") || [],
+    domains: process.env.NEXT_PUBLIC_IMAGE_DOMAINS?.split(',') || [],
   },
   async headers() {
     return [
       {
-        source: "/api/:path*",
+        source: '/api/:path*',
         headers: [
           {
-            key: "Access-Control-Allow-Origin",
-            value: "*",
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
           },
         ],
       },
@@ -28,10 +28,9 @@ const nextConfig = {
     if (dev) {
       const originalEntry = config.entry;
       config.entry = async () => {
-        const entries =
-            typeof originalEntry === "function" ? await originalEntry() : originalEntry;
-        if (entries["main.js"] && !entries["main.js"].includes("./api/mocks/index.ts")) {
-          entries["main.js"].unshift("./api/mocks/index.ts");
+        const entries = typeof originalEntry === 'function' ? await originalEntry() : originalEntry;
+        if (entries['main.js'] && !entries['main.js'].includes('./api/mocks/index.ts')) {
+          entries['main.js'].unshift('./api/mocks/index.ts');
         }
         return entries;
       };
