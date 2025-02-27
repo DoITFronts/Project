@@ -76,8 +76,8 @@ export default function GNB() {
           </Link>
           <div className="mr-5 flex gap-x-3 md:gap-x-6">
             <NavItem href="/meeting/list" label="번개 찾기" currentPath={pathname} />
-            <NavItem href="/my/liked" label="찜한 번개" currentPath={pathname} />
-            <NavItem href="/my/review" label="리뷰" currentPath={pathname} />
+            <NavItem href="/liked" label="찜한 번개" currentPath={pathname} />
+            <NavItem href="/review" label="리뷰" currentPath={pathname} />
           </div>
         </div>
         <div>
