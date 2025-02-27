@@ -16,43 +16,28 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const queryClientRef = useRef(new QueryClient());
 
   useEffect(() => {
-    const initServiceWorkers = async () => {
-      if (typeof window !== 'undefined') {
-        navigator.serviceWorker
-            .register('/sw.js', { scope: '/' })
-            .then((registration) => {
-              console.log('✅ PWA 서비스 워커 등록됨:', registration);
-            })
-            .catch((error) => console.log('PWA 서비스 워커 등록 실패:', error));
-
-        navigator.serviceWorker
-            .register('/mockServiceWorker.js', { scope: '/api/' })
-            .then((registration) => {
-              console.log('✅ MSW 등록됨:', registration);
-            })
-            .catch((error) => console.log('MSW 등록 실패:', error));
-
-        // ✅ MSW 실행
+    const initMockWorker = async () => {
+      if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
         await startMockWorker();
       }
       setReady(true);
     };
 
-    initServiceWorkers();
+    initMockWorker();
   }, []);
 
   if (!ready) return null;
 
   return (
-      <QueryClientProvider client={queryClientRef.current}>
-        <div className="flex h-screen flex-col">
-          {!pathname.includes('/user') && <Gnb />}
-          <div className="mt-16 flex-1 overflow-auto">{children}</div>
-          {isMeetingDetail && (
-              <BottomFloatingBar key={pathname} title="번개팅" subtitle="지금 당장 신청해보라능" />
-          )}
-          <Modal />
-        </div>
-      </QueryClientProvider>
+    <QueryClientProvider client={queryClientRef.current}>
+      <div className="flex h-screen flex-col">
+        {!pathname.includes('/user') && <Gnb />}
+        <div className="mt-16 flex-1 overflow-auto">{children}</div>
+        {isMeetingDetail && (
+          <BottomFloatingBar key={pathname} title="번개팅" subtitle="지금 당장 신청해보라능" />
+        )}
+        <Modal />
+      </div>
+    </QueryClientProvider>
   );
 }
