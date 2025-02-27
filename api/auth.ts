@@ -23,12 +23,8 @@ const signinUser = async (data: SignInRequestData) => {
 
 //로그아웃
 const signoutUser = async () => {
-  // TODO: 추후에 백엔드 로그아웃 구현되면 수정될수도
+  // TODO: 추후에 백엔드 로그아웃 구현되면
   // await axiosInstance.post('/api/v1/logout');
-
-  // 로컬 스토리지, 쿠키에서 accessToken 삭제
-  localStorage.removeItem('accessToken');
-  Cookies.remove('accessToken');
 };
 
 export { signupUser, signinUser, signoutUser };
