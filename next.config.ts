@@ -1,37 +1,32 @@
-const withPWA = require('next-pwa')({
-  dest: 'public',
-  register: true,
-  skipWaiting: true,
-  disable: process.env.NODE_ENV === 'development',
-});
+import type { NextConfig } from 'next';
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
     domains: process.env.NEXT_PUBLIC_IMAGE_DOMAINS?.split(',') || [],
   },
-  async headers() {
-    return [
-      {
-        source: '/api/:path*',
-        headers: [
-          {
-            key: 'Access-Control-Allow-Origin',
-            value: '*',
-          },
-        ],
-      },
-    ];
-  },
+  headers: async () => [
+    {
+      source: '/api/:path*',
+      headers: [
+        {
+          key: 'Access-Control-Allow-Origin',
+          value: '*',
+        },
+      ],
+    },
+  ],
   webpack: (config, { dev }) => {
     if (dev) {
       const originalEntry = config.entry;
+
       config.entry = async () => {
         const entries = typeof originalEntry === 'function' ? await originalEntry() : originalEntry;
+
         if (entries['main.js'] && !entries['main.js'].includes('./api/mocks/index.ts')) {
           entries['main.js'].unshift('./api/mocks/index.ts');
         }
+
         return entries;
       };
     }
@@ -39,4 +34,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withPWA(nextConfig);
+export default nextConfig;

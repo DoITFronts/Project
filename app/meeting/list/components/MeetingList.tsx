@@ -1,8 +1,8 @@
 'use client';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { InfiniteData, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import DatePicker from 'react-datepicker';
 
 import toggleLike from '@/api/meeting/toggleLike';
@@ -18,6 +18,7 @@ import { Meeting } from '@/types/meeting.types';
 import REGION_DATA from '../regions';
 
 import MeetingInfo from './MeetingInfo';
+import { MeetingCardError, MeetingCardLoading } from './skeleton/MeetingCardSkeleton';
 
 interface InitialMeetingsProps {
   initialMeetings: Meeting[];
@@ -70,7 +71,7 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
   const [selectedDate, setSelectedDate] = useState(
     searchParams.get('date') ? new Date(searchParams.get('date') as string) : null,
   );
-  const [observerNode, setObserverNode] = useState<HTMLDivElement | null>(null);
+  const observerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setSelectedCategory(searchParams.get('category') || '전체');
@@ -135,8 +136,8 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
     onMutate: async (meetingId: string) => {
       await queryClient.cancelQueries({ queryKey: ['meetings'] });
 
-      // 현재 캐시된 데이터 스냅샷 저장
-      const previousMeetings = queryClient.getQueryData<Meeting[]>(['meetings']);
+      // 기존 데이터 가져오기
+      const prevData = queryClient.getQueryData<InfiniteData<Meeting[]>>(['meetings']);
 
       // 새로운 좋아요 상태 적용 (낙관적 업데이트)
       queryClient.setQueryData(['meetings'], (oldData: any) => {
@@ -151,11 +152,11 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
         };
       });
 
-      return { previousMeetings };
+      return { prevData };
     },
     onError: (_err, _meetingId, context) => {
-      if (context?.previousMeetings) {
-        queryClient.setQueryData(['meetings'], context.previousMeetings);
+      if (context?.prevData) {
+        queryClient.setQueryData(['meetings'], context.prevData);
       }
     },
     onSettled: () => {
@@ -164,7 +165,7 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
   });
 
   // useInfiniteQuery를 사용해 번개 데이터 가져오기
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useMeeting({
+  const { data, isLoading, isError, fetchNextPage, hasNextPage, isFetchingNextPage } = useMeeting({
     category: selectedCategory,
     location1: selectedFirstLocation,
     location2: selectedSecondLocation,
@@ -178,7 +179,7 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
 
   // IntersectionObserver를 이용한 무한 스크롤 구현
   useEffect(() => {
-    if (!observerNode || !hasNextPage) return undefined;
+    if (!observerRef.current || !hasNextPage) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -187,12 +188,13 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
       { threshold: 1.0 },
     );
 
-    observer.observe(observerNode);
+    observer.observe(observerRef.current);
 
     return () => observer.disconnect();
-  }, [observerNode, fetchNextPage, hasNextPage]);
+  }, [fetchNextPage, hasNextPage]);
 
   // 지역 목록 생성
+  // TODO: 지역 목록 받아오는 api 연결
   const meetingLocationFirst = useMemo(() => [defaultFirstOption, ...Object.keys(REGION_DATA)], []);
   const meetingLocationSecond = useMemo(
     () => [defaultSecondOption, ...(REGION_DATA[selectedFirstLocation] || [])],
@@ -274,14 +276,17 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
       </div>
 
       {/* 번개 리스트 */}
-      <div className="meeting-list">
-        {meetings.length === 0 ? (
+      <div>
+        {isLoading && <MeetingCardLoading />}
+        {isError && <MeetingCardError />}
+        {!isLoading && !isError && meetings.length === 0 && (
           <EmptyMessage firstLine="아직 번개가 없어요" secondLine="지금 번개를 만들어 보세요!" />
-        ) : (
-          <div className="grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2  lg:grid-cols-3">
+        )}
+        {!isLoading && !isError && meetings.length > 0 && (
+          <div className="grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
             {meetings.map((meeting: Meeting) => (
               <MeetingInfo
-                key={`${meeting.id}`}
+                key={meeting.id}
                 meetings={meeting}
                 onClick={() => handleClickLike(meeting.id)}
               />
@@ -291,7 +296,7 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
       </div>
 
       {/* 무한 스크롤 트리거 */}
-      <div ref={setObserverNode} className="h-10" />
+      <div ref={observerRef} className="h-10" />
       {isFetchingNextPage && <p className="text-center text-gray-500">Loading more...</p>}
     </div>
   );
