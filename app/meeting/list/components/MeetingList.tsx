@@ -1,16 +1,17 @@
 'use client';
 
-import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useState, useEffect, useMemo } from 'react';
 import DatePicker from 'react-datepicker';
 
-import fetchMeeting from '@/api/meeting/fetchMeeting';
 import toggleLike from '@/api/meeting/toggleLike';
 import Icon from '@/components/shared/Icon';
 import Button from '@/components/ui/Button';
 import Chip from '@/components/ui/chip/Chip';
 import DropDown from '@/components/ui/DropDown';
 import EmptyMessage from '@/components/ui/EmptyMessage';
+import useMeeting from '@/hooks/useMeeting';
 import useModalStore from '@/store/useModalStore';
 import { Meeting } from '@/types/meeting.types';
 
@@ -55,16 +56,83 @@ function FilterDropdown({
 export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
   const queryClient = useQueryClient();
   const { openModal } = useModalStore();
-  const [selectedTab, setSelectedTab] = useState('전체');
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedFirstLocation, setSelectedFirstLocation] = useState(defaultFirstOption);
-  const [selectedSecondLocation, setSelectedSecondLocation] = useState(defaultSecondOption);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  // URL에서 가져온 검색 조건을 상태로 관리
+  const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || '전체');
+  const [selectedFirstLocation, setSelectedFirstLocation] = useState(
+    searchParams.get('location_1') || defaultFirstOption,
+  );
+  const [selectedSecondLocation, setSelectedSecondLocation] = useState(
+    searchParams.get('location_2') || defaultSecondOption,
+  );
+  const [selectedDate, setSelectedDate] = useState(
+    searchParams.get('date') ? new Date(searchParams.get('date') as string) : null,
+  );
   const [observerNode, setObserverNode] = useState<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    setSelectedCategory(searchParams.get('category') || '전체');
+    setSelectedFirstLocation(searchParams.get('location_1') || defaultFirstOption);
+    setSelectedSecondLocation(searchParams.get('location_2') || defaultSecondOption);
+    setSelectedDate(searchParams.get('date') ? new Date(searchParams.get('date') as string) : null);
+  }, [searchParams]);
+
+  // URL을 변경하여 상태 업데이트
+  const updateSearchParams = (key: string, value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (value) {
+      params.set(key, value);
+    } else {
+      params.delete(key);
+    }
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
+
+  //  카테고리 변경 핸들러
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory(category);
+    updateSearchParams('category', category === '전체' ? '' : category);
+  };
+
+  // 첫 번째 지역 선택
+  const handleSelectFirstLocation = (selected: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    // 첫 번째 지역을 업데이트
+    if (selected === defaultFirstOption) {
+      params.delete('location_1');
+      params.delete('location_2'); // 첫 번째 지역을 초기화하면 두 번째 지역도 초기화
+    } else {
+      params.set('location_1', selected);
+
+      // 현재 선택된 두 번째 지역이 유효한지 확인 후 유지
+      const validSecondLocations = REGION_DATA[selected] || [];
+      if (!validSecondLocations.includes(selectedSecondLocation)) {
+        params.delete('location_2');
+      }
+    }
+
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
+
+  // 두 번째 지역 선택
+  const handleSelectSecondLocation = (selected: string) => {
+    setSelectedSecondLocation(selected);
+    updateSearchParams('location_2', selected);
+  };
+
+  // 날짜 변경 핸들러
+  const handleDateChange = (date: Date | null) => {
+    setSelectedDate(date);
+    updateSearchParams('date', date ? date.toISOString().split('T')[0] : '');
+  };
 
   // 좋아요 Mutation
   const likeMutation = useMutation({
-    mutationFn: (meetingId: number) => toggleLike(meetingId),
-    onMutate: async (meetingId: number) => {
+    mutationFn: (meetingId: string) => toggleLike(meetingId),
+    onMutate: async (meetingId: string) => {
       await queryClient.cancelQueries({ queryKey: ['meetings'] });
 
       // 현재 캐시된 데이터 스냅샷 저장
@@ -96,37 +164,21 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
   });
 
   // useInfiniteQuery를 사용해 번개 데이터 가져오기
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: [
-      'meetings',
-      selectedTab,
-      selectedFirstLocation,
-      selectedSecondLocation,
-      selectedDate,
-    ],
-    queryFn: ({ pageParam = 2 }) =>
-      fetchMeeting({
-        tab: selectedTab,
-        location_1: selectedFirstLocation,
-        location_2: selectedSecondLocation,
-        date: selectedDate,
-        page: pageParam,
-        limit: 10,
-      }),
-    initialPageParam: 2,
-    getNextPageParam: (lastPage, allPages) =>
-      lastPage.length === 10 ? allPages.length + 1 : undefined,
-    initialData: {
-      pages: [initialMeetings],
-      pageParams: [1],
-    },
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useMeeting({
+    category: selectedCategory,
+    location1: selectedFirstLocation,
+    location2: selectedSecondLocation,
+    date: selectedDate,
+    per_page: 10,
+    initialMeetings,
   });
 
-  // useMutation을 이용한 좋아요 업데이트
+  // 번개 데이터 통합
+  const meetings = data?.pages.flatMap((page) => page.data) || [];
 
   // IntersectionObserver를 이용한 무한 스크롤 구현
   useEffect(() => {
-    if (!observerNode || !hasNextPage) return;
+    if (!observerNode || !hasNextPage) return undefined;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -147,18 +199,6 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
     [selectedFirstLocation],
   );
 
-  // 탭 변경
-  const handleTabClick = (tab: string) => setSelectedTab(tab);
-
-  // 첫 번째 지역 선택
-  const handleSelectFirstLocation = (selected: string) => {
-    setSelectedFirstLocation(selected);
-    setSelectedSecondLocation(defaultSecondOption);
-  };
-
-  // 두 번째 지역 선택
-  const handleSelectSecondLocation = (selected: string) => setSelectedSecondLocation(selected);
-
   // 번개 생성 모달 핸들러
   const handleClickCreateMeeting = () => {
     openModal('create');
@@ -170,15 +210,12 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
   };
 
   // 좋아요 버튼 클릭 핸들러
-  const handleClickLike = (meetingId: number) => {
+  const handleClickLike = (meetingId: string) => {
     likeMutation.mutate(meetingId);
   };
 
-  // 날짜 변경 핸들러
-  const handleDateChange = (date: Date | null) => setSelectedDate(date);
-
   return (
-    <div className="container mx-auto mt-[72px] max-w-[1200px]">
+    <div className="container mx-auto mt-[72px] max-w-[1200px] px-4">
       {/* 제목 */}
       <div className="mb-[52px] flex items-center justify-between">
         <div className="inline-flex h-[68px] flex-col items-start justify-start gap-[9px]">
@@ -196,14 +233,18 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
 
       {/* 번개 카테고리 */}
       <div className="mb-10 flex gap-3">
-        {meetingTypes.map((tab) => (
+        {meetingTypes.map((category) => (
           <button
-            key={tab}
+            key={category}
             type="button"
-            onClick={() => handleTabClick(tab)}
+            onClick={() => handleCategoryClick(category)}
             className="cursor-pointer focus:outline-none"
           >
-            <Chip text={tab} size="lg" mode={selectedTab === tab ? 'dark' : 'light'} />
+            <Chip
+              text={category}
+              size="lg"
+              mode={selectedCategory === category ? 'dark' : 'light'}
+            />
           </button>
         ))}
       </div>
@@ -234,13 +275,13 @@ export default function MeetingList({ initialMeetings }: InitialMeetingsProps) {
 
       {/* 번개 리스트 */}
       <div className="meeting-list">
-        {data.pages.flat().length === 0 ? (
+        {meetings.length === 0 ? (
           <EmptyMessage firstLine="아직 번개가 없어요" secondLine="지금 번개를 만들어 보세요!" />
         ) : (
-          <div className="grid grid-cols-3 gap-x-6 gap-y-10">
-            {data.pages.flat().map((meeting: Meeting, index: number) => (
+          <div className="grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2  lg:grid-cols-3">
+            {meetings.map((meeting: Meeting) => (
               <MeetingInfo
-                key={`${meeting.id}-${index}`}
+                key={`${meeting.id}`}
                 meetings={meeting}
                 onClick={() => handleClickLike(meeting.id)}
               />
