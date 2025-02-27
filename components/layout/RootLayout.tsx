@@ -32,7 +32,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <QueryClientProvider client={queryClientRef.current}>
       <div className="flex h-screen flex-col">
         {!pathname.includes('/user') && <Gnb />}
-        <div className="mt-16 flex-1 overflow-auto">{children}</div>
+        <div className={`flex-1 overflow-auto ${!pathname.includes('/user') ? 'mt-16' : ''}`}>
+          {children}
+        </div>
         {isMeetingDetail && (
           <BottomFloatingBar key={pathname} title="번개팅" subtitle="지금 당장 신청해보라능" />
         )}
